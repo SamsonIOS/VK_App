@@ -5,16 +5,6 @@ import UIKit
 
 /// Экран регистрации
 final class LoginViewController: UIViewController {
-    // MARK: Constants
-
-    private enum Constants {
-        static let segueId = "loginSegue"
-        static let okText = "OK"
-        static let errorText = "Ошибка"
-        static let errorMessageText = "Введите корректные данные"
-        static let login = "samson"
-    }
-
     // MARK: IBOutlet
 
     @IBOutlet private var scrollView: UIScrollView!
@@ -35,13 +25,13 @@ final class LoginViewController: UIViewController {
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        guard identifier == Constants.segueId,
+        guard identifier == ConstantsSting.segueId,
               let loginTextFieldText = loginTextField.text
         else { return false }
-        if loginTextFieldText == Constants.login {
+        if loginTextFieldText == ConstantsSting.login {
             return true
         } else {
-            showAlert(title: Constants.errorText, message: Constants.errorMessageText) {
+            showAlert(title: ConstantsSting.errorText, message: ConstantsSting.errorMessageText) {
                 self.dismiss(animated: true)
             }
             return false
@@ -52,7 +42,7 @@ final class LoginViewController: UIViewController {
 
     @IBAction private func signInButtonAction(_ sender: UIButton) {}
 
-    @objc private func keyboardWillShown(notification: Notification) {
+    @objc private func keyboardWillShownAction(notification: Notification) {
         guard let info = notification.userInfo as? NSDictionary else { return }
         guard let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
         else { return }
@@ -61,19 +51,19 @@ final class LoginViewController: UIViewController {
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hediKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hediKeyboardAction))
         scrollView.addGestureRecognizer(tapGesture)
     }
 
-    @objc private func hediKeyboard() {
+    @objc private func hediKeyboardAction() {
         scrollView.endEditing(true)
     }
 
-    @objc private func keyboardWillHide(notification: Notification) {
+    @objc private func keyboardWillHideAction(notification: Notification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
-    
+
     private func setBorderButton() {
         signInWithAppleButton.layer.borderColor = UIColor.lightGray.cgColor
     }
@@ -81,13 +71,13 @@ final class LoginViewController: UIViewController {
     private func addObserverForNotification() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(keyboardWillShown(notification:)),
+            selector: #selector(keyboardWillShownAction(notification:)),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(keyboardWillHide(notification:)),
+            selector: #selector(keyboardWillHideAction(notification:)),
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
@@ -99,12 +89,13 @@ final class LoginViewController: UIViewController {
     }
 }
 
-// MARK: Extensin + LoginViewController
-extension LoginViewController {
+// MARK: Extension + UIViewController
+
+extension UIViewController {
     typealias Closure = (() -> ())?
     func showAlert(title: String?, message: String, handler: Closure) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertControllerAction = UIAlertAction(title: Constants.okText, style: .default) { _ in
+        let alertControllerAction = UIAlertAction(title: ConstantsSting.okText, style: .default) { _ in
             handler?()
         }
         alertController.addAction(alertControllerAction)

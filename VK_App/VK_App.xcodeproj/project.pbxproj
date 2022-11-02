@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3308765D291292C800F4D3E8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3308765C291292C800F4D3E8 /* Colors.xcassets */; };
+		3308765F2912B53900F4D3E8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3308765E2912B53900F4D3E8 /* Constants.swift */; };
 		339E7A822911BA1F000FF65C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E7A812911BA1F000FF65C /* AppDelegate.swift */; };
 		339E7A842911BA1F000FF65C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E7A832911BA1F000FF65C /* SceneDelegate.swift */; };
 		339E7A862911BA1F000FF65C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E7A852911BA1F000FF65C /* LoginViewController.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		3308765C291292C800F4D3E8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		3308765E2912B53900F4D3E8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		339E7A7E2911BA1F000FF65C /* VK_App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		339E7A812911BA1F000FF65C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		339E7A832911BA1F000FF65C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		339E7A802911BA1F000FF65C /* VK_App */ = {
 			isa = PBXGroup;
 			children = (
+				3308765E2912B53900F4D3E8 /* Constants.swift */,
 				339E7A812911BA1F000FF65C /* AppDelegate.swift */,
 				339E7A832911BA1F000FF65C /* SceneDelegate.swift */,
 				339E7A852911BA1F000FF65C /* LoginViewController.swift */,
@@ -186,6 +189,7 @@
 				339E7A862911BA1F000FF65C /* LoginViewController.swift in Sources */,
 				339E7A822911BA1F000FF65C /* AppDelegate.swift in Sources */,
 				339E7A842911BA1F000FF65C /* SceneDelegate.swift in Sources */,
+				3308765F2912B53900F4D3E8 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
