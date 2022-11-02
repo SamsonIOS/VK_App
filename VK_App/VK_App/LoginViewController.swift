@@ -25,8 +25,8 @@ final class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        signInWithAppleButton.layer.borderColor = UIColor.lightGray.cgColor
         addObserverForNotification()
+        setBorderButton()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,6 +72,10 @@ final class LoginViewController: UIViewController {
     @objc private func keyboardWillHide(notification: Notification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+    
+    private func setBorderButton() {
+        signInWithAppleButton.layer.borderColor = UIColor.lightGray.cgColor
     }
 
     private func addObserverForNotification() {
