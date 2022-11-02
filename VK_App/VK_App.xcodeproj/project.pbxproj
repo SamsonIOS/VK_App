@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3308765D291292C800F4D3E8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3308765C291292C800F4D3E8 /* Colors.xcassets */; };
 		339E7A822911BA1F000FF65C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E7A812911BA1F000FF65C /* AppDelegate.swift */; };
 		339E7A842911BA1F000FF65C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E7A832911BA1F000FF65C /* SceneDelegate.swift */; };
-		339E7A862911BA1F000FF65C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E7A852911BA1F000FF65C /* ViewController.swift */; };
+		339E7A862911BA1F000FF65C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339E7A852911BA1F000FF65C /* LoginViewController.swift */; };
 		339E7A892911BA1F000FF65C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A872911BA1F000FF65C /* Main.storyboard */; };
 		339E7A8B2911BA21000FF65C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A8A2911BA21000FF65C /* Assets.xcassets */; };
 		339E7A8E2911BA21000FF65C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A8C2911BA21000FF65C /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3308765C291292C800F4D3E8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		339E7A7E2911BA1F000FF65C /* VK_App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		339E7A812911BA1F000FF65C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		339E7A832911BA1F000FF65C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		339E7A852911BA1F000FF65C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		339E7A852911BA1F000FF65C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		339E7A882911BA1F000FF65C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		339E7A8A2911BA21000FF65C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		339E7A8D2911BA21000FF65C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,9 +60,10 @@
 			children = (
 				339E7A812911BA1F000FF65C /* AppDelegate.swift */,
 				339E7A832911BA1F000FF65C /* SceneDelegate.swift */,
-				339E7A852911BA1F000FF65C /* ViewController.swift */,
+				339E7A852911BA1F000FF65C /* LoginViewController.swift */,
 				339E7A872911BA1F000FF65C /* Main.storyboard */,
 				339E7A8A2911BA21000FF65C /* Assets.xcassets */,
+				3308765C291292C800F4D3E8 /* Colors.xcassets */,
 				339E7A8C2911BA21000FF65C /* LaunchScreen.storyboard */,
 				339E7A8F2911BA21000FF65C /* Info.plist */,
 			);
@@ -128,6 +131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				339E7A8E2911BA21000FF65C /* LaunchScreen.storyboard in Resources */,
+				3308765D291292C800F4D3E8 /* Colors.xcassets in Resources */,
 				339E7A8B2911BA21000FF65C /* Assets.xcassets in Resources */,
 				339E7A892911BA1F000FF65C /* Main.storyboard in Resources */,
 			);
@@ -179,7 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				339E7A862911BA1F000FF65C /* ViewController.swift in Sources */,
+				339E7A862911BA1F000FF65C /* LoginViewController.swift in Sources */,
 				339E7A822911BA1F000FF65C /* AppDelegate.swift in Sources */,
 				339E7A842911BA1F000FF65C /* SceneDelegate.swift in Sources */,
 			);
