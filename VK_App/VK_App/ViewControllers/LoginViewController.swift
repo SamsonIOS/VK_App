@@ -89,11 +89,11 @@ final class LoginViewController: UIViewController {
     }
 }
 
-// MARK: Extension + UIViewController
+// MARK: вызов алерта из любого UIViewController
 
 extension UIViewController {
     typealias Closure = (() -> ())?
-    func showAlert(title: String?, message: String, handler: Closure) {
+    func showAlert(title: String?, message: String?, handler: Closure) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertControllerAction = UIAlertAction(title: ConstantsSting.okText, style: .default) { _ in
             handler?()
