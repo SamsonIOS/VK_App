@@ -11,7 +11,7 @@ final class FriendCollectionViewController: UICollectionViewController {
         static let collectionFriendsCellId = "collectionFriendsCell"
     }
 
-    // MARK: Private properties
+    // MARK: Public properties
 
     var collectionFriendList: User?
 }
@@ -30,9 +30,11 @@ extension FriendCollectionViewController {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: Constants.collectionFriendsCellId,
             for: indexPath
-        ) as? FriendCollectionViewCell else { return UICollectionViewCell() }
-
-        guard let friend = collectionFriendList else { return UICollectionViewCell() }
+        ) as? FriendCollectionViewCell,
+            let friend = collectionFriendList
+        else {
+            return UICollectionViewCell()
+        }
         cell.friendInfo(friend)
         return cell
     }

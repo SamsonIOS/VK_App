@@ -4,7 +4,7 @@
 import UIKit
 
 /// Отображение и коллличествоо лайков, создаем UIControl
-@IBDesignable final class LikeControl: UIControl {
+@IBDesignable class LikeControl: UIControl {
     // MARK: - Private constants
 
     private enum Constants {
@@ -45,7 +45,7 @@ import UIKit
         }
     }
 
-    // MARK: - Life Cycle
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)

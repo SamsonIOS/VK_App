@@ -23,15 +23,15 @@ final class FollowGroupsTableViewController: UITableViewController {
     // MARK: Private IBAction
 
     @IBAction private func addCellAction(segue: UIStoryboardSegue) {
-        if segue.identifier == Constants.segueIdentificator {
-            guard let userGroups = segue.source as? UnFollowTableViewController
-            else { return }
-            if let indexPath = userGroups.tableView.indexPathForSelectedRow {
-                let groups = userGroups.unSignGroups[indexPath.row]
-                signGroupList.append(groups)
-                tableView.reloadData()
-            }
+        guard segue.identifier == Constants.segueIdentificator,
+              let userGroups = segue.source as? UnFollowTableViewController,
+              let indexPath = userGroups.tableView.indexPathForSelectedRow
+        else {
+            return
         }
+        let groups = userGroups.unSignGroups[indexPath.row]
+        signGroupList.append(groups)
+        tableView.reloadData()
     }
 }
 

@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Ячейка с г группами на которые пользователь еще не подписан
+/// Ячейка с группами, на которые пользователь еще не подписан
 final class UnFollowTableViewCell: UITableViewCell {
     // MARK: IBOutlet
 

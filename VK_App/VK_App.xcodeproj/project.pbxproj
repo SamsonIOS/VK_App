@@ -11,7 +11,7 @@
 		3308765F2912B53900F4D3E8 /* ConstantsLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3308765E2912B53900F4D3E8 /* ConstantsLoginVC.swift */; };
 		3308766129146ED900F4D3E8 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3308766029146ED900F4D3E8 /* FriendTableViewCell.swift */; };
 		330876632914703F00F4D3E8 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330876622914703F00F4D3E8 /* FriendsTableViewController.swift */; };
-		330876652914707F00F4D3E8 /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330876642914707F00F4D3E8 /* struct.swift */; };
+		330876652914707F00F4D3E8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330876642914707F00F4D3E8 /* Model.swift */; };
 		33087667291478F600F4D3E8 /* FriendCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33087666291478F600F4D3E8 /* FriendCollectionViewController.swift */; };
 		330876692914790A00F4D3E8 /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330876682914790A00F4D3E8 /* FriendCollectionViewCell.swift */; };
 		330876702914903400F4D3E8 /* FollowGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3308766F2914903400F4D3E8 /* FollowGroupsTableViewController.swift */; };
@@ -33,7 +33,7 @@
 		3308765E2912B53900F4D3E8 /* ConstantsLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsLoginVC.swift; sourceTree = "<group>"; };
 		3308766029146ED900F4D3E8 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		330876622914703F00F4D3E8 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
-		330876642914707F00F4D3E8 /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
+		330876642914707F00F4D3E8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		33087666291478F600F4D3E8 /* FriendCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewController.swift; sourceTree = "<group>"; };
 		330876682914790A00F4D3E8 /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
 		3308766F2914903400F4D3E8 /* FollowGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowGroupsTableViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 		3308766E29148ED800F4D3E8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				330876642914707F00F4D3E8 /* struct.swift */,
+				330876642914707F00F4D3E8 /* Model.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,7 +259,7 @@
 				33F2DFB72915666C004C808D /* LikesControl.swift in Sources */,
 				3308766129146ED900F4D3E8 /* FriendTableViewCell.swift in Sources */,
 				33087667291478F600F4D3E8 /* FriendCollectionViewController.swift in Sources */,
-				330876652914707F00F4D3E8 /* struct.swift in Sources */,
+				330876652914707F00F4D3E8 /* Model.swift in Sources */,
 				330876632914703F00F4D3E8 /* FriendsTableViewController.swift in Sources */,
 				330876722914905100F4D3E8 /* FollowGroupsTableViewCell.swift in Sources */,
 				330876782914958E00F4D3E8 /* UnFollowTableViewController.swift in Sources */,

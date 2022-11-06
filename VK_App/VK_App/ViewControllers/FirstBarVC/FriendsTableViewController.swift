@@ -38,12 +38,6 @@ final class FriendsTableViewController: UITableViewController {
         User(friendName: Constants.sixName, friendImage: Constants.sixImageName),
         User(friendName: Constants.sevenName, friendImage: Constants.sevenImageName),
     ]
-
-    // MARK: Life cycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 }
 
 // MARK: UITableViewDataSource
@@ -58,7 +52,7 @@ extension FriendsTableViewController {
             withIdentifier: Constants.friendsCellId,
             for: indexPath
         ) as? FriendTableViewCell
-        else { fatalError() }
+        else { return UITableViewCell() }
 
         cell.addFriends(friendsList[indexPath.row])
 
