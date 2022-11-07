@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "khabib.jpg",
+      "idiom" : "iphone"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

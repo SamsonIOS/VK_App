@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "gomer.jpeg",
+      "idiom" : "iphone"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
