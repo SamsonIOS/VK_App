@@ -17,7 +17,7 @@ import UIKit
 
     private let likesLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = UIColor(named: "DarkGrayColor")
         label.text = Constants.nullText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -25,7 +25,7 @@ import UIKit
 
     private let likeButton: UIButton = {
         let button = UIButton()
-        button.tintColor = .white
+        button.tintColor = UIColor(named: "DarkGrayColor")
         button.setImage(UIImage(systemName: Constants.heartButtonImageName), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -110,16 +110,32 @@ import UIKit
     }
 
     private func removeLike() {
-        likeButton.tintColor = .white
+        likeButton.tintColor = UIColor(named: "DarkGrayColor")
         likeButton.setImage(UIImage(systemName: Constants.heartButtonImageName), for: .normal)
-        likesLabel.textColor = .white
+        likesLabel.textColor = UIColor(named: "DarkGrayColor")
     }
 
     private func changeLikeCount() {
         likesLabel.text = String(Int(likesCount))
     }
 
+    private func imageTabAction() {
+        likeButton.transform = CGAffineTransform(scaleX: 1.7, y: 1.7)
+        UIView.animate(
+            withDuration: 1,
+            delay: 0,
+            usingSpringWithDamping: 0.3,
+            initialSpringVelocity: 0.5,
+            options: .curveEaseInOut,
+            animations: {
+                self.likeButton.transform = .identity
+            },
+            completion: nil
+        )
+    }
+
     @objc private func likeButtonAction(sender: UIButton) {
         isLiked.toggle()
+        imageTabAction()
     }
 }

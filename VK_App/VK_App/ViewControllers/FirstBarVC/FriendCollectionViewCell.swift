@@ -13,10 +13,11 @@ final class FriendCollectionViewCell: UICollectionViewCell {
 
     // MARK: Public Methods
 
-    func friendInfo(_ model: User) {
-        nameLabel.text = model.friendName
-        friendImageView.image = UIImage(named: model.friendImage)
-
+    func friendInfo(nameUser: String, nameImage: String) {
+        nameLabel.text = nameUser
+        friendImageView.image = UIImage(named: nameImage)
+        friendImageView.setGroupImageView()
+        friendImageView.photoDidTapAction()
         likesView.layer.cornerRadius = 12
         likesView.clipsToBounds = true
         likesView.backgroundColor = .blue

@@ -15,5 +15,7 @@ final class UnFollowTableViewCell: UITableViewCell {
     func unFollowGroupInfo(_ model: Group) {
         unFollowGroupLabel.text = model.groupName
         unFollowImageView.image = UIImage(named: model.groupImage)
+        unFollowImageView.setGroupImageView()
+        unFollowImageView.photoDidTapAction()
     }
 }

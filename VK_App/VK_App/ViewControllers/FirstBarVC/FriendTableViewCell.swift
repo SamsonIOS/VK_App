@@ -12,8 +12,10 @@ final class FriendTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func addFriends(_ model: User) {
-        friendName.text = model.friendName
-        shadowForPersonView.setImage(imageName: model.friendImage)
+    func addFriends(nameUser: String, nameImage: String) {
+        friendName.text = nameUser
+        shadowForPersonView.setImage(imageName: nameImage)
+        shadowForPersonView.setGroupImageView()
+        shadowForPersonView.photoDidTapAction()
     }
 }

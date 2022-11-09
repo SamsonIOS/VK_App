@@ -15,5 +15,7 @@ final class FollowGroupsTableViewCell: UITableViewCell {
     func groupsInfo(_ model: Group) {
         nameGroupLabel.text = model.groupName
         groupImageView.image = UIImage(named: model.groupImage)
+        groupImageView.setGroupImageView()
+        groupImageView.photoDidTapAction()
     }
 }

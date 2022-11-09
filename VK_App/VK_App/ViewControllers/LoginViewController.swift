@@ -11,6 +11,12 @@ final class LoginViewController: UIViewController {
     @IBOutlet private var signInWithAppleButton: UIButton!
     @IBOutlet private var loginTextField: UITextField!
 
+    // MARK: Private Vusial Components
+
+    private var firstDoteView = UIView()
+    private var secondDoteView = UIView()
+    private var thirdDoteView = UIView()
+
     // MARK: Life cycle
 
     override func viewDidLoad() {
@@ -24,23 +30,29 @@ final class LoginViewController: UIViewController {
         removeObserverNotification()
     }
 
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        guard identifier == ConstantsSting.segueId,
-              let loginTextFieldText = loginTextField.text
-        else { return false }
+    // MARK: Private Methods
+
+    @IBAction private func signInButtonAction(_ sender: UIButton) {
+        let loginTextFieldText = loginTextField.text
         if loginTextFieldText == ConstantsSting.login {
-            return true
+            startAnimationView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.firstDoteView.layer.removeAllAnimations()
+                self.secondDoteView.layer.removeAllAnimations()
+                self.thirdDoteView.layer.removeAllAnimations()
+
+                guard let vc = UIStoryboard(name: ConstantsSting.mainText, bundle: nil)
+                    .instantiateViewController(withIdentifier: ConstantsSting.tabBarID) as? UITabBarController
+                else { return }
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
         } else {
             showAlert(title: ConstantsSting.errorText, message: ConstantsSting.errorMessageText) {
                 self.dismiss(animated: true)
             }
-            return false
         }
     }
-
-    // MARK: Private Methods
-
-    @IBAction private func signInButtonAction(_ sender: UIButton) {}
 
     @objc private func keyboardWillShownAction(notification: Notification) {
         guard let info = notification.userInfo as? NSDictionary else { return }
@@ -51,17 +63,61 @@ final class LoginViewController: UIViewController {
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hediKeyboardAction))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
         scrollView.addGestureRecognizer(tapGesture)
     }
 
-    @objc private func hediKeyboardAction() {
+    @objc private func hideKeyboardAction() {
         scrollView.endEditing(true)
     }
 
     @objc private func keyboardWillHideAction(notification: Notification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+
+    private func setupSuBivew(newView: UIView, xPosition: Int, yPosition: Int) -> UIView {
+        newView.backgroundColor = .white
+        newView.alpha = 0
+        newView.frame = CGRect(
+            x: view.center.x + CGFloat(xPosition),
+            y: view.center.y + CGFloat(yPosition),
+            width: 10,
+            height: 10
+        )
+        view.addSubview(newView)
+        newView.layer.cornerRadius = 5
+        return newView
+    }
+
+    private func startAnimationView() {
+        firstDoteView = setupSuBivew(newView: firstDoteView, xPosition: -20, yPosition: -115)
+        secondDoteView = setupSuBivew(newView: secondDoteView, xPosition: 0, yPosition: -115)
+        thirdDoteView = setupSuBivew(newView: thirdDoteView, xPosition: 20, yPosition: -115)
+
+        UIView.animate(
+            withDuration: 0.7,
+            delay: 0,
+            options: [.repeat, .autoreverse]
+        ) {
+            self.firstDoteView.alpha = 1
+        }
+
+        UIView.animate(
+            withDuration: 0.7,
+            delay: 0.3,
+            options: [.repeat, .autoreverse]
+        ) {
+            self.secondDoteView.alpha = 1
+        }
+
+        UIView.animate(
+            withDuration: 0.7,
+            delay: 0.6,
+            options: [.repeat, .autoreverse]
+        ) {
+            self.thirdDoteView.alpha = 1
+        }
     }
 
     private func setBorderButton() {
