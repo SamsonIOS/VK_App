@@ -14,8 +14,8 @@ final class FriendTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        shadowForPersonView.setImageView()
-        shadowForPersonView.imageDidTapAction()
+        shadowForPersonView.setupTapGestureRecognizer()
+        shadowForPersonView.animationDidTapAction()
     }
 
     // MARK: Public Methods

@@ -23,8 +23,8 @@ final class FriendCollectionViewCell: UICollectionViewCell {
     func friendInfo(nameUser: String, nameImage: String) {
         nameLabel.text = nameUser
         friendImageView.image = UIImage(named: nameImage)
-        friendImageView.setImageView()
-        friendImageView.imageDidTapAction()
+        friendImageView.setupTapGestureRecognizer()
+        friendImageView.animationDidTapAction()
     }
 
     // MARK: Private Methods

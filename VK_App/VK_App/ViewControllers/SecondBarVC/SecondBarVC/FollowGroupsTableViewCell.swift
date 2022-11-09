@@ -14,8 +14,8 @@ final class FollowGroupsTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        groupImageView.setImageView()
-        groupImageView.imageDidTapAction()
+        groupImageView.setupTapGestureRecognizer()
+        groupImageView.animationDidTapAction()
     }
 
     // MARK: Public Methods

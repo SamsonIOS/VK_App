@@ -14,8 +14,8 @@ final class UnFollowTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        unFollowImageView.setImageView()
-        unFollowImageView.imageDidTapAction()
+        unFollowImageView.setupTapGestureRecognizer()
+        unFollowImageView.animationDidTapAction()
     }
 
     // MARK: Public Methods
