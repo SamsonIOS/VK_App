@@ -76,7 +76,7 @@ final class LoginViewController: UIViewController {
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
 
-    private func setupSuBivew(newView: UIView, xPosition: Int, yPosition: Int) -> UIView {
+    private func setupSubView(newView: UIView, xPosition: Int, yPosition: Int) -> UIView {
         newView.backgroundColor = .white
         newView.alpha = 0
         newView.frame = CGRect(
@@ -91,9 +91,9 @@ final class LoginViewController: UIViewController {
     }
 
     private func startAnimationView() {
-        firstDoteView = setupSuBivew(newView: firstDoteView, xPosition: -20, yPosition: -115)
-        secondDoteView = setupSuBivew(newView: secondDoteView, xPosition: 0, yPosition: -115)
-        thirdDoteView = setupSuBivew(newView: thirdDoteView, xPosition: 20, yPosition: -115)
+        firstDoteView = setupSubView(newView: firstDoteView, xPosition: -20, yPosition: -115)
+        secondDoteView = setupSubView(newView: secondDoteView, xPosition: 0, yPosition: -115)
+        thirdDoteView = setupSubView(newView: thirdDoteView, xPosition: 20, yPosition: -115)
 
         UIView.animate(
             withDuration: 0.7,

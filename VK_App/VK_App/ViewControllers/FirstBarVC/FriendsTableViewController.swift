@@ -51,11 +51,15 @@ final class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
+        searchBarDelegate()
         sortedMethod()
     }
 
     // MARK: Private Methods
+
+    private func searchBarDelegate() {
+        searchBar.delegate = self
+    }
 
     private func sortedMethod() {
         for users in friendsList {
@@ -124,8 +128,6 @@ extension FriendsTableViewController: UISearchBarDelegate {
 
         if searchText.isEmpty {
             filteredFriendsList = sections
-            sectionsTitle = Array(filteredFriendsList.keys)
-            sectionsTitle.sort()
         } else {
             for friends in sections {
                 guard let new = friends.value.first else { return }
@@ -137,10 +139,10 @@ extension FriendsTableViewController: UISearchBarDelegate {
                         filteredFriendsList[firstChar] = [(new.0, new.1)]
                     }
                 }
-                sectionsTitle = Array(filteredFriendsList.keys)
-                sectionsTitle.sort()
             }
         }
+        sectionsTitle = Array(filteredFriendsList.keys)
+        sectionsTitle.sort()
         tableView.reloadData()
     }
 }

@@ -11,6 +11,13 @@ final class FriendCollectionViewCell: UICollectionViewCell {
     @IBOutlet private var friendImageView: UIImageView!
     @IBOutlet private var likesView: LikeControl!
 
+    // MARK: Life cycle
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setLikesView()
+    }
+
     // MARK: Public Methods
 
     func friendInfo(nameUser: String, nameImage: String) {
@@ -18,6 +25,11 @@ final class FriendCollectionViewCell: UICollectionViewCell {
         friendImageView.image = UIImage(named: nameImage)
         friendImageView.setImageView()
         friendImageView.imageDidTapAction()
+    }
+
+    // MARK: Private Methods
+
+    private func setLikesView() {
         likesView.layer.cornerRadius = 12
         likesView.clipsToBounds = true
         likesView.backgroundColor = .blue

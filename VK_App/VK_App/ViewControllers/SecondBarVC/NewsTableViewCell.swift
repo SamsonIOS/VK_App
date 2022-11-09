@@ -13,6 +13,12 @@ final class NewsTableViewCell: UITableViewCell {
     @IBOutlet private var postImageView: UIImageView!
     @IBOutlet private var likesCount: LikeControl!
 
+    // MARK: Life cycle
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setLikesView()
+    }
+
     // MARK: Public Methods
 
     func setCellInfo(_ model: News) {
@@ -20,6 +26,11 @@ final class NewsTableViewCell: UITableViewCell {
         userNameLabel.text = model.userName
         overviewPostLabel.text = model.overviewPost
         postImageView.image = UIImage(named: model.postImageName)
+    }
+
+    // MARK: Private Methods
+
+    private func setLikesView() {
         likesCount.layer.cornerRadius = 12
         likesCount.clipsToBounds = true
         likesCount.backgroundColor = .none
