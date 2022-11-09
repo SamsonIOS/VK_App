@@ -13,9 +13,9 @@ final class LoginViewController: UIViewController {
 
     // MARK: Private Vusial Components
 
-    private let firstDoteView = UIView()
-    private let secondDoteView = UIView()
-    private let thirdDoteView = UIView()
+    private var firstDoteView = UIView()
+    private var secondDoteView = UIView()
+    private var thirdDoteView = UIView()
 
     // MARK: Life cycle
 

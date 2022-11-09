@@ -1,7 +1,6 @@
 // Extension + UIView .swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
 import UIKit
 
 /// Расширения Чтобы можно было сделать анимацию для всего, кто наследуется от UIView и там где там нужна анимация

@@ -14,6 +14,7 @@ final class NewsTableViewCell: UITableViewCell {
     @IBOutlet private var likesCount: LikeControl!
 
     // MARK: Life cycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setLikesView()
