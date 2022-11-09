@@ -16,8 +16,8 @@ final class FriendCollectionViewCell: UICollectionViewCell {
     func friendInfo(nameUser: String, nameImage: String) {
         nameLabel.text = nameUser
         friendImageView.image = UIImage(named: nameImage)
-        friendImageView.setGroupImageView()
-        friendImageView.photoDidTapAction()
+        friendImageView.setImageView()
+        friendImageView.imageDidTapAction()
         likesView.layer.cornerRadius = 12
         likesView.clipsToBounds = true
         likesView.backgroundColor = .blue

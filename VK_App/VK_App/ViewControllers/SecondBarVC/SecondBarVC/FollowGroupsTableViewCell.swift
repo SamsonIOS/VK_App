@@ -11,12 +11,13 @@ final class FollowGroupsTableViewCell: UITableViewCell {
     @IBOutlet private var groupImageView: UIImageView!
 
     // MARK: Life cycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        groupImageView.setGroupImageView()
-        groupImageView.photoDidTapAction()
+        groupImageView.setImageView()
+        groupImageView.imageDidTapAction()
     }
-    
+
     // MARK: Public Methods
 
     func groupsInfo(_ model: Group) {

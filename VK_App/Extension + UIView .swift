@@ -4,16 +4,15 @@
 import Foundation
 import UIKit
 
-/// Расширения UIView чтобы можно было сделать анимацию для всего, кто наследуется от UIView и там где там нужна
-/// анимация
+/// Расширения Чтобы можно было сделать анимацию для всего, кто наследуется от UIView и там где там нужна анимация
 extension UIView {
-    func setGroupImageView() {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(photoDidTapAction))
+    func setImageView() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(imageDidTapAction))
         addGestureRecognizer(gesture)
         isUserInteractionEnabled = true
     }
 
-    @objc func photoDidTapAction() {
+    @objc func imageDidTapAction() {
         transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         UIView.animate(
             withDuration: 1,

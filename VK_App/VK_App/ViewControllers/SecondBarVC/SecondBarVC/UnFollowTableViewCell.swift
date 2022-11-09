@@ -11,12 +11,13 @@ final class UnFollowTableViewCell: UITableViewCell {
     @IBOutlet private var unFollowGroupLabel: UILabel!
 
     // MARK: Life cycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        unFollowImageView.setGroupImageView()
-        unFollowImageView.photoDidTapAction()
+        unFollowImageView.setImageView()
+        unFollowImageView.imageDidTapAction()
     }
-    
+
     // MARK: Public Methods
 
     func unFollowGroupInfo(_ model: Group) {

@@ -11,10 +11,11 @@ final class FriendTableViewCell: UITableViewCell {
     @IBOutlet private var shadowForPersonView: FriendsView!
 
     // MARK: Life cycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        shadowForPersonView.setGroupImageView()
-        shadowForPersonView.photoDidTapAction()
+        shadowForPersonView.setImageView()
+        shadowForPersonView.imageDidTapAction()
     }
 
     // MARK: Public Methods
