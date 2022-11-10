@@ -10,10 +10,18 @@ final class FriendTableViewCell: UITableViewCell {
     @IBOutlet private var friendName: UILabel!
     @IBOutlet private var shadowForPersonView: FriendsView!
 
+    // MARK: Life cycle
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        shadowForPersonView.setupTapGestureRecognizer()
+        shadowForPersonView.animationDidTapAction()
+    }
+
     // MARK: Public Methods
 
-    func addFriends(_ model: User) {
-        friendName.text = model.friendName
-        shadowForPersonView.setImage(imageName: model.friendImage)
+    func addFriends(nameUser: String, nameImage: String) {
+        friendName.text = nameUser
+        shadowForPersonView.setImage(imageName: nameImage)
     }
 }

@@ -13,7 +13,7 @@ final class FriendCollectionViewController: UICollectionViewController {
 
     // MARK: Public properties
 
-    var collectionFriendList: User?
+    var collectionFriendList: (String, String)?
 }
 
 // MARK: UICollectionViewDataSource
@@ -35,7 +35,7 @@ extension FriendCollectionViewController {
         else {
             return UICollectionViewCell()
         }
-        cell.friendInfo(friend)
+        cell.friendInfo(nameUser: friend.0, nameImage: friend.1)
         return cell
     }
 }

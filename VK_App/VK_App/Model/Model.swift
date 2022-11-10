@@ -14,3 +14,11 @@ struct Group {
     var groupName: String
     var groupImage: String
 }
+
+/// Структура описывающая пост в ленте
+struct News {
+    let userImageName: String
+    let userName: String
+    let overviewPost: String
+    let postImageName: String
+}

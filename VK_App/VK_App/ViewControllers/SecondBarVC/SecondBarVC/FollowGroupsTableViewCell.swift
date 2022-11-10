@@ -10,6 +10,14 @@ final class FollowGroupsTableViewCell: UITableViewCell {
     @IBOutlet private var nameGroupLabel: UILabel!
     @IBOutlet private var groupImageView: UIImageView!
 
+    // MARK: Life cycle
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        groupImageView.setupTapGestureRecognizer()
+        groupImageView.animationDidTapAction()
+    }
+
     // MARK: Public Methods
 
     func groupsInfo(_ model: Group) {

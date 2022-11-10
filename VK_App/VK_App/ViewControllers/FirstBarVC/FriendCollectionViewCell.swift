@@ -11,12 +11,25 @@ final class FriendCollectionViewCell: UICollectionViewCell {
     @IBOutlet private var friendImageView: UIImageView!
     @IBOutlet private var likesView: LikeControl!
 
+    // MARK: Life cycle
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setLikesView()
+    }
+
     // MARK: Public Methods
 
-    func friendInfo(_ model: User) {
-        nameLabel.text = model.friendName
-        friendImageView.image = UIImage(named: model.friendImage)
+    func friendInfo(nameUser: String, nameImage: String) {
+        nameLabel.text = nameUser
+        friendImageView.image = UIImage(named: nameImage)
+        friendImageView.setupTapGestureRecognizer()
+        friendImageView.animationDidTapAction()
+    }
 
+    // MARK: Private Methods
+
+    private func setLikesView() {
         likesView.layer.cornerRadius = 12
         likesView.clipsToBounds = true
         likesView.backgroundColor = .blue
