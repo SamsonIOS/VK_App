@@ -17,8 +17,8 @@ struct Group {
 
 /// Структура описывающая пост в ленте
 struct News {
-    var userImageName: String
-    var userName: String
-    var overviewPost: String
-    var postImageName: String
+    let userImageName: String
+    let userName: String
+    let overviewPost: String
+    let postImageName: String
 }

@@ -30,7 +30,7 @@ final class LoginViewController: UIViewController {
         removeObserverNotification()
     }
 
-    // MARK: Private Methods
+    // MARK: Private IBAction
 
     @IBAction private func signInButtonAction(_ sender: UIButton) {
         let loginTextFieldText = loginTextField.text
@@ -54,6 +54,7 @@ final class LoginViewController: UIViewController {
         }
     }
 
+    // MARK: Private Methods
     @objc private func keyboardWillShownAction(notification: Notification) {
         guard let info = notification.userInfo as? NSDictionary else { return }
         guard let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size

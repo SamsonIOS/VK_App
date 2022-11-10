@@ -633,7 +633,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="likesCount" destination="vPW-Wa-d3N" id="Cu2-Pp-PYn"/>
+                                    <outlet property="likesCountView" destination="vPW-Wa-d3N" id="Cu2-Pp-PYn"/>
                                     <outlet property="overviewPostLabel" destination="4PQ-BG-qHY" id="lGN-f3-JN4"/>
                                     <outlet property="postImageView" destination="u9c-yZ-0HO" id="2Zt-HP-OBV"/>
                                     <outlet property="userImageView" destination="nS1-q8-10V" id="3wg-os-3qo"/>

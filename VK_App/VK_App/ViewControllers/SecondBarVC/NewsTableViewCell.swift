@@ -11,7 +11,7 @@ final class NewsTableViewCell: UITableViewCell {
     @IBOutlet private var userNameLabel: UILabel!
     @IBOutlet private var overviewPostLabel: UILabel!
     @IBOutlet private var postImageView: UIImageView!
-    @IBOutlet private var likesCount: LikeControl!
+    @IBOutlet private var likesCountView: LikeControl!
 
     // MARK: Life cycle
 
@@ -22,18 +22,18 @@ final class NewsTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func setCellInfo(_ model: News) {
-        userImageView.image = UIImage(named: model.userImageName)
-        userNameLabel.text = model.userName
-        overviewPostLabel.text = model.overviewPost
-        postImageView.image = UIImage(named: model.postImageName)
+    func setCellInfo(_ news: News) {
+        userImageView.image = UIImage(named: news.userImageName)
+        userNameLabel.text = news.userName
+        overviewPostLabel.text = news.overviewPost
+        postImageView.image = UIImage(named: news.postImageName)
     }
 
     // MARK: Private Methods
 
     private func setLikesView() {
-        likesCount.layer.cornerRadius = 12
-        likesCount.clipsToBounds = true
-        likesCount.backgroundColor = .none
+        likesCountView.layer.cornerRadius = 12
+        likesCountView.clipsToBounds = true
+        likesCountView.backgroundColor = .none
     }
 }

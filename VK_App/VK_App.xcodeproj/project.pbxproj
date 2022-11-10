@@ -26,7 +26,7 @@
 		339E7A892911BA1F000FF65C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A872911BA1F000FF65C /* Main.storyboard */; };
 		339E7A8B2911BA21000FF65C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A8A2911BA21000FF65C /* Assets.xcassets */; };
 		339E7A8E2911BA21000FF65C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A8C2911BA21000FF65C /* LaunchScreen.storyboard */; };
-		33B020F0291B9A4800FAD4A1 /* Extension + UIView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B020EF291B9A4800FAD4A1 /* Extension + UIView .swift */; };
+		33B020F0291B9A4800FAD4A1 /* UIView +Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B020EF291B9A4800FAD4A1 /* UIView +Extension.swift */; };
 		33F2DFB72915666C004C808D /* LikesControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2DFB62915666C004C808D /* LikesControl.swift */; };
 		33F2DFB929157130004C808D /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2DFB829157130004C808D /* FriendsView.swift */; };
 /* End PBXBuildFile section */
@@ -53,7 +53,7 @@
 		339E7A8A2911BA21000FF65C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		339E7A8D2911BA21000FF65C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		339E7A8F2911BA21000FF65C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		33B020EF291B9A4800FAD4A1 /* Extension + UIView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIView .swift"; sourceTree = "<group>"; };
+		33B020EF291B9A4800FAD4A1 /* UIView +Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView +Extension.swift"; sourceTree = "<group>"; };
 		33F2DFB62915666C004C808D /* LikesControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesControl.swift; sourceTree = "<group>"; };
 		33F2DFB829157130004C808D /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,7 +125,7 @@
 		339E7A752911BA1F000FF65C = {
 			isa = PBXGroup;
 			children = (
-				33B020EF291B9A4800FAD4A1 /* Extension + UIView .swift */,
+				33B020EF291B9A4800FAD4A1 /* UIView +Extension.swift */,
 				339E7A802911BA1F000FF65C /* VK_App */,
 				339E7A7F2911BA1F000FF65C /* Products */,
 			);
@@ -285,7 +285,7 @@
 				3320CEC229193F06002355A7 /* NewsTableViewController.swift in Sources */,
 				339E7A822911BA1F000FF65C /* AppDelegate.swift in Sources */,
 				3320CEC429195D0F002355A7 /* NewsTableViewCell.swift in Sources */,
-				33B020F0291B9A4800FAD4A1 /* Extension + UIView .swift in Sources */,
+				33B020F0291B9A4800FAD4A1 /* UIView +Extension.swift in Sources */,
 				339E7A842911BA1F000FF65C /* SceneDelegate.swift in Sources */,
 				3308765F2912B53900F4D3E8 /* ConstantsLoginVC.swift in Sources */,
 			);

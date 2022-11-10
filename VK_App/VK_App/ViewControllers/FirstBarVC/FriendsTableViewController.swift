@@ -33,7 +33,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
-    private var sections: [Character: [(String, String)]] = [:]
+    private var sectionsDict: [Character: [(String, String)]] = [:]
     private var sectionsTitle: [Character] = .init()
     private var friendsList = [
         User(friendName: Constants.firstName, friendImage: Constants.firstImageName),
@@ -66,15 +66,15 @@ final class FriendsTableViewController: UITableViewController {
             guard let firstChar = users.friendName.first
             else { return }
 
-            if sections[firstChar] != nil {
-                sections[firstChar]?.append((users.friendName, users.friendImage))
+            if sectionsDict[firstChar] != nil {
+                sectionsDict[firstChar]?.append((users.friendName, users.friendImage))
             } else {
-                sections[firstChar] = [(users.friendName, users.friendImage)]
+                sectionsDict[firstChar] = [(users.friendName, users.friendImage)]
             }
         }
-        sectionsTitle = Array(sections.keys)
+        sectionsTitle = Array(sectionsDict.keys)
         sectionsTitle.sort()
-        filteredFriendsMap = sections
+        filteredFriendsMap = sectionsDict
     }
 }
 
@@ -127,9 +127,9 @@ extension FriendsTableViewController: UISearchBarDelegate {
         filteredFriendsMap = [:]
 
         if searchText.isEmpty {
-            filteredFriendsMap = sections
+            filteredFriendsMap = sectionsDict
         } else {
-            for friends in sections {
+            for friends in sectionsDict {
                 guard let new = friends.value.first else { return }
                 let firstChar = friends.key
                 if new.0.lowercased().contains(searchText.lowercased()) {
