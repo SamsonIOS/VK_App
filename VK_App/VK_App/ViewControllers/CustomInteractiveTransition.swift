@@ -5,7 +5,13 @@ import UIKit
 
 /// Интерактивная анимация
 final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
-    // MARK: Public Properties
+    // MARK: Constants
+
+    private enum Constants {
+        static let magicValue = 0.33
+    }
+
+    // MARK: Public visual components
 
     var viewController: UIViewController? {
         didSet {
@@ -19,7 +25,7 @@ final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
 
     // MARK: Private properties
 
-    private var isFinish = false
+    private var isFinished = false
 
     // MARK: Private methods
 
@@ -32,11 +38,11 @@ final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
             let translation = sender.translation(in: sender.view)
             let relative = translation.y / (sender.view?.bounds.width ?? 1)
             let progress = max(0, min(1, relative))
-            isFinish = progress > 0.33
+            isFinished = progress > Constants.magicValue
             update(progress)
         case .ended:
             isStarted = false
-            if isFinish {
+            if isFinished {
                 finish()
             } else {
                 cancel()

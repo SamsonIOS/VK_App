@@ -38,7 +38,7 @@ final class FriendsPhotosViewController: UIViewController {
         setupUserPhotos()
         setupSwipeGesture()
     }
-    
+
     private func setupUserPhotos() {
         guard userImages.indices.contains(selectedIndex) else { return }
         friendImageView.image = userImages[selectedIndex]
@@ -73,7 +73,7 @@ final class FriendsPhotosViewController: UIViewController {
         friendImageView.addGestureRecognizer(downSwipeGestureRecognizer)
     }
 
-    private func animateToUserPhoto(x xPosition: Int, indexOffset: Int) {
+    private func animateFriendsPhoto(x xPosition: Int, indexOffset: Int) {
         selectedIndex += indexOffset
         guard userImages.indices.contains(selectedIndex) else {
             selectedIndex -= indexOffset
@@ -96,11 +96,16 @@ final class FriendsPhotosViewController: UIViewController {
             self.friendImageView.transform = CGAffineTransform(translationX: CGFloat(xPosition), y: 0)
                 .concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
             self.friendImageView.layer.opacity = 0.2
-        }), completion: ({ _ in
-            self.friendImageView.layer.opacity = 1
-            self.friendImageView.image = self.userImages[self.selectedIndex]
-            self.friendImageView.transform = .identity
+        }), completion: ({ [weak self] _ in
+            guard let self = self else { return }
+            self.setFriendImageView()
         }))
+    }
+
+    private func setFriendImageView() {
+        friendImageView.layer.opacity = 1
+        friendImageView.image = userImages[selectedIndex]
+        friendImageView.transform = .identity
     }
 
     private func animatePop() {
@@ -115,9 +120,9 @@ final class FriendsPhotosViewController: UIViewController {
     @objc private func swipeUserPhotoAction(_ sender: UISwipeGestureRecognizer) {
         switch sender.direction {
         case .left:
-            animateToUserPhoto(x: -500, indexOffset: 1)
+            animateFriendsPhoto(x: -500, indexOffset: 1)
         case .right:
-            animateToUserPhoto(x: 500, indexOffset: -1)
+            animateFriendsPhoto(x: 500, indexOffset: -1)
         case .down:
             animatePop()
         default: break
