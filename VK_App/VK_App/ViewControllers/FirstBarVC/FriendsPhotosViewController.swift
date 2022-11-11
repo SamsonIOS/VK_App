@@ -5,7 +5,7 @@ import UIKit
 
 /// Экран с коллекцией фотографией друга
 final class FriendsPhotosViewController: UIViewController {
-    // MARK: IBOutlet
+    // MARK: Private IBOutlet
 
     @IBOutlet private var friendImageView: UIImageView!
 
@@ -22,8 +22,7 @@ final class FriendsPhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUserPhotos()
-        setupSwipeGesture()
+        setMethods()
     }
 
     // MARK: - Public methods
@@ -35,6 +34,11 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Private methods
 
+    private func setMethods() {
+        setupUserPhotos()
+        setupSwipeGesture()
+    }
+    
     private func setupUserPhotos() {
         guard userImages.indices.contains(selectedIndex) else { return }
         friendImageView.image = userImages[selectedIndex]
