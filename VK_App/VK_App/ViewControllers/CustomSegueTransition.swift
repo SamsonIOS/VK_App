@@ -5,6 +5,14 @@ import UIKit
 
 /// Кастомный сигвей
 final class CustomSegueTransition: UIStoryboardSegue {
+    // MARK: Constants
+
+    private enum ConstantsSegueValue {
+        static let twoValue = 2
+        static let zeroValue = 0
+        static let oneValue = 1
+    }
+
     // MARK: Public methods
 
     override func perform() {
@@ -12,27 +20,27 @@ final class CustomSegueTransition: UIStoryboardSegue {
 
         containerView.addSubview(destination.view)
         destination.view.frame = CGRect(
-            x: source.view.frame.width / 2,
-            y: source.view.frame.height / 2,
-            width: 0,
-            height: 0
+            x: Int(source.view.frame.width) / ConstantsSegueValue.twoValue,
+            y: Int(source.view.frame.height) / ConstantsSegueValue.twoValue,
+            width: ConstantsSegueValue.zeroValue,
+            height: ConstantsSegueValue.zeroValue
         )
         destination.modalPresentationStyle = .overFullScreen
 
-        UIView.animate(withDuration: 1) {
-            self.source.navigationController?.navigationBar.alpha = 0
-            self.source.tabBarController?.tabBar.alpha = 0
+        UIView.animate(withDuration: TimeInterval(ConstantsSegueValue.oneValue)) {
+            self.source.navigationController?.navigationBar.alpha = CGFloat(ConstantsSegueValue.zeroValue)
+            self.source.tabBarController?.tabBar.alpha = CGFloat(ConstantsSegueValue.zeroValue)
 
             self.destination.view.frame = CGRect(
-                x: 0,
-                y: 0,
+                x: CGFloat(ConstantsSegueValue.zeroValue),
+                y: CGFloat(ConstantsSegueValue.zeroValue),
                 width: self.source.view.frame.width,
                 height: self.source.view.frame.height
             )
         } completion: { _ in
             self.source.present(self.destination, animated: false)
-            self.source.navigationController?.navigationBar.alpha = 1
-            self.source.tabBarController?.tabBar.alpha = 1
+            self.source.navigationController?.navigationBar.alpha = CGFloat(ConstantsSegueValue.oneValue)
+            self.source.tabBarController?.tabBar.alpha = CGFloat(ConstantsSegueValue.oneValue)
         }
     }
 }

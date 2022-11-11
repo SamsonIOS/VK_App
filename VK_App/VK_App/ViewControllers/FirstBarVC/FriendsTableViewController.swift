@@ -41,7 +41,7 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: Private properties
 
     private var sectionsMap: [Character: [(String, String, [String]?)]] = [:]
-    private var sectionsTitle: [Character] = .init()
+    private var sectionsTitles: [Character] = .init()
     private var friendsList = [
         User(
             friendName: Constants.firstName,
@@ -93,8 +93,8 @@ final class FriendsTableViewController: UITableViewController {
                 sectionsMap[firstChar] = [(users.friendName, users.friendImage, users.photosUser)]
             }
         }
-        sectionsTitle = Array(sectionsMap.keys)
-        sectionsTitle.sort()
+        sectionsTitles = Array(sectionsMap.keys)
+        sectionsTitles.sort()
         filteredFriendsMap = sectionsMap
     }
 }
@@ -107,15 +107,15 @@ extension FriendsTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredFriendsMap[sectionsTitle[section]]?.count ?? 0
+        filteredFriendsMap[sectionsTitles[section]]?.count ?? 0
     }
 
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        sectionsTitle.map { String($0) }
+        sectionsTitles.map { String($0) }
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        String(sectionsTitle[section])
+        String(sectionsTitles[section])
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,7 +123,7 @@ extension FriendsTableViewController {
             withIdentifier: Constants.friendsCellId,
             for: indexPath
         ) as? FriendTableViewCell,
-            let infoForCell = filteredFriendsMap[sectionsTitle[indexPath.section]]?[indexPath.row]
+            let infoForCell = filteredFriendsMap[sectionsTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
         cell.addFriends(nameUser: infoForCell.0, nameImage: infoForCell.1)
 
@@ -135,7 +135,7 @@ extension FriendsTableViewController {
         guard let secondVC = story
             .instantiateViewController(withIdentifier: Constants.storyFriendPhotoID) as? FriendsPhotosViewController
         else { return }
-        guard let list = filteredFriendsMap[sectionsTitle[indexPath.section]]?[indexPath.row] else { return }
+        guard let list = filteredFriendsMap[sectionsTitles[indexPath.section]]?[indexPath.row] else { return }
         secondVC.configureData(nameFriend: list.0, allPhotoFriend: list.2)
         navigationController?.pushViewController(secondVC, animated: true)
     }
@@ -162,8 +162,8 @@ extension FriendsTableViewController: UISearchBarDelegate {
                 }
             }
         }
-        sectionsTitle = Array(filteredFriendsMap.keys)
-        sectionsTitle.sort()
+        sectionsTitles = Array(filteredFriendsMap.keys)
+        sectionsTitles.sort()
         tableView.reloadData()
     }
 }

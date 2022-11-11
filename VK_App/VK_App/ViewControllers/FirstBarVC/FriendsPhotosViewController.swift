@@ -16,7 +16,7 @@ final class FriendsPhotosViewController: UIViewController {
         photoNames.compactMap { UIImage(named: $0) }
     }
 
-    private var selectedIndex = 0
+    private var rowIndex = 0
 
     // MARK: - Life cycle
 
@@ -40,8 +40,8 @@ final class FriendsPhotosViewController: UIViewController {
     }
 
     private func setupUserPhotos() {
-        guard userImages.indices.contains(selectedIndex) else { return }
-        friendImageView.image = userImages[selectedIndex]
+        guard userImages.indices.contains(rowIndex) else { return }
+        friendImageView.image = userImages[rowIndex]
         friendImageView.layer.borderWidth = 1
         friendImageView.layer.borderColor = UIColor.blue.cgColor
         friendImageView.layer.cornerRadius = 15
@@ -74,9 +74,9 @@ final class FriendsPhotosViewController: UIViewController {
     }
 
     private func animateFriendsPhoto(x xPosition: Int, indexOffset: Int) {
-        selectedIndex += indexOffset
-        guard userImages.indices.contains(selectedIndex) else {
-            selectedIndex -= indexOffset
+        rowIndex += indexOffset
+        guard userImages.indices.contains(rowIndex) else {
+            rowIndex -= indexOffset
             UIView.animate(
                 withDuration: 1,
                 delay: 0,
@@ -104,7 +104,7 @@ final class FriendsPhotosViewController: UIViewController {
 
     private func setFriendImageView() {
         friendImageView.layer.opacity = 1
-        friendImageView.image = userImages[selectedIndex]
+        friendImageView.image = userImages[rowIndex]
         friendImageView.transform = .identity
     }
 
