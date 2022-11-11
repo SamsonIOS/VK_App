@@ -40,7 +40,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
-    private var sectionsDict: [Character: [(String, String, [String]?)]] = [:]
+    private var sectionsMap: [Character: [(String, String, [String]?)]] = [:]
     private var sectionsTitle: [Character] = .init()
     private var friendsList = [
         User(
@@ -87,15 +87,15 @@ final class FriendsTableViewController: UITableViewController {
             guard let firstChar = users.friendName.first
             else { return }
 
-            if sectionsDict[firstChar] != nil {
-                sectionsDict[firstChar]?.append((users.friendName, users.friendImage, users.photosUser))
+            if sectionsMap[firstChar] != nil {
+                sectionsMap[firstChar]?.append((users.friendName, users.friendImage, users.photosUser))
             } else {
-                sectionsDict[firstChar] = [(users.friendName, users.friendImage, users.photosUser)]
+                sectionsMap[firstChar] = [(users.friendName, users.friendImage, users.photosUser)]
             }
         }
-        sectionsTitle = Array(sectionsDict.keys)
+        sectionsTitle = Array(sectionsMap.keys)
         sectionsTitle.sort()
-        filteredFriendsMap = sectionsDict
+        filteredFriendsMap = sectionsMap
     }
 }
 
@@ -148,9 +148,9 @@ extension FriendsTableViewController: UISearchBarDelegate {
         filteredFriendsMap = [:]
 
         if searchText.isEmpty {
-            filteredFriendsMap = sectionsDict
+            filteredFriendsMap = sectionsMap
         } else {
-            for friends in sectionsDict {
+            for friends in sectionsMap {
                 guard let new = friends.value.first else { return }
                 let firstChar = friends.key
                 if new.0.lowercased().contains(searchText.lowercased()) {
