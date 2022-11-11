@@ -55,6 +55,7 @@ final class LoginViewController: UIViewController {
     }
 
     // MARK: Private Methods
+
     @objc private func keyboardWillShownAction(notification: Notification) {
         guard let info = notification.userInfo as? NSDictionary else { return }
         guard let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size

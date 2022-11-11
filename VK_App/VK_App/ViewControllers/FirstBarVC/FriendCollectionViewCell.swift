@@ -25,6 +25,8 @@ final class FriendCollectionViewCell: UICollectionViewCell {
         friendImageView.image = UIImage(named: nameImage)
         friendImageView.setupTapGestureRecognizer()
         friendImageView.animationDidTapAction()
+        friendImageView.layer.borderColor = UIColor.blue.cgColor
+        friendImageView.layer.borderWidth = 1
     }
 
     // MARK: Private Methods

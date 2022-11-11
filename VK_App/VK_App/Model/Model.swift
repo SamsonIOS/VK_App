@@ -7,6 +7,7 @@ import Foundation
 struct User {
     var friendName: String
     var friendImage: String
+    var photosUser: [String]?
 }
 
 /// Структура описывающая группы вк
