@@ -8,7 +8,7 @@ final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
     // MARK: Constants
 
     private enum Constants {
-        static let magicValue = 0.33
+        static let progressValue = 0.33
     }
 
     // MARK: Public visual components
@@ -38,7 +38,7 @@ final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
             let translation = sender.translation(in: sender.view)
             let relative = translation.y / (sender.view?.bounds.width ?? 1)
             let progress = max(0, min(1, relative))
-            isFinished = progress > Constants.magicValue
+            isFinished = progress > Constants.progressValue
             update(progress)
         case .ended:
             isStarted = false

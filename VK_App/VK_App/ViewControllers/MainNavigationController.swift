@@ -1,10 +1,10 @@
-// CustomNavigationController.swift
+// MainNavigationController.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Кастомный UINavigationViewController который позволяет делать переходы на следующий и предыдущий экран с анимацией
-final class CustomNavigationController: UINavigationController {
+final class MainNavigationController: UINavigationController {
     // MARK: Private properties
 
     private let interactive = CustomInteractiveTransition()
@@ -25,7 +25,7 @@ final class CustomNavigationController: UINavigationController {
 
 // MARK: UINavigationControllerDelegate
 
-extension CustomNavigationController: UINavigationControllerDelegate {
+extension MainNavigationController: UINavigationControllerDelegate {
     func navigationController(
         _ navigationController: UINavigationController,
         animationControllerFor operation: UINavigationController.Operation,

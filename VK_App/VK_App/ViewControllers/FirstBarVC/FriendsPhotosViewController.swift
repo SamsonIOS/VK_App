@@ -27,7 +27,7 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Public methods
 
-    func configureData(nameFriend: String, allPhotoFriend: [String]?) {
+    func configure(nameFriend: String, allPhotoFriend: [String]?) {
         photoNames = allPhotoFriend ?? [""]
         title = nameFriend
     }

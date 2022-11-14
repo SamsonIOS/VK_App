@@ -182,19 +182,18 @@
                                             <rect key="frame" x="306" y="11" width="60" height="60"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="60" id="ANv-oI-GcQ"/>
-                                                <constraint firstAttribute="height" constant="60" id="atD-Ah-vP4"/>
+                                                <constraint firstAttribute="height" constant="60" id="QTD-7F-qfv"/>
+                                                <constraint firstAttribute="width" constant="60" id="pol-0l-s9b"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="26D-x1-95b" secondAttribute="bottom" constant="11" id="DHI-uz-LHk"/>
-                                        <constraint firstItem="26D-x1-95b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hFi-Wg-aRT" secondAttribute="trailing" symbolic="YES" id="FbZ-ag-hTc"/>
-                                        <constraint firstItem="26D-x1-95b" firstAttribute="top" secondItem="jrp-mN-IvT" secondAttribute="top" constant="11" id="OSB-1N-dkt"/>
-                                        <constraint firstAttribute="trailing" secondItem="26D-x1-95b" secondAttribute="trailing" constant="48" id="TpC-de-QVa"/>
+                                        <constraint firstItem="26D-x1-95b" firstAttribute="leading" secondItem="jrp-mN-IvT" secondAttribute="leading" constant="306" id="11a-ke-Rwu"/>
+                                        <constraint firstAttribute="bottom" secondItem="26D-x1-95b" secondAttribute="bottom" constant="11" id="IXD-kN-8p6"/>
                                         <constraint firstItem="hFi-Wg-aRT" firstAttribute="top" secondItem="jrp-mN-IvT" secondAttribute="top" constant="26" id="aGk-GK-gcf"/>
-                                        <constraint firstItem="26D-x1-95b" firstAttribute="leading" secondItem="jrp-mN-IvT" secondAttribute="leading" constant="306" id="dSX-TG-Euo"/>
                                         <constraint firstItem="hFi-Wg-aRT" firstAttribute="leading" secondItem="jrp-mN-IvT" secondAttribute="leading" constant="20" symbolic="YES" id="dkg-dw-c5l"/>
+                                        <constraint firstAttribute="trailing" secondItem="26D-x1-95b" secondAttribute="trailing" constant="48" id="pu8-52-HXy"/>
+                                        <constraint firstItem="26D-x1-95b" firstAttribute="top" secondItem="jrp-mN-IvT" secondAttribute="top" constant="11" id="x3W-iF-gMk"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -454,7 +453,7 @@
         <!--Сообщества-->
         <scene sceneID="vpI-st-ddv">
             <objects>
-                <navigationController id="c6C-mc-Y3c" customClass="CustomNavigationController" customModule="VK_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="c6C-mc-Y3c" customClass="MainNavigationController" customModule="VK_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Сообщества" image="rectangle.3.group.fill" catalog="system" id="PUS-DE-bVh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wHc-OM-W7D">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -694,7 +693,7 @@
         <!--Друзья-->
         <scene sceneID="lWP-5C-sOn">
             <objects>
-                <navigationController id="6Ex-id-rVx" customClass="CustomNavigationController" customModule="VK_App" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="6Ex-id-rVx" customClass="MainNavigationController" customModule="VK_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Друзья" image="person.2.fill" catalog="system" id="vTA-H3-IC6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dg7-0z-23L">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
