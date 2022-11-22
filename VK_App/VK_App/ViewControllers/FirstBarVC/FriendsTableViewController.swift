@@ -10,6 +10,9 @@ final class FriendsTableViewController: UITableViewController {
     private enum Constants {
         static let firstName = "Gomer"
         static let firstImageName = "gomer"
+        static let firstGomerImageName = "gomer3"
+        static let secondGomerImageName = "gomer4"
+        static let thirdGomerImageName = "gomer5"
         static let secondName = "Mr.Garry"
         static let secondImageName = "garrys"
         static let thirdName = "BART"
@@ -22,9 +25,13 @@ final class FriendsTableViewController: UITableViewController {
         static let sixImageName = "shupalz"
         static let sevenName = "Liza Simpson"
         static let sevenImageName = "malaya2"
+        static let firstLizaImageName = "liza2"
+        static let secondLizaImageName = "liza3"
+        static let thirdLizaImageName = "liza4"
         static let friendsCellId = "friendsCell"
         static let storyName = "Main"
-        static let storyId = "second"
+        static let storyID = "second"
+        static let storyFriendPhotoID = "friendsVC"
     }
 
     // MARK: IBOutlet
@@ -33,19 +40,37 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
-    private var sectionsDict: [Character: [(String, String)]] = [:]
-    private var sectionsTitle: [Character] = .init()
-    private var friendsList = [
-        User(friendName: Constants.firstName, friendImage: Constants.firstImageName),
-        User(friendName: Constants.secondName, friendImage: Constants.secondImageName),
-        User(friendName: Constants.thirdName, friendImage: Constants.thirdImageName),
+    private var sectionsMap: [Character: [(String, String, [String]?)]] = [:]
+    private var sectionTitles: [Character] = .init()
+    private var friends = [
+        User(
+            friendName: Constants.firstName,
+            friendImage: Constants.firstImageName,
+            userPhotoNames: [
+                Constants.firstGomerImageName,
+                Constants.secondGomerImageName,
+                Constants.thirdGomerImageName
+            ]
+        ),
+        User(
+            friendName: Constants.secondName,
+            friendImage: Constants.secondImageName
+        ),
+        User(
+            friendName: Constants.thirdName,
+            friendImage: Constants.thirdImageName
+        ),
         User(friendName: Constants.fourthName, friendImage: Constants.fourthImageName),
         User(friendName: Constants.fiveName, friendImage: Constants.fiveImageName),
         User(friendName: Constants.sixName, friendImage: Constants.sixImageName),
-        User(friendName: Constants.sevenName, friendImage: Constants.sevenImageName),
+        User(
+            friendName: Constants.sevenName,
+            friendImage: Constants.sevenImageName,
+            userPhotoNames: [Constants.firstLizaImageName, Constants.secondLizaImageName, Constants.thirdLizaImageName]
+        ),
     ]
 
-    private var filteredFriendsMap: [Character: [(String, String)]] = [:]
+    private var filteredFriendsMap: [Character: [(String, String, [String]?)]] = [:]
 
     // MARK: Life cycle
 
@@ -62,19 +87,29 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func sortedMethod() {
-        for users in friendsList {
+        for users in friends {
             guard let firstChar = users.friendName.first
             else { return }
 
-            if sectionsDict[firstChar] != nil {
-                sectionsDict[firstChar]?.append((users.friendName, users.friendImage))
+            if sectionsMap[firstChar] != nil {
+                sectionsMap[firstChar]?.append((users.friendName, users.friendImage, users.userPhotoNames))
             } else {
-                sectionsDict[firstChar] = [(users.friendName, users.friendImage)]
+                sectionsMap[firstChar] = [(users.friendName, users.friendImage, users.userPhotoNames)]
             }
         }
-        sectionsTitle = Array(sectionsDict.keys)
-        sectionsTitle.sort()
-        filteredFriendsMap = sectionsDict
+        sectionTitles = Array(sectionsMap.keys)
+        sectionTitles.sort()
+        filteredFriendsMap = sectionsMap
+    }
+
+    private func setDidSelectRow(indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: Constants.storyName, bundle: nil)
+        guard let friendsPhotosViewController = storyboard
+            .instantiateViewController(withIdentifier: Constants.storyFriendPhotoID) as? FriendsPhotosViewController
+        else { return }
+        guard let list = filteredFriendsMap[sectionTitles[indexPath.section]]?[indexPath.row] else { return }
+        friendsPhotosViewController.configure(nameFriend: list.0, allPhotoFriend: list.2)
+        navigationController?.pushViewController(friendsPhotosViewController, animated: true)
     }
 }
 
@@ -86,15 +121,15 @@ extension FriendsTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredFriendsMap[sectionsTitle[section]]?.count ?? 0
+        filteredFriendsMap[sectionTitles[section]]?.count ?? 0
     }
 
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        sectionsTitle.map { String($0) }
+        sectionTitles.map { String($0) }
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        String(sectionsTitle[section])
+        String(sectionTitles[section])
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,7 +137,7 @@ extension FriendsTableViewController {
             withIdentifier: Constants.friendsCellId,
             for: indexPath
         ) as? FriendTableViewCell,
-            let infoForCell = filteredFriendsMap[sectionsTitle[indexPath.section]]?[indexPath.row]
+            let infoForCell = filteredFriendsMap[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
         cell.addFriends(nameUser: infoForCell.0, nameImage: infoForCell.1)
 
@@ -110,13 +145,7 @@ extension FriendsTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let story = UIStoryboard(name: Constants.storyName, bundle: nil)
-        guard let secondVC = story
-            .instantiateViewController(withIdentifier: Constants.storyId) as? FriendCollectionViewController
-        else { return }
-        let list = filteredFriendsMap[sectionsTitle[indexPath.section]]?[indexPath.row]
-        secondVC.collectionFriendList = list
-        navigationController?.pushViewController(secondVC, animated: true)
+        setDidSelectRow(indexPath: indexPath)
     }
 }
 
@@ -127,22 +156,22 @@ extension FriendsTableViewController: UISearchBarDelegate {
         filteredFriendsMap = [:]
 
         if searchText.isEmpty {
-            filteredFriendsMap = sectionsDict
+            filteredFriendsMap = sectionsMap
         } else {
-            for friends in sectionsDict {
+            for friends in sectionsMap {
                 guard let new = friends.value.first else { return }
                 let firstChar = friends.key
                 if new.0.lowercased().contains(searchText.lowercased()) {
                     if filteredFriendsMap[firstChar] != nil {
-                        filteredFriendsMap[firstChar]?.append((new.0, new.1))
+                        filteredFriendsMap[firstChar]?.append((new.0, new.1, new.2))
                     } else {
-                        filteredFriendsMap[firstChar] = [(new.0, new.1)]
+                        filteredFriendsMap[firstChar] = [(new.0, new.1, new.2)]
                     }
                 }
             }
         }
-        sectionsTitle = Array(filteredFriendsMap.keys)
-        sectionsTitle.sort()
+        sectionTitles = Array(filteredFriendsMap.keys)
+        sectionTitles.sort()
         tableView.reloadData()
     }
 }

@@ -1,4 +1,4 @@
-// Model.swift
+// User.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
@@ -7,6 +7,7 @@ import Foundation
 struct User {
     var friendName: String
     var friendImage: String
+    var userPhotoNames: [String]?
 }
 
 /// Структура описывающая группы вк
