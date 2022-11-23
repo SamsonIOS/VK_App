@@ -2,10 +2,40 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
-
+import WebKit
 /// Экран регистрации
 final class LoginViewController: UIViewController {
+    // MARK: Constants
+
+    private enum Constants {
+        static let scheme = "https"
+        static let host = "oauth.vk.com"
+        static let path = "/authorize"
+        static let clientIDText = "client_id"
+        static let displayText = "display"
+        static let mobileText = "mobile"
+        static let redirectText = "redirect_uri"
+        static let blankText = "https://oauth.vk.com/blank.html"
+        static let scopeText = "scope"
+        static let scopeValue = "262150"
+        static let responseTypeText = "response_type"
+        static let toketText = "token"
+        static let versionText = "v"
+        static let versionValueText = "5.68"
+        static let ampersand = "&"
+        static let equall = "="
+        static let accesTokenText = "access_token"
+        static let vkSegue = "vkSegue"
+        static let blankHtmlText = "/blank.html"
+    }
+
     // MARK: IBOutlet
+
+    @IBOutlet private var webView: WKWebView! {
+        didSet {
+            webView.navigationDelegate = self
+        }
+    }
 
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var signInWithAppleButton: UIButton!
@@ -17,12 +47,15 @@ final class LoginViewController: UIViewController {
     private var secondDoteView = UIView()
     private var thirdDoteView = UIView()
 
+    private var networkManager = NetworkManager()
+
     // MARK: Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         addObserverForNotification()
         setBorderButton()
+        setUrlVK()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,6 +109,28 @@ final class LoginViewController: UIViewController {
     @objc private func keyboardWillHideAction(notification: Notification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+
+    private func setUrlVK() {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = Constants.scheme
+        urlComponents.host = Constants.host
+        urlComponents.path = Constants.path
+        urlComponents.queryItems = [
+            URLQueryItem(name: Constants.clientIDText, value: Session.shared.userID),
+            URLQueryItem(name: Constants.displayText, value: Constants.mobileText),
+            URLQueryItem(
+                name: Constants.redirectText,
+                value:
+                Constants.blankText
+            ),
+            URLQueryItem(name: Constants.scopeText, value: Constants.scopeValue),
+            URLQueryItem(name: Constants.responseTypeText, value: Constants.toketText),
+            URLQueryItem(name: Constants.versionText, value: Constants.versionValueText)
+        ]
+        guard let components = urlComponents.url else { return }
+        let request = URLRequest(url: components)
+        webView.load(request)
     }
 
     private func setupSubView(newView: UIView, xPosition: Int, yPosition: Int) -> UIView {
@@ -158,5 +213,39 @@ extension UIViewController {
         }
         alertController.addAction(alertControllerAction)
         present(alertController, animated: true)
+    }
+}
+
+// MARK: WKNavigationDelegate
+
+extension LoginViewController: WKNavigationDelegate {
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationResponse:
+        WKNavigationResponse,
+        decisionHandler: @escaping (WKNavigationResponsePolicy) ->
+            Void
+    ) {
+        guard let url = navigationResponse.response.url, url.path ==
+            Constants.blankHtmlText, let fragment = url.fragment
+        else {
+            decisionHandler(.allow)
+            return
+        }
+        let params = fragment
+            .components(separatedBy: Constants.ampersand)
+            .map { $0.components(separatedBy: Constants.equall) }
+            .reduce([String: String]()) { result, param in
+                var dict = result
+                let key = param[0]
+                let value = param[1]
+                dict[key] = value
+                return dict
+            }
+        if let token = params[Constants.accesTokenText] {
+            Session.shared.token = token
+        }
+        decisionHandler(.cancel)
+        performSegue(withIdentifier: Constants.vkSegue, sender: self)
     }
 }

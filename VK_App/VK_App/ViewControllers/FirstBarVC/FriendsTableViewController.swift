@@ -32,6 +32,7 @@ final class FriendsTableViewController: UITableViewController {
         static let storyName = "Main"
         static let storyID = "second"
         static let storyFriendPhotoID = "friendsVC"
+        static let searchGroupName = "VK"
     }
 
     // MARK: IBOutlet
@@ -72,15 +73,25 @@ final class FriendsTableViewController: UITableViewController {
 
     private var filteredFriendsMap: [Character: [(String, String, [String]?)]] = [:]
 
+    private let networkManager = NetworkManager()
+
     // MARK: Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBarDelegate()
         sortedMethod()
+        infoAboutUser()
     }
 
     // MARK: Private Methods
+
+    private func infoAboutUser() {
+        networkManager.getFriends()
+        networkManager.getUserPhotos()
+        networkManager.getGroups()
+        networkManager.getGroups(group: Constants.searchGroupName)
+    }
 
     private func searchBarDelegate() {
         searchBar.delegate = self
