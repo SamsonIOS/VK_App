@@ -90,7 +90,7 @@ final class FriendsTableViewController: UITableViewController {
         networkManager.getFriends()
         networkManager.getUserPhotos()
         networkManager.getGroups()
-        networkManager.getGroups(group: Constants.searchGroupName)
+        networkManager.getSearchedGroup(group: Constants.searchGroupName)
     }
 
     private func searchBarDelegate() {

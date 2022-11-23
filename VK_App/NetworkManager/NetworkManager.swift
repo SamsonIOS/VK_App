@@ -52,7 +52,7 @@ struct NetworkManager {
         }
     }
 
-    func getGroups(group: String) {
+    func getSearchedGroup(group: String) {
         let path =
             "\(Constants.getSearchGroup)\(Constants.acessToken)" +
             "\(Constants.friendFields)\(Constants.searchQueryText)\(group)\(Constants.version)"
