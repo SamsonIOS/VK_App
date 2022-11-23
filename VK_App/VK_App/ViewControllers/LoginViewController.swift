@@ -2,26 +2,14 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+
 import WebKit
+
 /// Экран регистрации
 final class LoginViewController: UIViewController {
     // MARK: Constants
 
     private enum Constants {
-        static let scheme = "https"
-        static let host = "oauth.vk.com"
-        static let path = "/authorize"
-        static let clientIDText = "client_id"
-        static let displayText = "display"
-        static let mobileText = "mobile"
-        static let redirectText = "redirect_uri"
-        static let blankText = "https://oauth.vk.com/blank.html"
-        static let scopeText = "scope"
-        static let scopeValue = "262150"
-        static let responseTypeText = "response_type"
-        static let toketText = "token"
-        static let versionText = "v"
-        static let versionValueText = "5.68"
         static let ampersand = "&"
         static let equall = "="
         static let accesTokenText = "access_token"
@@ -47,7 +35,7 @@ final class LoginViewController: UIViewController {
     private var secondDoteView = UIView()
     private var thirdDoteView = UIView()
 
-    private var networkManager = NetworkManager()
+    private let networkApiService = NetworkAPIService()
 
     // MARK: Life cycle
 
@@ -55,7 +43,7 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         addObserverForNotification()
         setBorderButton()
-        setUrlVK()
+        showAuthorizationWebView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,25 +99,8 @@ final class LoginViewController: UIViewController {
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
 
-    private func setUrlVK() {
-        var urlComponents = URLComponents()
-        urlComponents.scheme = Constants.scheme
-        urlComponents.host = Constants.host
-        urlComponents.path = Constants.path
-        urlComponents.queryItems = [
-            URLQueryItem(name: Constants.clientIDText, value: Session.shared.userID),
-            URLQueryItem(name: Constants.displayText, value: Constants.mobileText),
-            URLQueryItem(
-                name: Constants.redirectText,
-                value:
-                Constants.blankText
-            ),
-            URLQueryItem(name: Constants.scopeText, value: Constants.scopeValue),
-            URLQueryItem(name: Constants.responseTypeText, value: Constants.toketText),
-            URLQueryItem(name: Constants.versionText, value: Constants.versionValueText)
-        ]
-        guard let components = urlComponents.url else { return }
-        let request = URLRequest(url: components)
+    private func showAuthorizationWebView() {
+        guard let request = networkApiService.urlComponents() else { return }
         webView.load(request)
     }
 

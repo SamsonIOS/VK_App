@@ -73,7 +73,7 @@ final class FriendsTableViewController: UITableViewController {
 
     private var filteredFriendsMap: [Character: [(String, String, [String]?)]] = [:]
 
-    private let networkManager = NetworkManager()
+    private let networkAPIService = NetworkAPIService()
 
     // MARK: Life cycle
 
@@ -87,10 +87,10 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: Private Methods
 
     private func infoAboutUser() {
-        networkManager.getFriends()
-        networkManager.getUserPhotos()
-        networkManager.getGroups()
-        networkManager.getSearchedGroup(group: Constants.searchGroupName)
+        networkAPIService.fetchFriends()
+        networkAPIService.fetchUserPhotos()
+        networkAPIService.fetchGroups()
+        networkAPIService.fetchSearchedGroup(group: Constants.searchGroupName)
     }
 
     private func searchBarDelegate() {

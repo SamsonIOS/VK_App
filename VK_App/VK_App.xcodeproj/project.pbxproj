@@ -35,7 +35,7 @@
 		33B020F0291B9A4800FAD4A1 /* UIView +Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B020EF291B9A4800FAD4A1 /* UIView +Extension.swift */; };
 		33B020F6291D089A00FAD4A1 /* FriendsPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B020F5291D089A00FAD4A1 /* FriendsPhotosViewController.swift */; };
 		33D78D3E292D55D4008BF031 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D78D3D292D55D4008BF031 /* Session.swift */; };
-		33D78D41292D5903008BF031 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D78D40292D5903008BF031 /* NetworkManager.swift */; };
+		33D78D41292D5903008BF031 /* NetworkAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D78D40292D5903008BF031 /* NetworkAPIService.swift */; };
 		33F2DFB72915666C004C808D /* LikesControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2DFB62915666C004C808D /* LikesControl.swift */; };
 		33F2DFB929157130004C808D /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F2DFB829157130004C808D /* FriendsView.swift */; };
 /* End PBXBuildFile section */
@@ -71,7 +71,7 @@
 		33B020EF291B9A4800FAD4A1 /* UIView +Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView +Extension.swift"; sourceTree = "<group>"; };
 		33B020F5291D089A00FAD4A1 /* FriendsPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPhotosViewController.swift; sourceTree = "<group>"; };
 		33D78D3D292D55D4008BF031 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		33D78D40292D5903008BF031 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		33D78D40292D5903008BF031 /* NetworkAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIService.swift; sourceTree = "<group>"; };
 		33F2DFB62915666C004C808D /* LikesControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesControl.swift; sourceTree = "<group>"; };
 		33F2DFB829157130004C808D /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		4F9D954F93C8BA8583BDBF0B /* Pods-VK_App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK_App.debug.xcconfig"; path = "Target Support Files/Pods-VK_App/Pods-VK_App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 		33D78D3F292D58E1008BF031 /* NetworkManager */ = {
 			isa = PBXGroup;
 			children = (
-				33D78D40292D5903008BF031 /* NetworkManager.swift */,
+				33D78D40292D5903008BF031 /* NetworkAPIService.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -232,9 +232,9 @@
 				339E7A7A2911BA1F000FF65C /* Sources */,
 				339E7A7B2911BA1F000FF65C /* Frameworks */,
 				339E7A7C2911BA1F000FF65C /* Resources */,
-				339E7A962911BA51000FF65C /* Swift Format */,
-				339E7A952911BA2A000FF65C /* Swift Lint */,
 				A0F948D78853BD05538ADADC /* [CP] Embed Pods Frameworks */,
+				339E7A952911BA2A000FF65C /* Swift Lint */,
+				339E7A962911BA51000FF65C /* Swift Format */,
 			);
 			buildRules = (
 			);
@@ -392,7 +392,7 @@
 				330876632914703F00F4D3E8 /* FriendsTableViewController.swift in Sources */,
 				330876722914905100F4D3E8 /* FollowGroupsTableViewCell.swift in Sources */,
 				330876782914958E00F4D3E8 /* UnFollowTableViewController.swift in Sources */,
-				33D78D41292D5903008BF031 /* NetworkManager.swift in Sources */,
+				33D78D41292D5903008BF031 /* NetworkAPIService.swift in Sources */,
 				3320CEC229193F06002355A7 /* NewsTableViewController.swift in Sources */,
 				339E7A822911BA1F000FF65C /* AppDelegate.swift in Sources */,
 				3320CEC429195D0F002355A7 /* NewsTableViewCell.swift in Sources */,

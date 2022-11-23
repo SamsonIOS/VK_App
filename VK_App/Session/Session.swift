@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Синглтон для хранения данных сессии
+/// Инфо о сессии юзера
 final class Session {
     // MARK: Constants
 
