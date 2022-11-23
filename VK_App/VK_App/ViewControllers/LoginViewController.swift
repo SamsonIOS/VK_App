@@ -3,9 +3,27 @@
 
 import UIKit
 
+import WebKit
+
 /// Экран регистрации
 final class LoginViewController: UIViewController {
+    // MARK: Constants
+
+    private enum Constants {
+        static let ampersand = "&"
+        static let equall = "="
+        static let accesTokenText = "access_token"
+        static let vkSegue = "vkSegue"
+        static let blankHtmlText = "/blank.html"
+    }
+
     // MARK: IBOutlet
+
+    @IBOutlet private var webView: WKWebView! {
+        didSet {
+            webView.navigationDelegate = self
+        }
+    }
 
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var signInWithAppleButton: UIButton!
@@ -17,12 +35,15 @@ final class LoginViewController: UIViewController {
     private var secondDoteView = UIView()
     private var thirdDoteView = UIView()
 
+    private let networkApiService = NetworkAPIService()
+
     // MARK: Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         addObserverForNotification()
         setBorderButton()
+        showAuthorizationWebView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,6 +97,11 @@ final class LoginViewController: UIViewController {
     @objc private func keyboardWillHideAction(notification: Notification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+
+    private func showAuthorizationWebView() {
+        guard let request = networkApiService.urlComponents() else { return }
+        webView.load(request)
     }
 
     private func setupSubView(newView: UIView, xPosition: Int, yPosition: Int) -> UIView {
@@ -158,5 +184,39 @@ extension UIViewController {
         }
         alertController.addAction(alertControllerAction)
         present(alertController, animated: true)
+    }
+}
+
+// MARK: WKNavigationDelegate
+
+extension LoginViewController: WKNavigationDelegate {
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationResponse:
+        WKNavigationResponse,
+        decisionHandler: @escaping (WKNavigationResponsePolicy) ->
+            Void
+    ) {
+        guard let url = navigationResponse.response.url, url.path ==
+            Constants.blankHtmlText, let fragment = url.fragment
+        else {
+            decisionHandler(.allow)
+            return
+        }
+        let params = fragment
+            .components(separatedBy: Constants.ampersand)
+            .map { $0.components(separatedBy: Constants.equall) }
+            .reduce([String: String]()) { result, param in
+                var dict = result
+                let key = param[0]
+                let value = param[1]
+                dict[key] = value
+                return dict
+            }
+        if let token = params[Constants.accesTokenText] {
+            Session.shared.token = token
+        }
+        decisionHandler(.cancel)
+        performSegue(withIdentifier: Constants.vkSegue, sender: self)
     }
 }
