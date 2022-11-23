@@ -4,7 +4,7 @@
 import Alamofire
 import Foundation
 
-/// NetworkService
+/// Настройки апи для получения нужных запросов
 struct NetworkManager {
     // MARK: Constants
 
