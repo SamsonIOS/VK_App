@@ -23,7 +23,7 @@ import UIKit
         }
     }
 
-    @IBInspectable var image: UIImage? = UIImage(named: "apple") {
+    @IBInspectable var image: UIImage? = UIImage(named: "pencil.fill") {
         didSet {
             setImage(image: image)
         }

@@ -10,6 +10,8 @@ final class FollowGroupsTableViewCell: UITableViewCell {
     @IBOutlet private var nameGroupLabel: UILabel!
     @IBOutlet private var groupImageView: UIImageView!
 
+    // MARK: Private properties
+
     private var currentPath = ""
 
     // MARK: Life cycle
@@ -29,8 +31,10 @@ final class FollowGroupsTableViewCell: UITableViewCell {
         getImage(imagePath: group.photo50Path)
     }
 
+    // MARK: Private Methods
+
     private func getImage(imagePath: String) {
-        ImageLoader.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
+        LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 if imagePath == self.currentPath {

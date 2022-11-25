@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Модель ответа на запрос групп
+/// ответ на запрос групп
 struct GroupResult: Decodable {
     let response: GroupResponse
 }

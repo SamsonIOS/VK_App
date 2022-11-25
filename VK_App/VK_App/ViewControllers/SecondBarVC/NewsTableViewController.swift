@@ -9,15 +9,7 @@ final class NewsTableViewController: UITableViewController {
 
     private enum Constants {
         static let newsCellID = "newsCell"
-        static let firstUserImageName = "bart"
-        static let firstUserName = "Bart Simpson"
-        static let firstPostImageName = "dark"
-        static let secondUserImageName = "shupalz"
-        static let secondUserName = "Marsianin"
-        static let secondPostImageName = "inoplat"
     }
-
-    // MARK: Private properties
 }
 
 // MARK: UITableViewDataSource

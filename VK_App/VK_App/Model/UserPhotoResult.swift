@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Результат выполнения запроса на получение фотографий пользователя
+/// Результат запроса на получение фотографий пользователя
 struct UserPhotoResult: Decodable {
     let response: UserPhotoResponse
 }

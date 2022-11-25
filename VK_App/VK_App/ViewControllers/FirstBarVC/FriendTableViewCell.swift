@@ -10,7 +10,8 @@ final class FriendTableViewCell: UITableViewCell {
     @IBOutlet private var friendName: UILabel!
     @IBOutlet private var shadowForPersonView: FriendsView!
 
-    private let imageLoader = ImageLoader.shared
+    // MARK: Private properties
+
     private var currentPath = ""
 
     // MARK: Life cycle
@@ -26,15 +27,17 @@ final class FriendTableViewCell: UITableViewCell {
     func addFriends(user: User) {
         shadowForPersonView.image = nil
         friendName.text = "\(user.firstName) \(user.lastName)"
-        getImage(for: user.userImagePath)
+        getImage(imagePath: user.userImagePath)
         currentPath = user.userImagePath
     }
 
-    private func getImage(for path: String) {
-        ImageLoader.shared.getImage(imagePosterPath: path) { [weak self] data in
+    // MARK: Private Methods
+
+    private func getImage(imagePath: String) {
+        LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                if path == self.currentPath {
+                if imagePath == self.currentPath {
                     self.shadowForPersonView.image = UIImage(data: data)
                 }
             }

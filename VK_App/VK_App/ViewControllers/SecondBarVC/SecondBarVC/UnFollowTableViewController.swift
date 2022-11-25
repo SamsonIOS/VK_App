@@ -11,33 +11,24 @@ final class UnFollowTableViewController: UITableViewController {
         static let unFollowGroupCellId = "unSignGroupCell"
     }
 
-    var subscribeGroupHandler: ((Group) -> ())?
+    // MARK: Private Properties
 
-    // MARK: Public Properties
-
-    private let networtkApi = NetworkAPIService()
-    private var globalGroups: [Group] = [] {
+    private let networkAPIService = NetworkAPIService()
+    private var searchedGroups: [Group] = [] {
         didSet {
             tableView.reloadData()
         }
     }
 
-//    func configure(userGroups: [Group], subscribeGroupHandler: @escaping (Group) -> ()) {
-//        globalGroups = globalGroups.filter { globalGroup in
-//            !userGroups.contains { userGroup in
-//                userGroup == globalGroup
-//            }
-//        }
-//        self.subscribeGroupHandler = subscribeGroupHandler
-//    }
+    // MARK: Private Methods
 
-    private func searchGroups(by prefix: String) {
-        networtkApi.fetchSearchedGroups(by: prefix) { [weak self] result in
+    private func fetchSearchedGroups(by prefix: String) {
+        networkAPIService.fetchSearchedGroups(by: prefix) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(groups):
                 DispatchQueue.main.async {
-                    self.globalGroups = groups
+                    self.searchedGroups = groups
                 }
             case let .failure(error):
                 print(error)
@@ -47,7 +38,7 @@ final class UnFollowTableViewController: UITableViewController {
 
     private func setupSearchBar() {
         let searchBar = UISearchBar()
-        searchBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        searchBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 45)
         searchBar.delegate = self
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = ""
@@ -60,7 +51,7 @@ final class UnFollowTableViewController: UITableViewController {
 
 extension UnFollowTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        globalGroups.count
+        searchedGroups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,25 +61,16 @@ extension UnFollowTableViewController {
                 for: indexPath
             ) as? UnFollowTableViewCell
         else { return UITableViewCell() }
-        let group = globalGroups[indexPath.row]
-        // cell.configure(by: <#T##Group#>)
+        let group = searchedGroups[indexPath.row]
+        cell.configure(group: group)
         return cell
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        addGroupToUser(groupNumber: indexPath.row)
-    }
-
-    private func addGroupToUser(groupNumber: Int) {
-        guard globalGroups.count > groupNumber else { return }
-        let group = globalGroups[groupNumber]
-        subscribeGroupHandler?(group)
-        navigationController?.popViewController(animated: true)
     }
 }
 
+// MARK: UISearchBarDelegate
+
 extension UnFollowTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchGroups(by: searchText)
+        fetchSearchedGroups(by: searchText)
     }
 }

@@ -5,18 +5,18 @@ import Foundation
 
 import Alamofire
 
-/// Класс для загрузки и кеширования картинок
-final class ImageLoader {
+/// Загрузка и кеширование картинок
+final class LoadingImage {
     // MARK: - Public properties
 
-    static let shared = ImageLoader()
+    static let shared = LoadingImage()
 
     // MARK: - Private properties
 
     private let decoder = JSONDecoder()
     private var imagesMap: [String: Data] = [:]
 
-    // MARK: - Initializers
+    // MARK: - Init
 
     private init() {}
 

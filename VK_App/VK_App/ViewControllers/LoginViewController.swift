@@ -35,7 +35,9 @@ final class LoginViewController: UIViewController {
     private var secondDoteView = UIView()
     private var thirdDoteView = UIView()
 
-    private let networkApiService = NetworkAPIService()
+    // MARK: Private properties
+
+    private let networkAPIService = NetworkAPIService()
 
     // MARK: Life cycle
 
@@ -100,7 +102,7 @@ final class LoginViewController: UIViewController {
     }
 
     private func showAuthorizationWebView() {
-        guard let request = networkApiService.urlComponents() else { return }
+        guard let request = networkAPIService.urlComponents() else { return }
         webView.load(request)
     }
 

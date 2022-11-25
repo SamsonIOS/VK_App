@@ -20,8 +20,6 @@ final class NewsTableViewCell: UITableViewCell {
         setLikesView()
     }
 
-    // MARK: Public Methods
-
     // MARK: Private Methods
 
     private func setLikesView() {

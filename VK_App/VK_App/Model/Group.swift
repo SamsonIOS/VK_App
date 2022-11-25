@@ -3,12 +3,14 @@
 
 import Foundation
 
-/// Модель группы
+import RealmSwift
+
+/// Группы
 final class Group: Decodable {
-    var id: Int
-    var name: String
-    var photo50Path: String
-    var screenName: String
+    @objc dynamic var id: Int
+    @objc dynamic var name: String
+    @objc dynamic var photo50Path: String
+    @objc dynamic var screenName: String
 
     enum CodingKeys: String, CodingKey {
         case id

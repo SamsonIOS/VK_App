@@ -21,8 +21,9 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
+    private let networkAPIService = NetworkAPIService()
     private var sectionsMap: [Character: [User]] = [:]
-    private var friends: [User] = [] {
+    private var users: [User] = [] {
         didSet {
             filteredFriendsMap = [:]
             sortedMethod()
@@ -39,27 +40,26 @@ final class FriendsTableViewController: UITableViewController {
         filteredFriendsMap.keys.sorted()
     }
 
-    private let networkAPIService = NetworkAPIService()
-
     // MARK: Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBarDelegate()
-        infoAboutUser()
-        getFriends()
+        setMethods()
     }
 
     // MARK: Private Methods
 
-    private func infoAboutUser() {}
+    private func setMethods() {
+        searchBarDelegate()
+        fetchFriends()
+    }
 
-    private func getFriends() {
+    private func fetchFriends() {
         networkAPIService.fetchFriends { [weak self] result in
             switch result {
             case let .success(users):
                 DispatchQueue.main.async {
-                    self?.friends = users
+                    self?.users = users
                     self?.tableView.reloadData()
                 }
             case let .failure(error):
@@ -74,7 +74,7 @@ final class FriendsTableViewController: UITableViewController {
 
     private func sortedMethod() {
         var results = [Character: [User]]()
-        friends.forEach {
+        users.forEach {
             guard let character = $0.firstName.first else { return }
             if results[character] != nil {
                 results[character]?.append($0)
@@ -90,9 +90,29 @@ final class FriendsTableViewController: UITableViewController {
         guard let friendsPhotosViewController = storyboard
             .instantiateViewController(withIdentifier: Constants.storyFriendPhotoID) as? FriendsPhotosViewController
         else { return }
-        guard let list = filteredFriendsMap[sortedCharacters[indexPath.section]]?[indexPath.row] else { return }
-        friendsPhotosViewController.configure(user: list)
+        guard let friends = filteredFriendsMap[sortedCharacters[indexPath.section]]?[indexPath.row] else { return }
+        friendsPhotosViewController.configure(user: friends)
         navigationController?.pushViewController(friendsPhotosViewController, animated: true)
+    }
+
+    private func filterFriends(prefix: String) {
+        sortedMethod()
+        guard
+            !prefix.isEmpty,
+            let character = prefix.first,
+            var friendsMap = filteredFriendsMap[character]
+        else {
+            filteredFriendsMap = [:]
+            sortedMethod()
+            return
+        }
+
+        friendsMap = friendsMap.filter { user in
+            user.firstName.hasPrefix(prefix)
+        }
+
+        filteredFriendsMap = [:]
+        filteredFriendsMap[character] = friendsMap
     }
 }
 
@@ -130,32 +150,12 @@ extension FriendsTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         setDidSelectRow(indexPath: indexPath)
     }
-
-    private func filterFriends(by prefix: String) {
-        sortedMethod()
-        guard
-            !prefix.isEmpty,
-            let prefixCharacter = prefix.first,
-            var friendsMap = filteredFriendsMap[prefixCharacter]
-        else {
-            filteredFriendsMap = [:]
-            sortedMethod()
-            return
-        }
-
-        friendsMap = friendsMap.filter { user in
-            user.firstName.hasPrefix(prefix)
-        }
-
-        filteredFriendsMap = [:]
-        filteredFriendsMap[prefixCharacter] = friendsMap
-    }
 }
 
 // MARK: UISearchBarDelegate
 
 extension FriendsTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterFriends(by: searchText)
+        filterFriends(prefix: searchText)
     }
 }

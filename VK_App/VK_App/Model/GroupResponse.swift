@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Модель с массивом групп
+/// массив групп
 struct GroupResponse: Decodable {
     let groups: [Group]
 

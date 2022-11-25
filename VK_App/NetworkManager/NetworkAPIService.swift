@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
+
 import Foundation
 
 /// VK API Сервис
@@ -10,15 +11,12 @@ struct NetworkAPIService {
 
     private enum Constants {
         static let baseURL = "https://api.vk.com/method/"
-        static let acessToken = "access_token"
         static let friendFields = "fields"
         static let friendFieldsValue = "nickname, photo_100"
         static let getFriends = "friends.get"
         static let getUserPhoto = "photos.getAll"
         static let getGroups = "groups.get"
         static let getSearchGroup = "groups.search"
-        static let searchQueryText = "&q="
-        static let version = "5.81"
         static let scheme = "https"
         static let host = "oauth.vk.com"
         static let path = "/authorize"
@@ -41,7 +39,9 @@ struct NetworkAPIService {
         static let ownerIDParameter = "owner_id"
     }
 
-    var decoder = JSONDecoder()
+    // MARK: Private properties
+
+    private var decoder = JSONDecoder()
 
     // MARK: - Public Methods
 
@@ -90,7 +90,7 @@ struct NetworkAPIService {
             Constants.acessTokenParameter: Session.shared.token,
             Constants.versionParameter: Constants.versionValue,
             Constants.extendedParameter: Constants.extendedValue,
-            Constants.ownerIDParameter: "-\(userID)"
+            Constants.ownerIDParameter: userID
         ]
         let path = "\(Constants.baseURL)\(Constants.getUserPhoto)"
         AF.request(path, parameters: parameters).responseData { response in

@@ -11,18 +11,12 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private let imageLoader = ImageLoader.shared
-    private let queue = DispatchQueue.global(qos: .userInteractive)
+    private let imageLoader = LoadingImage.shared
+    private let disQueue = DispatchQueue.global(qos: .userInteractive)
     private var photoNames: [String] = [] {
         didSet {
-            queue.sync {
-                self.photoNames.forEach {
-                    self.imageLoader.getImage(imagePosterPath: $0) { [weak self] data in
-                        if let image = UIImage(data: data) {
-                            self?.userImages.append(image)
-                        }
-                    }
-                }
+            disQueue.sync {
+                loadImage()
             }
         }
     }
@@ -36,16 +30,16 @@ final class FriendsPhotosViewController: UIViewController {
     }
 
     private var userIdentifier = 0
-
     private var rowIndex = 0
     private var selectedIndex = 0
-    private var networkApi = NetworkAPIService()
+    private var networkAPIService = NetworkAPIService()
 
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSwipeGesture()
+        setImage()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -58,11 +52,23 @@ final class FriendsPhotosViewController: UIViewController {
     func configure(user: User) {
         userIdentifier = user.id
         title = "\(user.firstName) \(user.lastName)"
-        getImagePaths(userID: userIdentifier)
+        fetchUserPhotos(userID: userIdentifier)
     }
 
-    private func getImagePaths(userID: Int) {
-        networkApi.fetchUserPhotos(for: userID) { [weak self] result in
+    // MARK: - Private methods
+
+    private func loadImage() {
+        photoNames.forEach {
+            self.imageLoader.getImage(imagePosterPath: $0) { [weak self] data in
+                if let image = UIImage(data: data) {
+                    self?.userImages.append(image)
+                }
+            }
+        }
+    }
+
+    private func fetchUserPhotos(userID: Int) {
+        networkAPIService.fetchUserPhotos(for: userID) { [weak self] result in
             switch result {
             case let .success(photoPaths):
                 self?.photoNames = photoPaths.map(\.url)
@@ -72,11 +78,12 @@ final class FriendsPhotosViewController: UIViewController {
         }
     }
 
-    // MARK: - Private methods
-
     private func setupUserPhotos() {
         guard userImages.indices.contains(selectedIndex) else { return }
         friendImageView.image = userImages[selectedIndex]
+    }
+
+    private func setImage() {
         friendImageView.layer.borderWidth = 1
         friendImageView.layer.borderColor = UIColor.blue.cgColor
         friendImageView.layer.cornerRadius = 15

@@ -12,41 +12,39 @@ final class FollowGroupsTableViewController: UITableViewController {
         static let followGroupCellId = "signGroupCell"
     }
 
+    // MARK: Private IBAction
+
+    @IBAction private func addCellAction(segue: UIStoryboardSegue) {
+        guard segue.identifier == Constants.segueIdentificator,
+              let userGroups = segue.source as? UnFollowTableViewController else { return }
+        tableView.reloadData()
+    }
+
     // MARK: Private properties
 
-    private let networkApi = NetworkAPIService()
-    private var signGroupList: [Group] = [] {
+    private let networkAPIService = NetworkAPIService()
+    private var groups: [Group] = [] {
         didSet {
             tableView.reloadData()
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getUserGroups()
+    // MARK: Life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchGroups()
     }
 
-    // MARK: Private IBAction
+    // MARK: Private Methods
 
-    @IBAction private func addCellAction(segue: UIStoryboardSegue) {
-        guard segue.identifier == Constants.segueIdentificator,
-              let userGroups = segue.source as? UnFollowTableViewController,
-              let indexPath = userGroups.tableView.indexPathForSelectedRow
-        else {
-            return
-        }
-        //  let groups = userGroups.unSignGroups[indexPath.row]
-        // signGroupList.append(groups)
-        tableView.reloadData()
-    }
-
-    private func getUserGroups() {
-        networkApi.fetchGroups { [weak self] result in
+    private func fetchGroups() {
+        networkAPIService.fetchGroups { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(groups):
                 DispatchQueue.main.async {
-                    self.signGroupList = groups
+                    self.groups = groups
                 }
             case let .failure(error):
                 print(error.localizedDescription)
@@ -59,7 +57,7 @@ final class FollowGroupsTableViewController: UITableViewController {
 
 extension FollowGroupsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        signGroupList.count
+        groups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,7 +67,7 @@ extension FollowGroupsTableViewController {
                 for: indexPath
             ) as? FollowGroupsTableViewCell
         else { return UITableViewCell() }
-        let group = signGroupList[indexPath.row]
+        let group = groups[indexPath.row]
         cell.configure(group)
         return cell
     }
@@ -80,7 +78,6 @@ extension FollowGroupsTableViewController {
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            //      signGroupList.remove(at: indexPath.row)
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
