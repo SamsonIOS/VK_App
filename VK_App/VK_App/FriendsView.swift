@@ -53,13 +53,11 @@ import UIKit
         setupView()
     }
 
-    // MARK: - Public Methods
+    // MARK: - Private Methods
 
     private func setImage(image: UIImage?) {
         friendImageView.image = image
     }
-
-    // MARK: - Private Methods
 
     private func setupView() {
         addSubview(friendImageView)

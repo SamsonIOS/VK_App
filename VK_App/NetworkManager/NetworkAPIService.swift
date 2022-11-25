@@ -41,7 +41,7 @@ struct NetworkAPIService {
 
     // MARK: Private properties
 
-    private var decoder = JSONDecoder()
+    private let decoder = JSONDecoder()
 
     // MARK: - Public Methods
 
