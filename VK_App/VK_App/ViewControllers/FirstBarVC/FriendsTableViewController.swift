@@ -41,37 +41,19 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
-    private var sectionsMap: [Character: [(String, String, [String]?)]] = [:]
+    private var sectionsMap: [Character: [User]] = [:]
     private var sectionTitles: [Character] = .init()
-    private var friends = [
-        User(
-            friendName: Constants.firstName,
-            friendImage: Constants.firstImageName,
-            userPhotoNames: [
-                Constants.firstGomerImageName,
-                Constants.secondGomerImageName,
-                Constants.thirdGomerImageName
-            ]
-        ),
-        User(
-            friendName: Constants.secondName,
-            friendImage: Constants.secondImageName
-        ),
-        User(
-            friendName: Constants.thirdName,
-            friendImage: Constants.thirdImageName
-        ),
-        User(friendName: Constants.fourthName, friendImage: Constants.fourthImageName),
-        User(friendName: Constants.fiveName, friendImage: Constants.fiveImageName),
-        User(friendName: Constants.sixName, friendImage: Constants.sixImageName),
-        User(
-            friendName: Constants.sevenName,
-            friendImage: Constants.sevenImageName,
-            userPhotoNames: [Constants.firstLizaImageName, Constants.secondLizaImageName, Constants.thirdLizaImageName]
-        ),
-    ]
+    private var friends: [User] = []
 
-    private var filteredFriendsMap: [Character: [(String, String, [String]?)]] = [:]
+    private var filteredFriendsMap: [Character: [User]] = [:] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
+    private var sortedCharacters: [Character] {
+        filteredFriendsMap.keys.sorted()
+    }
 
     private let networkAPIService = NetworkAPIService()
 
@@ -82,15 +64,29 @@ final class FriendsTableViewController: UITableViewController {
         searchBarDelegate()
         sortedMethod()
         infoAboutUser()
+        getFriends()
     }
 
     // MARK: Private Methods
 
     private func infoAboutUser() {
-        networkAPIService.fetchFriends()
         networkAPIService.fetchUserPhotos()
         networkAPIService.fetchGroups()
         networkAPIService.fetchSearchedGroup(group: Constants.searchGroupName)
+    }
+
+    private func getFriends() {
+        networkAPIService.fetchFriends { [weak self] result in
+            switch result {
+            case let .success(users):
+                DispatchQueue.main.async {
+                    self?.friends = users
+                    self?.tableView.reloadData()
+                }
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     private func searchBarDelegate() {
@@ -99,13 +95,13 @@ final class FriendsTableViewController: UITableViewController {
 
     private func sortedMethod() {
         for users in friends {
-            guard let firstChar = users.friendName.first
+            guard let firstChar = users.firstName.first
             else { return }
 
             if sectionsMap[firstChar] != nil {
-                sectionsMap[firstChar]?.append((users.friendName, users.friendImage, users.userPhotoNames))
+                sectionsMap[firstChar]?.append(users)
             } else {
-                sectionsMap[firstChar] = [(users.friendName, users.friendImage, users.userPhotoNames)]
+                sectionsMap[firstChar] = [users]
             }
         }
         sectionTitles = Array(sectionsMap.keys)
@@ -118,8 +114,8 @@ final class FriendsTableViewController: UITableViewController {
         guard let friendsPhotosViewController = storyboard
             .instantiateViewController(withIdentifier: Constants.storyFriendPhotoID) as? FriendsPhotosViewController
         else { return }
-        guard let list = filteredFriendsMap[sectionTitles[indexPath.section]]?[indexPath.row] else { return }
-        friendsPhotosViewController.configure(nameFriend: list.0, allPhotoFriend: list.2)
+        // guard let list = filteredFriendsMap[sectionTitles[indexPath.section]]?[indexPath.row] else { return }
+        //  friendsPhotosViewController.configure(nameFriend: <#T##String#>, allPhotoFriend: <#T##[String]?#>)
         navigationController?.pushViewController(friendsPhotosViewController, animated: true)
     }
 }
@@ -147,10 +143,10 @@ extension FriendsTableViewController {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: Constants.friendsCellId,
             for: indexPath
-        ) as? FriendTableViewCell,
-            let infoForCell = filteredFriendsMap[sectionTitles[indexPath.section]]?[indexPath.row]
+        ) as? FriendTableViewCell
+        //    let infoForCell = filteredFriendsMap[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
-        cell.addFriends(nameUser: infoForCell.0, nameImage: infoForCell.1)
+        cell.addFriends(user: friends[indexPath.row])
 
         return cell
     }
@@ -172,17 +168,18 @@ extension FriendsTableViewController: UISearchBarDelegate {
             for friends in sectionsMap {
                 guard let new = friends.value.first else { return }
                 let firstChar = friends.key
-                if new.0.lowercased().contains(searchText.lowercased()) {
-                    if filteredFriendsMap[firstChar] != nil {
-                        filteredFriendsMap[firstChar]?.append((new.0, new.1, new.2))
-                    } else {
-                        filteredFriendsMap[firstChar] = [(new.0, new.1, new.2)]
-                    }
+                // if new.lowercased().contains(searchText.lowercased()) {
+                if filteredFriendsMap[firstChar] != nil {
+                    filteredFriendsMap[firstChar]?.append(new)
+                } else {
+                    filteredFriendsMap[firstChar] = [new]
                 }
             }
         }
-        sectionTitles = Array(filteredFriendsMap.keys)
-        sectionTitles.sort()
-        tableView.reloadData()
     }
+//        sectionTitles = Array(filteredFriendsMap.keys)
+//        sectionTitles.sort()
+//        tableView.reloadData()
 }
+
+// }

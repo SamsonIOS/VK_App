@@ -32,7 +32,6 @@ struct NetworkAPIService {
         static let responseTypeText = "response_type"
         static let toketText = "token"
         static let versionText = "v"
-        static let versionValueText = "5.68"
         static let acessTokenParameter = "access_token"
         static let versionParameter = "v"
         static let versionValue = "5.131"
@@ -40,6 +39,8 @@ struct NetworkAPIService {
         static let extendedValue = "1"
         static let queryParameter = "q"
     }
+
+    var decoder = JSONDecoder()
 
     // MARK: - Public Methods
 
@@ -58,22 +59,30 @@ struct NetworkAPIService {
             ),
             URLQueryItem(name: Constants.scopeText, value: Constants.scopeValue),
             URLQueryItem(name: Constants.responseTypeText, value: Constants.toketText),
-            URLQueryItem(name: Constants.versionText, value: Constants.versionValueText)
+            URLQueryItem(name: Constants.versionText, value: Constants.versionValue)
         ]
         guard let components = urlComponents.url else { return nil }
         let request = URLRequest(url: components)
         return request
     }
 
-    func fetchFriends() {
+    func fetchFriends(completion: @escaping (Result<[User], Error>) -> ()) {
         let parameters: Parameters = [
-            Constants.acessToken: Session.shared.token,
+            Constants.acessTokenParameter: Session.shared.token,
             Constants.friendFields: Constants.friendFieldsValue,
-            Constants.versionText: Constants.version
+            Constants.versionParameter: Constants.versionValue
         ]
         let path = "\(Constants.baseURL)\(Constants.getFriends)"
         AF.request(path, parameters: parameters).responseData { response in
-            print(response.value)
+            guard let data = response.value else { return }
+            print("\(data)")
+            do {
+                let request = try self.decoder.decode(UserResult.self, from: data)
+                completion(.success(request.response.users))
+                print(request.response.users)
+            } catch {
+                print(error)
+            }
         }
     }
 
@@ -84,8 +93,8 @@ struct NetworkAPIService {
             Constants.extendedParameter: Constants.extendedValue,
         ]
         let path = "\(Constants.baseURL)\(Constants.getUserPhoto)"
-        AF.request(path, parameters: parameters).responseData { response in
-            print(response.value)
+        AF.request(path, parameters: parameters).responseData { _ in
+            print(parameters)
         }
     }
 
@@ -96,8 +105,8 @@ struct NetworkAPIService {
             Constants.extendedParameter: Constants.extendedValue
         ]
         let path = "\(Constants.baseURL)\(Constants.getGroups)"
-        AF.request(path, parameters: parameters).responseData { response in
-            print(response.value)
+        AF.request(path, parameters: parameters).responseData { _ in
+            //   print(response.value)
         }
     }
 
