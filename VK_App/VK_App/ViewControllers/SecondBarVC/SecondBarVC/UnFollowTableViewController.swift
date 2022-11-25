@@ -8,35 +8,59 @@ final class UnFollowTableViewController: UITableViewController {
     // MARK: Constants
 
     private enum Constants {
-        static let diazGroupNameText = "Nate Diaz Group"
-        static let diazGroupImageName = "nateDiaz"
-        static let khabibGroupNameText = "Khabib Nurmagomedov Group"
-        static let khabibGroupImageName = "khabib"
-        static let conorGroupNameText = "Conor MacGregor Group"
-        static let conorGroupImageName = "macgregor"
-        static let mikeGroupNameText = "Mike Tyson Group"
-        static let mikeGroupImageName = "tyson"
-        static let romeroGroupNameText = "Yeol Romero Group"
-        static let romeroGroupImageName = "yeolRomero"
         static let unFollowGroupCellId = "unSignGroupCell"
     }
 
+    var subscribeGroupHandler: ((Group) -> ())?
+
     // MARK: Public Properties
 
-    var unSignGroups = [
-        Group(groupName: Constants.diazGroupNameText, groupImage: Constants.diazGroupImageName),
-        Group(groupName: Constants.khabibGroupNameText, groupImage: Constants.khabibGroupImageName),
-        Group(groupName: Constants.conorGroupNameText, groupImage: Constants.conorGroupImageName),
-        Group(groupName: Constants.mikeGroupNameText, groupImage: Constants.mikeGroupImageName),
-        Group(groupName: Constants.romeroGroupNameText, groupImage: Constants.romeroGroupImageName),
-    ]
+    private let networtkApi = NetworkAPIService()
+    private var globalGroups: [Group] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
+//    func configure(userGroups: [Group], subscribeGroupHandler: @escaping (Group) -> ()) {
+//        globalGroups = globalGroups.filter { globalGroup in
+//            !userGroups.contains { userGroup in
+//                userGroup == globalGroup
+//            }
+//        }
+//        self.subscribeGroupHandler = subscribeGroupHandler
+//    }
+
+    private func searchGroups(by prefix: String) {
+        networtkApi.fetchSearchedGroups(by: prefix) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(groups):
+                DispatchQueue.main.async {
+                    self.globalGroups = groups
+                }
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+
+    private func setupSearchBar() {
+        let searchBar = UISearchBar()
+        searchBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        searchBar.delegate = self
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = ""
+        searchBar.sizeToFit()
+        tableView.tableHeaderView = searchBar
+    }
 }
 
 // MARK: UITableViewDataSource
 
 extension UnFollowTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        unSignGroups.count
+        globalGroups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -46,8 +70,25 @@ extension UnFollowTableViewController {
                 for: indexPath
             ) as? UnFollowTableViewCell
         else { return UITableViewCell() }
-
-        cell.unFollowGroupInfo(unSignGroups[indexPath.row])
+        let group = globalGroups[indexPath.row]
+        // cell.configure(by: <#T##Group#>)
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        addGroupToUser(groupNumber: indexPath.row)
+    }
+
+    private func addGroupToUser(groupNumber: Int) {
+        guard globalGroups.count > groupNumber else { return }
+        let group = globalGroups[groupNumber]
+        subscribeGroupHandler?(group)
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+extension UnFollowTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchGroups(by: searchText)
     }
 }

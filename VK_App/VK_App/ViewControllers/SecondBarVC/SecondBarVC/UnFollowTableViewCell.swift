@@ -9,6 +9,7 @@ final class UnFollowTableViewCell: UITableViewCell {
 
     @IBOutlet private var unFollowImageView: UIImageView!
     @IBOutlet private var unFollowGroupLabel: UILabel!
+    private var currentPath = ""
 
     // MARK: Life cycle
 
@@ -20,8 +21,21 @@ final class UnFollowTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func unFollowGroupInfo(_ group: Group) {
-        unFollowGroupLabel.text = group.groupName
-        unFollowImageView.image = UIImage(named: group.groupImage)
+    func configure(by group: Group) {
+        unFollowImageView.image = nil
+        currentPath = group.photo50Path
+        unFollowGroupLabel.text = group.name
+        getImage(imagePath: group.photo50Path)
+    }
+
+    private func getImage(imagePath: String) {
+        ImageLoader.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                if imagePath == self.currentPath {
+                    self.unFollowImageView.image = UIImage(data: data)
+                }
+            }
+        }
     }
 }

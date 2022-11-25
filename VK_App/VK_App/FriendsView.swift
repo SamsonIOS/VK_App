@@ -23,6 +23,12 @@ import UIKit
         }
     }
 
+    @IBInspectable var image: UIImage? = UIImage(named: "apple") {
+        didSet {
+            setImage(image: image)
+        }
+    }
+
     @IBInspectable private var shadowOpacity: Float = 0.7 {
         didSet {
             updateShadowOpacity()
@@ -49,8 +55,8 @@ import UIKit
 
     // MARK: - Public Methods
 
-    func setImage(imageName: String) {
-        friendImageView.image = UIImage(named: imageName)
+    private func setImage(image: UIImage?) {
+        friendImageView.image = image
     }
 
     // MARK: - Private Methods

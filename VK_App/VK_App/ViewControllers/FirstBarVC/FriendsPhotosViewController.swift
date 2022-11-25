@@ -11,37 +11,72 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private var photoNames: [String] = []
-    private var userImages: [UIImage] {
-        photoNames.compactMap { UIImage(named: $0) }
+    private let imageLoader = ImageLoader.shared
+    private let queue = DispatchQueue.global(qos: .userInteractive)
+    private var photoNames: [String] = [] {
+        didSet {
+            queue.sync {
+                self.photoNames.forEach {
+                    self.imageLoader.getImage(imagePosterPath: $0) { [weak self] data in
+                        if let image = UIImage(data: data) {
+                            self?.userImages.append(image)
+                        }
+                    }
+                }
+            }
+        }
     }
 
+    private var userImages: [UIImage] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.setupUserPhotos()
+            }
+        }
+    }
+
+    private var userIdentifier = 0
+
     private var rowIndex = 0
+    private var selectedIndex = 0
+    private var networkApi = NetworkAPIService()
 
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setMethods()
+        setupSwipeGesture()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        selectedIndex = 0
     }
 
     // MARK: - Public methods
 
-    func configure(nameFriend: String, allPhotoFriend: [String]?) {
-        photoNames = allPhotoFriend ?? [""]
-        title = nameFriend
+    func configure(user: User) {
+        userIdentifier = user.id
+        title = "\(user.firstName) \(user.lastName)"
+        getImagePaths(userID: userIdentifier)
+    }
+
+    private func getImagePaths(userID: Int) {
+        networkApi.fetchUserPhotos(for: userID) { [weak self] result in
+            switch result {
+            case let .success(photoPaths):
+                self?.photoNames = photoPaths.map(\.url)
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     // MARK: - Private methods
 
-    private func setMethods() {
-        setupUserPhotos()
-        setupSwipeGesture()
-    }
-
     private func setupUserPhotos() {
-        guard userImages.indices.contains(rowIndex) else { return }
-        friendImageView.image = userImages[rowIndex]
+        guard userImages.indices.contains(selectedIndex) else { return }
+        friendImageView.image = userImages[selectedIndex]
         friendImageView.layer.borderWidth = 1
         friendImageView.layer.borderColor = UIColor.blue.cgColor
         friendImageView.layer.cornerRadius = 15

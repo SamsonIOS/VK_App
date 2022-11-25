@@ -8,17 +8,23 @@ final class FollowGroupsTableViewController: UITableViewController {
     // MARK: Constants
 
     private enum Constants {
-        static let groupNameText = "ММА Official Group"
-        static let groupImageName = "mma"
         static let segueIdentificator = "segueId"
         static let followGroupCellId = "signGroupCell"
     }
 
     // MARK: Private properties
 
-    private var signGroupList = [
-        Group(groupName: Constants.groupNameText, groupImage: Constants.groupImageName),
-    ]
+    private let networkApi = NetworkAPIService()
+    private var signGroupList: [Group] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getUserGroups()
+    }
 
     // MARK: Private IBAction
 
@@ -29,9 +35,23 @@ final class FollowGroupsTableViewController: UITableViewController {
         else {
             return
         }
-        let groups = userGroups.unSignGroups[indexPath.row]
-        signGroupList.append(groups)
+        //  let groups = userGroups.unSignGroups[indexPath.row]
+        // signGroupList.append(groups)
         tableView.reloadData()
+    }
+
+    private func getUserGroups() {
+        networkApi.fetchGroups { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(groups):
+                DispatchQueue.main.async {
+                    self.signGroupList = groups
+                }
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -49,9 +69,8 @@ extension FollowGroupsTableViewController {
                 for: indexPath
             ) as? FollowGroupsTableViewCell
         else { return UITableViewCell() }
-
-        cell.groupsInfo(signGroupList[indexPath.row])
-
+        let group = signGroupList[indexPath.row]
+        cell.configure(group)
         return cell
     }
 
@@ -61,7 +80,7 @@ extension FollowGroupsTableViewController {
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            signGroupList.remove(at: indexPath.row)
+            //      signGroupList.remove(at: indexPath.row)
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()

@@ -12,7 +12,7 @@ struct NetworkAPIService {
         static let baseURL = "https://api.vk.com/method/"
         static let acessToken = "access_token"
         static let friendFields = "fields"
-        static let friendFieldsValue = "nickname"
+        static let friendFieldsValue = "nickname, photo_100"
         static let getFriends = "friends.get"
         static let getUserPhoto = "photos.getAll"
         static let getGroups = "groups.get"
@@ -38,6 +38,7 @@ struct NetworkAPIService {
         static let extendedParameter = "extended"
         static let extendedValue = "1"
         static let queryParameter = "q"
+        static let ownerIDParameter = "owner_id"
     }
 
     var decoder = JSONDecoder()
@@ -74,51 +75,69 @@ struct NetworkAPIService {
         ]
         let path = "\(Constants.baseURL)\(Constants.getFriends)"
         AF.request(path, parameters: parameters).responseData { response in
-            guard let data = response.value else { return }
-            print("\(data)")
+            guard let data = response.data else { return }
             do {
                 let request = try self.decoder.decode(UserResult.self, from: data)
                 completion(.success(request.response.users))
-                print(request.response.users)
             } catch {
-                print(error)
+                completion(.failure(error))
             }
         }
     }
 
-    func fetchUserPhotos() {
+    func fetchUserPhotos(for userID: Int, completion: @escaping (Result<[UserPhotoUrl], Error>) -> ()) {
         let parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.versionParameter: Constants.versionValue,
             Constants.extendedParameter: Constants.extendedValue,
+            Constants.ownerIDParameter: "-\(userID)"
         ]
         let path = "\(Constants.baseURL)\(Constants.getUserPhoto)"
-        AF.request(path, parameters: parameters).responseData { _ in
-            print(parameters)
+        AF.request(path, parameters: parameters).responseData { response in
+            guard let data = response.data else { return }
+            do {
+                let result = try self.decoder.decode(UserPhotoResult.self, from: data)
+                let imagePaths = result.response.photos.compactMap(\.photos.last)
+                completion(.success(imagePaths))
+            } catch {
+                completion(.failure(error))
+            }
         }
     }
 
-    func fetchGroups() {
-        let parameters: Parameters = [
-            Constants.acessToken: Session.shared.token,
-            Constants.versionText: Constants.version,
-            Constants.extendedParameter: Constants.extendedValue
-        ]
-        let path = "\(Constants.baseURL)\(Constants.getGroups)"
-        AF.request(path, parameters: parameters).responseData { _ in
-            //   print(response.value)
-        }
-    }
-
-    func fetchSearchedGroup(group: String) {
+    func fetchGroups(completion: @escaping (Result<[Group], Error>) -> ()) {
         let parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.versionParameter: Constants.versionValue,
-            Constants.queryParameter: group
+            Constants.extendedParameter: Constants.extendedValue
+        ]
+        let path = "\(Constants.baseURL)\(Constants.getGroups)"
+        AF.request(path, parameters: parameters).responseData { response in
+            guard let data = response.data else { return }
+            do {
+                let result = try self.decoder.decode(GroupResult.self, from: data)
+                completion(.success(result.response.groups))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchSearchedGroups(by searchQuery: String, completion: @escaping (Result<[Group], Error>) -> ()) {
+        let parameters: Parameters = [
+            Constants.acessTokenParameter: Session.shared.token,
+            Constants.versionParameter: Constants.versionValue,
+            Constants.queryParameter: searchQuery
         ]
         let path = "\(Constants.baseURL)\(Constants.getSearchGroup)"
         AF.request(path, parameters: parameters).responseData { response in
-            print(response.value)
+            guard let data = response.data else { return }
+            do {
+                let result = try self.decoder.decode(GroupResult.self, from: data)
+                completion(.success(result.response.groups))
+            } catch {
+                completion(.failure(error))
+            }
         }
     }
 }

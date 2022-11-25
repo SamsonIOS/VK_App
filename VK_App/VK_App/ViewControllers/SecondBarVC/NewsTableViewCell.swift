@@ -22,13 +22,6 @@ final class NewsTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func setCellInfo(_ news: News) {
-        userImageView.image = UIImage(named: news.userImageName)
-        userNameLabel.text = news.userName
-        overviewPostLabel.text = news.overviewPost
-        postImageView.image = UIImage(named: news.postImageName)
-    }
-
     // MARK: Private Methods
 
     private func setLikesView() {
