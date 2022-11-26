@@ -27,9 +27,7 @@ final class UnFollowTableViewController: UITableViewController {
             guard let self = self else { return }
             switch result {
             case let .success(groups):
-                DispatchQueue.main.async {
-                    self.searchedGroups = groups
-                }
+                self.searchedGroups = groups
             case let .failure(error):
                 print(error)
             }

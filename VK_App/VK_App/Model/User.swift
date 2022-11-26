@@ -5,7 +5,7 @@ import Foundation
 import RealmSwift
 
 /// Пользователь
-class User: Object, Decodable {
+final class User: Object, Decodable {
     @objc dynamic var id: Int
     @objc dynamic var firstName: String
     @objc dynamic var lastName: String

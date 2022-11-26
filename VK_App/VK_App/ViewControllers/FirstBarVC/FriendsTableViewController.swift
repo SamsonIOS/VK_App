@@ -56,12 +56,11 @@ final class FriendsTableViewController: UITableViewController {
 
     private func fetchFriends() {
         networkAPIService.fetchFriends { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .success(users):
-                DispatchQueue.main.async {
-                    self?.users = users
-                    self?.tableView.reloadData()
-                }
+                self.users = users
+                self.tableView.reloadData()
             case let .failure(error):
                 print(error.localizedDescription)
             }
@@ -88,9 +87,8 @@ final class FriendsTableViewController: UITableViewController {
     private func setDidSelectRow(indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: Constants.storyName, bundle: nil)
         guard let friendsPhotosViewController = storyboard
-            .instantiateViewController(withIdentifier: Constants.storyFriendPhotoID) as? FriendsPhotosViewController
-        else { return }
-        guard let friends = filteredFriendsMap[sortedCharacters[indexPath.section]]?[indexPath.row] else { return }
+            .instantiateViewController(withIdentifier: Constants.storyFriendPhotoID) as? FriendsPhotosViewController,
+            let friends = filteredFriendsMap[sortedCharacters[indexPath.section]]?[indexPath.row] else { return }
         friendsPhotosViewController.configure(user: friends)
         navigationController?.pushViewController(friendsPhotosViewController, animated: true)
     }

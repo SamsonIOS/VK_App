@@ -43,9 +43,7 @@ final class FollowGroupsTableViewController: UITableViewController {
             guard let self = self else { return }
             switch result {
             case let .success(groups):
-                DispatchQueue.main.async {
-                    self.groups = groups
-                }
+                self.groups = groups
             case let .failure(error):
                 print(error.localizedDescription)
             }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// массив групп
+/// Массив групп
 struct GroupResponse: Decodable {
     let groups: [Group]
 

@@ -1,9 +1,8 @@
 // LoadingImage.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
-
 import Alamofire
+import Foundation
 
 /// Загрузка и кеширование картинок
 final class LoadingImage {
@@ -13,7 +12,6 @@ final class LoadingImage {
 
     // MARK: - Private properties
 
-    private let decoder = JSONDecoder()
     private var imagesMap: [String: Data] = [:]
 
     // MARK: - Init

@@ -23,9 +23,7 @@ final class FriendsPhotosViewController: UIViewController {
 
     private var userImages: [UIImage] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.setupUserPhotos()
-            }
+            setupUserPhotos()
         }
     }
 

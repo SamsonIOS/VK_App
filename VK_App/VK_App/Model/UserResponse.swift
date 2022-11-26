@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// UserResponse result
+/// UserResponse результат
 struct UserResponse: Decodable {
     let users: [User]
 

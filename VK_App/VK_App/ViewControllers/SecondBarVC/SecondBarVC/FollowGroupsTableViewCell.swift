@@ -35,11 +35,9 @@ final class FollowGroupsTableViewCell: UITableViewCell {
 
     private func getImage(imagePath: String) {
         LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                if imagePath == self.currentPath {
-                    self.groupImageView.image = UIImage(data: data)
-                }
+            guard let self = self else { return }
+            if imagePath == self.currentPath {
+                self.groupImageView.image = UIImage(data: data)
             }
         }
     }

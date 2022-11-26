@@ -4,7 +4,7 @@
 import Foundation
 import RealmSwift
 
-/// Путь до фотографии пользователя
+/// Фотографии пользователя
 final class UserPhotoUrl: Decodable {
     @objc dynamic var url: String
 }
