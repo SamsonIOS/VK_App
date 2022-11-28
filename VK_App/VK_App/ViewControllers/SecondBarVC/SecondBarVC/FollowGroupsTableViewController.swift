@@ -65,8 +65,7 @@ extension FollowGroupsTableViewController {
                 for: indexPath
             ) as? FollowGroupsTableViewCell
         else { return UITableViewCell() }
-        let group = groups[indexPath.row]
-        cell.configure(group)
+        cell.configure(groups[indexPath.row])
         return cell
     }
 

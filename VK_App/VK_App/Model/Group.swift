@@ -8,11 +8,11 @@ import RealmSwift
 final class Group: Decodable {
     @objc dynamic var id: Int
     @objc dynamic var name: String
-    @objc dynamic var photo50Path: String
+    @objc dynamic var photoPath: String
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case photo50Path = "photo_50"
+        case photoPath = "photo_50"
     }
 }

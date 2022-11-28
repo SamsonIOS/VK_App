@@ -12,11 +12,10 @@ final class FriendsPhotosViewController: UIViewController {
     // MARK: - Private properties
 
     private let imageLoader = LoadingImage.shared
-    private let disQueue = DispatchQueue.global(qos: .userInteractive)
     private var photoNames: [String] = [] {
         didSet {
-            disQueue.sync {
-                loadImage()
+            DispatchQueue.global(qos: .userInteractive).async {
+                self.loadImage()
             }
         }
     }

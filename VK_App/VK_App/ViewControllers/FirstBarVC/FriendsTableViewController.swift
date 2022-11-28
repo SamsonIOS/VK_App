@@ -72,16 +72,16 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func sortedMethod() {
-        var results = [Character: [User]]()
+        var resultsMap = [Character: [User]]()
         users.forEach {
             guard let character = $0.firstName.first else { return }
-            if results[character] != nil {
-                results[character]?.append($0)
+            if resultsMap[character] != nil {
+                resultsMap[character]?.append($0)
             } else {
-                results[character] = [$0]
+                resultsMap[character] = [$0]
             }
         }
-        filteredFriendsMap = results
+        filteredFriendsMap = resultsMap
     }
 
     private func setDidSelectRow(indexPath: IndexPath) {

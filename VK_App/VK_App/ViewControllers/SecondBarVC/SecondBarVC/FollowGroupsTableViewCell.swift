@@ -26,19 +26,19 @@ final class FollowGroupsTableViewCell: UITableViewCell {
 
     func configure(_ group: Group) {
         nameGroupLabel.text = group.name
-        currentPath = group.photo50Path
+        currentPath = group.photoPath
         groupImageView.image = nil
-        getImage(imagePath: group.photo50Path)
+        getImage(imagePath: group.photoPath)
     }
 
     // MARK: Private Methods
 
     private func getImage(imagePath: String) {
         LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
-            guard let self = self else { return }
-            if imagePath == self.currentPath {
-                self.groupImageView.image = UIImage(data: data)
-            }
+            guard let self = self,
+                  imagePath == self.currentPath
+            else { return }
+            self.groupImageView.image = UIImage(data: data)
         }
     }
 }

@@ -35,10 +35,10 @@ final class FriendTableViewCell: UITableViewCell {
 
     private func getImage(imagePath: String) {
         LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
-            guard let self = self else { return }
-            if imagePath == self.currentPath {
-                self.shadowForPersonView.image = UIImage(data: data)
-            }
+            guard let self = self,
+                  imagePath == self.currentPath
+            else { return }
+            self.shadowForPersonView.image = UIImage(data: data)
         }
     }
 }

@@ -5,6 +5,12 @@ import UIKit
 
 /// Вью с изображением для отображения тени на ней
 @IBDesignable final class FriendsView: UIView {
+    // MARK: Constants
+
+    private enum Constants {
+        static let pencilImageName = "pencil.fill"
+    }
+
     // MARK: - Private Visual components
 
     private let friendImageView: UIImageView = {
@@ -23,7 +29,7 @@ import UIKit
         }
     }
 
-    @IBInspectable var image: UIImage? = UIImage(named: "pencil.fill") {
+    @IBInspectable var image: UIImage? = UIImage(named: Constants.pencilImageName) {
         didSet {
             setImage(image: image)
         }

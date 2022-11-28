@@ -26,9 +26,9 @@ final class UnFollowTableViewCell: UITableViewCell {
 
     func configure(group: Group) {
         unFollowImageView.image = nil
-        currentPath = group.photo50Path
+        currentPath = group.photoPath
         unFollowGroupLabel.text = group.name
-        getImage(imagePath: group.photo50Path)
+        getImage(imagePath: group.photoPath)
     }
 
     // MARK: Private Methods
@@ -36,9 +36,7 @@ final class UnFollowTableViewCell: UITableViewCell {
     private func getImage(imagePath: String) {
         LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
             guard let self = self else { return }
-            if imagePath == self.currentPath {
-                self.unFollowImageView.image = UIImage(data: data)
-            }
+            self.unFollowImageView.image = UIImage(data: data)
         }
     }
 }

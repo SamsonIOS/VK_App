@@ -38,10 +38,6 @@ struct NetworkAPIService {
         static let ownerIDParameter = "owner_id"
     }
 
-    // MARK: Private properties
-
-    private let decoder = JSONDecoder()
-
     // MARK: - Public Methods
 
     func urlComponents() -> URLRequest? {
@@ -76,7 +72,7 @@ struct NetworkAPIService {
         AF.request(path, parameters: parameters).responseData { response in
             guard let data = response.data else { return }
             do {
-                let request = try self.decoder.decode(UserResult.self, from: data)
+                let request = try JSONDecoder().decode(UserResult.self, from: data)
                 completion(.success(request.response.users))
             } catch {
                 completion(.failure(error))
@@ -84,7 +80,7 @@ struct NetworkAPIService {
         }
     }
 
-    func fetchUserPhotos(for userID: Int, completion: @escaping (Result<[UserPhotoUrl], Error>) -> ()) {
+    func fetchUserPhotos(for userID: Int, completion: @escaping (Result<[UserPhoto], Error>) -> ()) {
         let parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.versionParameter: Constants.versionValue,
@@ -95,7 +91,7 @@ struct NetworkAPIService {
         AF.request(path, parameters: parameters).responseData { response in
             guard let data = response.data else { return }
             do {
-                let result = try self.decoder.decode(UserPhotoResult.self, from: data)
+                let result = try JSONDecoder().decode(UserPhotoResult.self, from: data)
                 let imagePaths = result.response.photos.compactMap(\.photos.last)
                 completion(.success(imagePaths))
             } catch {
@@ -114,7 +110,7 @@ struct NetworkAPIService {
         AF.request(path, parameters: parameters).responseData { response in
             guard let data = response.data else { return }
             do {
-                let result = try self.decoder.decode(GroupResult.self, from: data)
+                let result = try JSONDecoder().decode(GroupResult.self, from: data)
                 completion(.success(result.response.groups))
             } catch {
                 completion(.failure(error))
@@ -132,11 +128,47 @@ struct NetworkAPIService {
         AF.request(path, parameters: parameters).responseData { response in
             guard let data = response.data else { return }
             do {
-                let result = try self.decoder.decode(GroupResult.self, from: data)
+                let result = try JSONDecoder().decode(GroupResult.self, from: data)
                 completion(.success(result.response.groups))
             } catch {
                 completion(.failure(error))
             }
+        }
+    }
+}
+
+/// Загрузка и кеширование картинок
+final class LoadingImage {
+    // MARK: - Public properties
+
+    static let shared = LoadingImage()
+
+    // MARK: - Private properties
+
+    private var imagesMap: [String: Data] = [:]
+
+    // MARK: - Init
+
+    private init() {}
+
+    // MARK: - Public methods
+
+    func getImage(imagePosterPath: String, completion: @escaping (Data) -> ()) {
+        if let data = imagesMap[imagePosterPath] {
+            completion(data)
+        } else {
+            loadImage(imagePath: imagePosterPath, completion: completion)
+        }
+    }
+
+    // MARK: - Private methods
+
+    private func loadImage(imagePath: String, completion: @escaping (Data) -> ()) {
+        guard let url = URL(string: imagePath) else { return }
+        AF.request(url).responseData { response in
+            guard let data = response.data else { return }
+            self.imagesMap[imagePath] = data
+            completion(data)
         }
     }
 }
