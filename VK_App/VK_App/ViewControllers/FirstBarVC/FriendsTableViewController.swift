@@ -21,7 +21,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
-    private let networkAPIService = NetworkAPIService()
+    private let networkService = NetworkAPIService()
     private var sectionsMap: [Character: [User]] = [:]
     private var users: [User] = [] {
         didSet {
@@ -55,7 +55,7 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func fetchFriends() {
-        networkAPIService.fetchFriends { [weak self] result in
+        networkService.fetchFriends { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(users):

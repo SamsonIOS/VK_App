@@ -29,7 +29,7 @@ final class FriendsPhotosViewController: UIViewController {
     private var userIdentifier = 0
     private var rowIndex = 0
     private var selectedIndex = 0
-    private var networkAPIService = NetworkAPIService()
+    private var networkService = NetworkAPIService()
 
     // MARK: - Life cycle
 
@@ -65,7 +65,7 @@ final class FriendsPhotosViewController: UIViewController {
     }
 
     private func fetchUserPhotos(userID: Int) {
-        networkAPIService.fetchUserPhotos(for: userID) { [weak self] result in
+        networkService.fetchUserPhotos(for: userID) { [weak self] result in
             switch result {
             case let .success(photoPaths):
                 self?.photoNames = photoPaths.map(\.url)

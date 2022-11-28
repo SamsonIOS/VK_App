@@ -36,7 +36,7 @@ final class LoginViewController: UIViewController {
 
     // MARK: Private properties
 
-    private let networkAPIService = NetworkAPIService()
+    private let networkService = NetworkAPIService()
 
     // MARK: Life cycle
 
@@ -101,7 +101,7 @@ final class LoginViewController: UIViewController {
     }
 
     private func showAuthorizationWebView() {
-        guard let request = networkAPIService.urlComponents() else { return }
+        guard let request = networkService.urlComponents() else { return }
         webView.load(request)
     }
 

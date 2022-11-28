@@ -13,7 +13,7 @@ final class UnFollowTableViewController: UITableViewController {
 
     // MARK: Private Properties
 
-    private let networkAPIService = NetworkAPIService()
+    private let networkService = NetworkAPIService()
     private var searchedGroups: [Group] = [] {
         didSet {
             tableView.reloadData()
@@ -23,7 +23,7 @@ final class UnFollowTableViewController: UITableViewController {
     // MARK: Private Methods
 
     private func fetchSearchedGroups(by prefix: String) {
-        networkAPIService.fetchSearchedGroups(by: prefix) { [weak self] result in
+        networkService.fetchSearchedGroups(by: prefix) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(groups):
