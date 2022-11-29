@@ -5,9 +5,15 @@ import UIKit
 
 /// Вью с изображением для отображения тени на ней
 @IBDesignable final class FriendsView: UIView {
+    // MARK: Constants
+
+    private enum Constants {
+        static let pencilImageName = "pencil.fill"
+    }
+
     // MARK: - Private Visual components
 
-    private let friendImageView: UIImageView = {
+    let friendImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -20,6 +26,12 @@ import UIKit
     @IBInspectable private var shadowRadius: CGFloat = 7 {
         didSet {
             updateShadowRadius()
+        }
+    }
+
+    @IBInspectable var image: UIImage? = UIImage(named: Constants.pencilImageName) {
+        didSet {
+            setImage(image: image)
         }
     }
 
@@ -47,13 +59,11 @@ import UIKit
         setupView()
     }
 
-    // MARK: - Public Methods
-
-    func setImage(imageName: String) {
-        friendImageView.image = UIImage(named: imageName)
-    }
-
     // MARK: - Private Methods
+
+    private func setImage(image: UIImage?) {
+        friendImageView.image = image
+    }
 
     private func setupView() {
         addSubview(friendImageView)

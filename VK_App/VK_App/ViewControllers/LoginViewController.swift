@@ -2,7 +2,6 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
-
 import WebKit
 
 /// Экран регистрации
@@ -35,7 +34,9 @@ final class LoginViewController: UIViewController {
     private var secondDoteView = UIView()
     private var thirdDoteView = UIView()
 
-    private let networkApiService = NetworkAPIService()
+    // MARK: Private properties
+
+    private let networkService = NetworkService()
 
     // MARK: Life cycle
 
@@ -100,7 +101,7 @@ final class LoginViewController: UIViewController {
     }
 
     private func showAuthorizationWebView() {
-        guard let request = networkApiService.urlComponents() else { return }
+        guard let request = networkService.urlComponents() else { return }
         webView.load(request)
     }
 

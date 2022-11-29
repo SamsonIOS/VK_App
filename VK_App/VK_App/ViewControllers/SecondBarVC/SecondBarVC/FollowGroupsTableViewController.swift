@@ -8,30 +8,46 @@ final class FollowGroupsTableViewController: UITableViewController {
     // MARK: Constants
 
     private enum Constants {
-        static let groupNameText = "ММА Official Group"
-        static let groupImageName = "mma"
         static let segueIdentificator = "segueId"
         static let followGroupCellId = "signGroupCell"
     }
-
-    // MARK: Private properties
-
-    private var signGroupList = [
-        Group(groupName: Constants.groupNameText, groupImage: Constants.groupImageName),
-    ]
 
     // MARK: Private IBAction
 
     @IBAction private func addCellAction(segue: UIStoryboardSegue) {
         guard segue.identifier == Constants.segueIdentificator,
-              let userGroups = segue.source as? UnFollowTableViewController,
-              let indexPath = userGroups.tableView.indexPathForSelectedRow
-        else {
-            return
-        }
-        let groups = userGroups.unSignGroups[indexPath.row]
-        signGroupList.append(groups)
+              let userGroups = segue.source as? UnFollowTableViewController else { return }
         tableView.reloadData()
+    }
+
+    // MARK: Private properties
+
+    private let networkService = NetworkService()
+    private var groups: [Group] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
+    // MARK: Life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchGroups()
+    }
+
+    // MARK: Private Methods
+
+    private func fetchGroups() {
+        networkService.fetchGroups { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(groups):
+                self.groups = groups
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -39,7 +55,7 @@ final class FollowGroupsTableViewController: UITableViewController {
 
 extension FollowGroupsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        signGroupList.count
+        groups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,9 +65,7 @@ extension FollowGroupsTableViewController {
                 for: indexPath
             ) as? FollowGroupsTableViewCell
         else { return UITableViewCell() }
-
-        cell.groupsInfo(signGroupList[indexPath.row])
-
+        cell.configure(groups[indexPath.row], networkService: networkService)
         return cell
     }
 
@@ -61,7 +75,6 @@ extension FollowGroupsTableViewController {
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            signGroupList.remove(at: indexPath.row)
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()

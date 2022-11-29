@@ -2,24 +2,19 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
-/// Структура описывающая друзей
-struct User {
-    var friendName: String
-    var friendImage: String
-    var userPhotoNames: [String]?
-}
+/// Пользователь
+final class User: Object, Decodable {
+    @objc dynamic var id: Int
+    @objc dynamic var firstName: String
+    @objc dynamic var lastName: String
+    @objc dynamic var userImagePath: String
 
-/// Структура описывающая группы вк
-struct Group {
-    var groupName: String
-    var groupImage: String
-}
-
-/// Структура описывающая пост в ленте
-struct News {
-    let userImageName: String
-    let userName: String
-    let overviewPost: String
-    let postImageName: String
+    enum CodingKeys: String, CodingKey {
+        case id
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case userImagePath = "photo_100"
+    }
 }

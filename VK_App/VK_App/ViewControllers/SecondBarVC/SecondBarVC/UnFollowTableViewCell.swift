@@ -20,8 +20,7 @@ final class UnFollowTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func unFollowGroupInfo(_ group: Group) {
-        unFollowGroupLabel.text = group.groupName
-        unFollowImageView.image = UIImage(named: group.groupImage)
+    func configure(group: Group) {
+        unFollowGroupLabel.text = group.name
     }
 }

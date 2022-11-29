@@ -20,8 +20,8 @@ final class FriendTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func addFriends(nameUser: String, nameImage: String) {
-        friendName.text = nameUser
-        shadowForPersonView.setImage(imageName: nameImage)
+    func addFriends(user: User, service: NetworkService) {
+        friendName.text = "\(user.firstName) \(user.lastName)"
+        shadowForPersonView.friendImageView.loadDatas(url: user.userImagePath, networkService: service)
     }
 }

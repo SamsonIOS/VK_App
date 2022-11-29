@@ -10,6 +10,10 @@ final class FollowGroupsTableViewCell: UITableViewCell {
     @IBOutlet private var nameGroupLabel: UILabel!
     @IBOutlet private var groupImageView: UIImageView!
 
+    // MARK: Private properties
+
+    private var currentPath = ""
+
     // MARK: Life cycle
 
     override func awakeFromNib() {
@@ -20,8 +24,8 @@ final class FollowGroupsTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func groupsInfo(_ model: Group) {
-        nameGroupLabel.text = model.groupName
-        groupImageView.image = UIImage(named: model.groupImage)
+    func configure(_ group: Group, networkService: NetworkService) {
+        nameGroupLabel.text = group.name
+        groupImageView.loadDatas(url: group.photoPath, networkService: networkService)
     }
 }

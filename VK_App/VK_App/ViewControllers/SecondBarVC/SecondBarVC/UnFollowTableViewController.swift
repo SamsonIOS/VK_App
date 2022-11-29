@@ -8,35 +8,48 @@ final class UnFollowTableViewController: UITableViewController {
     // MARK: Constants
 
     private enum Constants {
-        static let diazGroupNameText = "Nate Diaz Group"
-        static let diazGroupImageName = "nateDiaz"
-        static let khabibGroupNameText = "Khabib Nurmagomedov Group"
-        static let khabibGroupImageName = "khabib"
-        static let conorGroupNameText = "Conor MacGregor Group"
-        static let conorGroupImageName = "macgregor"
-        static let mikeGroupNameText = "Mike Tyson Group"
-        static let mikeGroupImageName = "tyson"
-        static let romeroGroupNameText = "Yeol Romero Group"
-        static let romeroGroupImageName = "yeolRomero"
         static let unFollowGroupCellId = "unSignGroupCell"
     }
 
-    // MARK: Public Properties
+    // MARK: Private Properties
 
-    var unSignGroups = [
-        Group(groupName: Constants.diazGroupNameText, groupImage: Constants.diazGroupImageName),
-        Group(groupName: Constants.khabibGroupNameText, groupImage: Constants.khabibGroupImageName),
-        Group(groupName: Constants.conorGroupNameText, groupImage: Constants.conorGroupImageName),
-        Group(groupName: Constants.mikeGroupNameText, groupImage: Constants.mikeGroupImageName),
-        Group(groupName: Constants.romeroGroupNameText, groupImage: Constants.romeroGroupImageName),
-    ]
+    private let networkService = NetworkService()
+    private var searchedGroups: [Group] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
+    // MARK: Private Methods
+
+    private func fetchSearchedGroups(by prefix: String) {
+        networkService.fetchSearchedGroups(by: prefix) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(groups):
+                self.searchedGroups = groups
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+
+    private func setupSearchBar() {
+        let searchBar = UISearchBar()
+        searchBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 45)
+        searchBar.delegate = self
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = ""
+        searchBar.sizeToFit()
+        tableView.tableHeaderView = searchBar
+    }
 }
 
 // MARK: UITableViewDataSource
 
 extension UnFollowTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        unSignGroups.count
+        searchedGroups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -46,8 +59,16 @@ extension UnFollowTableViewController {
                 for: indexPath
             ) as? UnFollowTableViewCell
         else { return UITableViewCell() }
-
-        cell.unFollowGroupInfo(unSignGroups[indexPath.row])
+        let group = searchedGroups[indexPath.row]
+        cell.configure(group: group)
         return cell
+    }
+}
+
+// MARK: UISearchBarDelegate
+
+extension UnFollowTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        fetchSearchedGroups(by: searchText)
     }
 }

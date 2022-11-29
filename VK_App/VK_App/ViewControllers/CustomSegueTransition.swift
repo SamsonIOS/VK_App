@@ -13,7 +13,7 @@ final class CustomSegueTransition: UIStoryboardSegue {
         static let oneValue = 1
     }
 
-    // MARK: Public methods
+    // MARK: Public Methods
 
     override func perform() {
         guard let containerView = source.view.superview else { return }

@@ -1,11 +1,11 @@
-// NetworkAPIService.swift
+// NetworkService.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
 import Foundation
 
 /// VK API Сервис
-struct NetworkAPIService {
+struct NetworkService {
     // MARK: Constants
 
     private enum Constants {
@@ -40,6 +40,13 @@ struct NetworkAPIService {
 
     // MARK: - Public Methods
 
+    func downloadImage(url: String) -> Data? {
+        guard let url = URL(string: url),
+              let data = try? Data(contentsOf: url)
+        else { return nil }
+        return data
+    }
+
     func urlComponents() -> URLRequest? {
         var urlComponents = URLComponents()
         urlComponents.scheme = Constants.scheme
@@ -48,11 +55,7 @@ struct NetworkAPIService {
         urlComponents.queryItems = [
             URLQueryItem(name: Constants.clientIDText, value: Session.shared.userID),
             URLQueryItem(name: Constants.displayText, value: Constants.mobileText),
-            URLQueryItem(
-                name: Constants.redirectText,
-                value:
-                Constants.blankText
-            ),
+            URLQueryItem(name: Constants.redirectText, value: Constants.blankText),
             URLQueryItem(name: Constants.scopeText, value: Constants.scopeValue),
             URLQueryItem(name: Constants.responseTypeText, value: Constants.toketText),
             URLQueryItem(name: Constants.versionText, value: Constants.versionValue)
