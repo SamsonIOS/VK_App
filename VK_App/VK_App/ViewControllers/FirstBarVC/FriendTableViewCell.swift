@@ -10,10 +10,6 @@ final class FriendTableViewCell: UITableViewCell {
     @IBOutlet private var friendName: UILabel!
     @IBOutlet private var shadowForPersonView: FriendsView!
 
-    // MARK: Private properties
-
-    private var currentPath = ""
-
     // MARK: Life cycle
 
     override func awakeFromNib() {
@@ -24,21 +20,8 @@ final class FriendTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func addFriends(user: User) {
-        shadowForPersonView.image = nil
+    func addFriends(user: User, service: NetworkService) {
         friendName.text = "\(user.firstName) \(user.lastName)"
-        getImage(imagePath: user.userImagePath)
-        currentPath = user.userImagePath
-    }
-
-    // MARK: Private Methods
-
-    private func getImage(imagePath: String) {
-        LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
-            guard let self = self,
-                  imagePath == self.currentPath
-            else { return }
-            self.shadowForPersonView.image = UIImage(data: data)
-        }
+        shadowForPersonView.friendImageView.loadDatas(url: user.userImagePath, networkService: service)
     }
 }

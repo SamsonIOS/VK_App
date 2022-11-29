@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+import RealmSwift
 
 /// Экран с коллекцией фотографией друга
 final class FriendsPhotosViewController: UIViewController {
@@ -11,25 +12,19 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private let imageLoader = LoadingImage.shared
-    private var photoNames: [String] = [] {
-        didSet {
-            DispatchQueue.global(qos: .userInteractive).async {
-                self.loadImage()
-            }
-        }
-    }
+    private var photos: [UserPhotoResults] = []
 
-    private var userImages: [UIImage] = [] {
-        didSet {
-            setupUserPhotos()
-        }
-    }
+//    private var userImages: [UIImage] = [] {
+//        didSet {
+//            setupUserPhotos()
+//        }
+//    }
 
     private var userIdentifier = 0
     private var rowIndex = 0
     private var selectedIndex = 0
-    private var networkService = NetworkAPIService()
+    private var networkService = NetworkService()
+    var imageLoader = LoadingImage.shared
 
     // MARK: - Life cycle
 
@@ -55,13 +50,7 @@ final class FriendsPhotosViewController: UIViewController {
     // MARK: - Private methods
 
     private func loadImage() {
-        photoNames.forEach {
-            self.imageLoader.getImage(imagePosterPath: $0) { [weak self] data in
-                if let image = UIImage(data: data) {
-                    self?.userImages.append(image)
-                }
-            }
-        }
+        
     }
 
     private func fetchUserPhotos(userID: Int) {
@@ -74,10 +63,25 @@ final class FriendsPhotosViewController: UIViewController {
             }
         }
     }
+    
+    private func loadPhotosToRealm() {
+        do {
+            let realm = try Realm()
+            let friends = Array(realm.objects(UserPhoto.self))
+            if photoNames != friends {
+                photoNames = friends
+                print(realm.configuration.fileURL)
+            } else {
+              //  fetchFriends()
+            }
+        } catch {
+            print(error)
+        }
+    }
 
     private func setupUserPhotos() {
-        guard userImages.indices.contains(selectedIndex) else { return }
-        friendImageView.image = userImages[selectedIndex]
+        guard let imageName = photos.first?.photos[index].url else { return }
+        friendImageView.loadDatas(url: imageName, networkService: networkService)
     }
 
     private func setImage() {

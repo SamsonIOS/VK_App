@@ -13,7 +13,7 @@ import UIKit
 
     // MARK: - Private Visual components
 
-    private let friendImageView: UIImageView = {
+    let friendImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true

@@ -36,7 +36,7 @@ final class LoginViewController: UIViewController {
 
     // MARK: Private properties
 
-    private let networkService = NetworkAPIService()
+    private let networkService = NetworkService()
 
     // MARK: Life cycle
 

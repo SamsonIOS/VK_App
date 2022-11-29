@@ -13,7 +13,7 @@ final class UnFollowTableViewController: UITableViewController {
 
     // MARK: Private Properties
 
-    private let networkService = NetworkAPIService()
+    private let networkService = NetworkService()
     private var searchedGroups: [Group] = [] {
         didSet {
             tableView.reloadData()

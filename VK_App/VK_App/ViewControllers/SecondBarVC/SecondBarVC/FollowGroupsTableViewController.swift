@@ -22,7 +22,7 @@ final class FollowGroupsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
-    private let networkAPIService = NetworkAPIService()
+    private let networkService = NetworkService()
     private var groups: [Group] = [] {
         didSet {
             tableView.reloadData()
@@ -39,7 +39,7 @@ final class FollowGroupsTableViewController: UITableViewController {
     // MARK: Private Methods
 
     private func fetchGroups() {
-        networkAPIService.fetchGroups { [weak self] result in
+        networkService.fetchGroups { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(groups):
@@ -65,7 +65,7 @@ extension FollowGroupsTableViewController {
                 for: indexPath
             ) as? FollowGroupsTableViewCell
         else { return UITableViewCell() }
-        cell.configure(groups[indexPath.row])
+        cell.configure(groups[indexPath.row], networkService: networkService)
         return cell
     }
 

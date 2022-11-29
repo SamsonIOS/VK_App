@@ -24,21 +24,8 @@ final class FollowGroupsTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func configure(_ group: Group) {
+    func configure(_ group: Group, networkService: NetworkService) {
         nameGroupLabel.text = group.name
-        currentPath = group.photoPath
-        groupImageView.image = nil
-        getImage(imagePath: group.photoPath)
-    }
-
-    // MARK: Private Methods
-
-    private func getImage(imagePath: String) {
-        LoadingImage.shared.getImage(imagePosterPath: imagePath) { [weak self] data in
-            guard let self = self,
-                  imagePath == self.currentPath
-            else { return }
-            self.groupImageView.image = UIImage(data: data)
-        }
+        groupImageView.loadDatas(url: group.photoPath, networkService: networkService)
     }
 }
