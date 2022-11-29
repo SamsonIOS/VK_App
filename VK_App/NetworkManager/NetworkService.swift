@@ -55,11 +55,7 @@ struct NetworkService {
         urlComponents.queryItems = [
             URLQueryItem(name: Constants.clientIDText, value: Session.shared.userID),
             URLQueryItem(name: Constants.displayText, value: Constants.mobileText),
-            URLQueryItem(
-                name: Constants.redirectText,
-                value:
-                Constants.blankText
-            ),
+            URLQueryItem(name: Constants.redirectText, value: Constants.blankText),
             URLQueryItem(name: Constants.scopeText, value: Constants.scopeValue),
             URLQueryItem(name: Constants.responseTypeText, value: Constants.toketText),
             URLQueryItem(name: Constants.versionText, value: Constants.versionValue)

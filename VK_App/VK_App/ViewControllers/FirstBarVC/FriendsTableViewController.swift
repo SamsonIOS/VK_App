@@ -23,7 +23,6 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: Private properties
 
     private let networkService = NetworkService()
-    private let saveData = RealmService()
     private var sectionsMap: [Character: [User]] = [:]
     private var users: [User] = [] {
         didSet {
@@ -53,23 +52,7 @@ final class FriendsTableViewController: UITableViewController {
 
     private func setMethods() {
         searchBarDelegate()
-        loadFriendsToRealm()
-    }
-
-    private func loadFriendsToRealm() {
-        do {
-            let realm = try Realm()
-            let friends = Array(realm.objects(User.self))
-            if users != friends {
-                users = friends
-                sortedMethod()
-                print(realm.configuration.fileURL)
-            } else {
-                fetchFriends()
-            }
-        } catch {
-            print(error)
-        }
+        fetchFriends()
     }
 
     private func fetchFriends() {
@@ -78,7 +61,6 @@ final class FriendsTableViewController: UITableViewController {
             switch result {
             case let .success(users):
                 self.users = users
-                self.saveData.saveDataToRealm(users)
                 self.tableView.reloadData()
             case let .failure(error):
                 print(error.localizedDescription)

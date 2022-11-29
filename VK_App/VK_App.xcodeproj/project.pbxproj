@@ -18,7 +18,6 @@
 		330876722914905100F4D3E8 /* FollowGroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330876712914905100F4D3E8 /* FollowGroupsTableViewCell.swift */; };
 		330876752914953F00F4D3E8 /* UnFollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330876742914953F00F4D3E8 /* UnFollowTableViewCell.swift */; };
 		330876782914958E00F4D3E8 /* UnFollowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330876772914958E00F4D3E8 /* UnFollowTableViewController.swift */; };
-		3310765D293568B400BC7F96 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310765C293568B400BC7F96 /* RealmService.swift */; };
 		3320CEC229193F06002355A7 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3320CEC129193F06002355A7 /* NewsTableViewController.swift */; };
 		3320CEC429195D0F002355A7 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3320CEC329195D0F002355A7 /* NewsTableViewCell.swift */; };
 		33601E5129353AFD00763BF8 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */; };
@@ -63,7 +62,6 @@
 		330876712914905100F4D3E8 /* FollowGroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowGroupsTableViewCell.swift; sourceTree = "<group>"; };
 		330876742914953F00F4D3E8 /* UnFollowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnFollowTableViewCell.swift; sourceTree = "<group>"; };
 		330876772914958E00F4D3E8 /* UnFollowTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnFollowTableViewController.swift; sourceTree = "<group>"; };
-		3310765C293568B400BC7F96 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		3320CEC129193F06002355A7 /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
 		3320CEC329195D0F002355A7 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 			children = (
 				33D78D40292D5903008BF031 /* NetworkService.swift */,
 				33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */,
-				3310765C293568B400BC7F96 /* RealmService.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -415,7 +412,6 @@
 				33F2DFB929157130004C808D /* FriendsView.swift in Sources */,
 				330876692914790A00F4D3E8 /* FriendCollectionViewCell.swift in Sources */,
 				330876702914903400F4D3E8 /* FollowGroupsTableViewController.swift in Sources */,
-				3310765D293568B400BC7F96 /* RealmService.swift in Sources */,
 				330876752914953F00F4D3E8 /* UnFollowTableViewCell.swift in Sources */,
 				339E7A862911BA1F000FF65C /* LoginViewController.swift in Sources */,
 				33919C74291DACAD008D1F6D /* CustomSegueTransition.swift in Sources */,
