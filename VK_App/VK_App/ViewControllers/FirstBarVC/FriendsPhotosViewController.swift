@@ -11,15 +11,21 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Private properties
 
-       private var photoNames: [String] = [] {
-           didSet {
-               DispatchQueue.global(qos: .userInteractive).async {
-                   self.loadImage()
-               }
-           }
-       }
+    private var photoNames: [String] = [] {
+        didSet {
+            DispatchQueue.global(qos: .userInteractive).async {
+                self.loadImage()
+            }
+        }
+    }
 
-       private var userImages: [UIImage] = [] 
+    private var userImages: [UIImage] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.setupUserPhotos()
+            }
+        }
+    }
 
     private var userIdentifier = 0
     private var rowIndex = 0
@@ -33,7 +39,6 @@ final class FriendsPhotosViewController: UIViewController {
         super.viewDidLoad()
         setupSwipeGesture()
         setImage()
-        
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -51,7 +56,15 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Private methods
 
-    private func loadImage() {}
+    private func loadImage() {
+        photoNames.forEach {
+            self.imageLoader.getImage(imagePosterPath: $0) { [weak self] data in
+                if let image = UIImage(data: data) {
+                    self?.userImages.append(image)
+                }
+            }
+        }
+    }
 
     private func fetchUserPhotos(userID: Int) {
         networkService.fetchUserPhotos(for: userID) { [weak self] results in
@@ -67,7 +80,7 @@ final class FriendsPhotosViewController: UIViewController {
 
     private func setupUserPhotos() {
         guard userImages.indices.contains(selectedIndex) else { return }
-               friendImageView.image = userImages[selectedIndex]
+        friendImageView.image = userImages[selectedIndex]
     }
 
     private func setImage() {
