@@ -1,14 +1,13 @@
 // Group.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
 import RealmSwift
 
 /// Группы
-final class Group: Decodable {
-    @objc dynamic var id: Int
-    @objc dynamic var name: String
-    @objc dynamic var photoPath: String
+final class Group: Object, Decodable {
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var name: String
+    @Persisted var photoPath: String
 
     enum CodingKeys: String, CodingKey {
         case id

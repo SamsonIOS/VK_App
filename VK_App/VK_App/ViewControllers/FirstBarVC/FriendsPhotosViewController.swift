@@ -1,6 +1,7 @@
 // FriendsPhotosViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран с коллекцией фотографией друга
@@ -11,6 +12,12 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Private properties
 
+    private let networkService = NetworkService()
+    private let saveData = RealmService()
+    private let imageLoader = LoadingImage.shared
+    private var userIdentifier = 0
+    private var rowIndex = 0
+    private var selectedIndex = 0
     private var photoNames: [String] = [] {
         didSet {
             DispatchQueue.global(qos: .userInteractive).async {
@@ -27,12 +34,6 @@ final class FriendsPhotosViewController: UIViewController {
         }
     }
 
-    private var userIdentifier = 0
-    private var rowIndex = 0
-    private var selectedIndex = 0
-    private var networkService = NetworkService()
-    var imageLoader = LoadingImage.shared
-
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -48,13 +49,30 @@ final class FriendsPhotosViewController: UIViewController {
 
     // MARK: - Public methods
 
-    func configure(user: User) {
+    func configure(user: User, userID: Int) {
         userIdentifier = user.id
         title = "\(user.firstName) \(user.lastName)"
-        fetchUserPhotos(userID: userIdentifier)
+        loadPhotoToRealm(userID: userID)
     }
 
     // MARK: - Private methods
+
+    private func loadPhotoToRealm(userID: Int) {
+        do {
+            let realm = try Realm()
+            var userPhoto = Array(realm.objects(UserPhotoResults.self))
+            let userIdentificator = userPhoto.map(\.ownerID)
+            if userIdentificator.contains(where: { tempID in userID == tempID }) {
+                userPhoto = userPhoto.filter { $0.ownerID == userID }
+                let photoAll = userPhoto.map(\.photos.last)
+                photoNames = photoAll.map { $0?.url ?? "NO URL" }
+            } else {
+                fetchUserPhotos(userID: userID)
+            }
+        } catch {
+            print(error)
+        }
+    }
 
     private func loadImage() {
         photoNames.forEach {
@@ -70,7 +88,9 @@ final class FriendsPhotosViewController: UIViewController {
         networkService.fetchUserPhotos(for: userID) { [weak self] results in
             switch results {
             case let .success(photoPaths):
-                self?.photoNames = photoPaths.map(\.url)
+                let photoOptional = photoPaths.response.photos.map(\.photos.last)
+                self?.photoNames = photoOptional.map { $0?.url ?? "NO" }
+                self?.saveData.saveDataToRealm(photoPaths.response.photos)
                 self?.setupUserPhotos()
             case let .failure(error):
                 print(error.localizedDescription)

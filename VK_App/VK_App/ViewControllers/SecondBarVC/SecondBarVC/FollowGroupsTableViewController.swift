@@ -1,6 +1,7 @@
 // FollowGroupsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран с группами пользователя на которые он подписан
@@ -22,8 +23,10 @@ final class FollowGroupsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
+    private let realmService = RealmService()
     private let networkService = NetworkService()
-    private var groups: [Group] = [] {
+    private var groupsToken: NotificationToken?
+    private var groups: Results<Group>? {
         didSet {
             tableView.reloadData()
         }
@@ -33,19 +36,44 @@ final class FollowGroupsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchGroups()
+        loadGroupsRealm()
     }
 
     // MARK: Private Methods
+
+    private func loadGroupsRealm() {
+        let realm = try? Realm()
+        guard let objects = realm?.objects(Group.self) else { return }
+        addGroupsToken(result: objects)
+        if !objects.isEmpty {
+            groups = objects
+        } else {
+            fetchGroups()
+        }
+    }
+
+    private func addGroupsToken(result: Results<Group>) {
+        groupsToken = result.observe { change in
+            switch change {
+            case .initial:
+                break
+            case .update:
+                self.groups = result
+                self.tableView.reloadData()
+            case let .error(error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 
     private func fetchGroups() {
         networkService.fetchGroups { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case let .success(groups):
-                self.groups = groups
+            case let .success(data):
+                self.realmService.saveDataToRealm(data)
             case let .failure(error):
-                print(error.localizedDescription)
+                print(error)
             }
         }
     }
@@ -55,7 +83,7 @@ final class FollowGroupsTableViewController: UITableViewController {
 
 extension FollowGroupsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        groups?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,7 +93,8 @@ extension FollowGroupsTableViewController {
                 for: indexPath
             ) as? FollowGroupsTableViewCell
         else { return UITableViewCell() }
-        cell.configure(groups[indexPath.row], networkService: networkService)
+        guard let groups = groups?[indexPath.row] else { return UITableViewCell() }
+        cell.configure(groups, networkService: networkService)
         return cell
     }
 
