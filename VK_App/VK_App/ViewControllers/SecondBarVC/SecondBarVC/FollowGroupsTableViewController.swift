@@ -25,6 +25,7 @@ final class FollowGroupsTableViewController: UITableViewController {
 
     private let realmService = RealmService()
     private let networkService = NetworkService()
+    private let realm = try? Realm()
     private var groupsToken: NotificationToken?
     private var groups: Results<Group>? {
         didSet {
@@ -42,7 +43,6 @@ final class FollowGroupsTableViewController: UITableViewController {
     // MARK: Private Methods
 
     private func loadGroupsRealm() {
-        let realm = try? Realm()
         guard let objects = realm?.objects(Group.self) else { return }
         addGroupsToken(result: objects)
         if !objects.isEmpty {
@@ -73,7 +73,7 @@ final class FollowGroupsTableViewController: UITableViewController {
             case let .success(data):
                 self.realmService.saveDataToRealm(data)
             case let .failure(error):
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }

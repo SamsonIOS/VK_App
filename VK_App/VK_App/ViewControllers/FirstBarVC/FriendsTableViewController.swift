@@ -24,6 +24,7 @@ final class FriendsTableViewController: UITableViewController {
 
     private let networkService = NetworkService()
     private let realmService = RealmService()
+    private let realm = try? Realm()
     private var sectionsMap: [Character: [User]] = [:]
     private var usersToken: NotificationToken?
     private var users: Results<User>? {
@@ -58,7 +59,6 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func loadRealmUser() {
-        let realm = try? Realm()
         guard let objects = realm?.objects(User.self) else { return }
         addUserToken(result: objects)
         if !objects.isEmpty {
@@ -91,7 +91,7 @@ final class FriendsTableViewController: UITableViewController {
             case let .success(data):
                 self.realmService.saveDataToRealm(data)
             case let .failure(error):
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }

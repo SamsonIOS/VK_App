@@ -3,7 +3,7 @@
 
 import RealmSwift
 
-/// Сервис для хранения данных в кэш
+/// Сохранение в реалм
 final class RealmService {
     func saveDataToRealm<T: Object>(_ info: [T]) {
         do {
