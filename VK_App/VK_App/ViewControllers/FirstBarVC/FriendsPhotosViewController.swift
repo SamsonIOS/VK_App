@@ -38,8 +38,7 @@ final class FriendsPhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSwipeGesture()
-        setImage()
+        setMethods()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -56,6 +55,10 @@ final class FriendsPhotosViewController: UIViewController {
     }
 
     // MARK: - Private methods
+    private func setMethods() {
+        setupSwipeGesture()
+        setImage()
+    }
 
     private func loadPhotoToRealm(userID: Int) {
         do {
@@ -86,12 +89,13 @@ final class FriendsPhotosViewController: UIViewController {
 
     private func fetchUserPhotos(userID: Int) {
         networkService.fetchUserPhotos(for: userID) { [weak self] results in
+            guard let self = self else { return }
             switch results {
             case let .success(photoPaths):
                 let photoOptional = photoPaths.response.photos.map(\.photos.last)
-                self?.photoNames = photoOptional.map { $0?.url ?? "NO" }
-                self?.saveData.saveDataToRealm(photoPaths.response.photos)
-                self?.setupUserPhotos()
+                self.photoNames = photoOptional.map { $0?.url ?? "NO" }
+                self.saveData.saveDataToRealm(photoPaths.response.photos)
+                self.setupUserPhotos()
             case let .failure(error):
                 print(error.localizedDescription)
             }
