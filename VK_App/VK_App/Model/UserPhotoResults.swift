@@ -5,17 +5,14 @@ import RealmSwift
 
 /// Результаты парсинга запрсоса на получение объектов с путями фотографий пользователя
 final class UserPhotoResults: Object, Decodable {
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var photos = List<UserPhoto>()
+    @Persisted var ownerID: Int
     
-    // MARK: Constants
-    private enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case photos = "sizes"
         case ownerID = "owner_id"
     }
-    
-    // MARK: Public properties
-    @Persisted(primaryKey: true) var id: Int
-    @Persisted var photos = List<UserPhoto>()
-    @Persisted var ownerID: Int
 
 }
