@@ -13,7 +13,7 @@ final class FriendsPhotosViewController: UIViewController {
     // MARK: - Private properties
 
     private let networkService = NetworkService()
-    private let saveData = RealmService()
+    private let realmService = RealmService()
     private let imageLoader = LoadingImage.shared
     private var userIdentifier = 0
     private var rowIndex = 0
@@ -63,10 +63,10 @@ final class FriendsPhotosViewController: UIViewController {
     private func loadPhotoToRealm(userID: Int) {
         do {
             let realm = try Realm()
-            var userPhoto = Array(realm.objects(UserPhotoResults.self))
-            let userIdentificator = userPhoto.map(\.ownerID)
+            guard let userPhotoResults = RealmService.get(UserPhotoResults.self) else { return }
+            let userIdentificator = userPhotoResults.map(\.ownerID)
             if userIdentificator.contains(where: { tempID in userID == tempID }) {
-                userPhoto = userPhoto.filter { $0.ownerID == userID }
+                let userPhoto = userPhotoResults.filter { $0.ownerID == userID }
                 let photoAll = userPhoto.map(\.photos.last)
                 photoNames = photoAll.map { $0?.url ?? "NO URL" }
             } else {
@@ -94,7 +94,7 @@ final class FriendsPhotosViewController: UIViewController {
             case let .success(photoPaths):
                 let photoOptional = photoPaths.response.photos.map(\.photos.last)
                 self.photoNames = photoOptional.map { $0?.url ?? "NO" }
-                self.saveData.saveDataToRealm(photoPaths.response.photos)
+                RealmService.save(items: photoPaths.response.photos)
                 self.setupUserPhotos()
             case let .failure(error):
                 print(error.localizedDescription)
