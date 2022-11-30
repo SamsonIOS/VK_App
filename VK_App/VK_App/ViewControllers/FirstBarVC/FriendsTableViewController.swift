@@ -24,7 +24,8 @@ final class FriendsTableViewController: UITableViewController {
 
     private let networkService = NetworkService()
     private var sectionsMap: [Character: [User]] = [:]
-    private var users: [User] = [] {
+    private var usersToken: NotificationToken?
+    private var users: Results<User>? {
         didSet {
             filteredFriendsMap = [:]
             sortedMethod()
@@ -52,16 +53,40 @@ final class FriendsTableViewController: UITableViewController {
 
     private func setMethods() {
         searchBarDelegate()
-        fetchFriends()
+        loadRealmUser()
+    }
+
+    private func loadRealmUser() {
+        guard let objects = RealmService.get(User.self) else { return }
+        addUserToken(result: objects)
+        if !objects.isEmpty {
+            users = objects
+            sortedMethod()
+        } else {
+            fetchFriends()
+        }
+    }
+
+    private func addUserToken(result: Results<User>) {
+        usersToken = result.observe { change in
+            switch change {
+            case .initial:
+                break
+            case .update:
+                self.users = result
+                self.sortedMethod()
+                self.tableView.reloadData()
+            case let .error(error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     private func fetchFriends() {
-        networkService.fetchFriends { [weak self] result in
-            guard let self = self else { return }
+        networkService.fetchFriends { result in
             switch result {
-            case let .success(users):
-                self.users = users
-                self.tableView.reloadData()
+            case let .success(data):
+                RealmService.save(items: data)
             case let .failure(error):
                 print(error.localizedDescription)
             }
@@ -74,7 +99,7 @@ final class FriendsTableViewController: UITableViewController {
 
     private func sortedMethod() {
         var resultsMap = [Character: [User]]()
-        users.forEach {
+        users?.forEach {
             guard let character = $0.firstName.first else { return }
             if resultsMap[character] != nil {
                 resultsMap[character]?.append($0)
@@ -90,7 +115,8 @@ final class FriendsTableViewController: UITableViewController {
         guard let friendsPhotosViewController = storyboard
             .instantiateViewController(withIdentifier: Constants.storyFriendPhotoID) as? FriendsPhotosViewController,
             let friends = filteredFriendsMap[sortedCharacters[indexPath.section]]?[indexPath.row] else { return }
-        friendsPhotosViewController.configure(user: friends)
+        friendsPhotosViewController.configure(user: friends, userID: friends.id)
+
         navigationController?.pushViewController(friendsPhotosViewController, animated: true)
     }
 

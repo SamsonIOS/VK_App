@@ -2,7 +2,6 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
-import Foundation
 
 /// VK API Сервис
 struct NetworkService {
@@ -83,7 +82,7 @@ struct NetworkService {
         }
     }
 
-    func fetchUserPhotos(for userID: Int, completion: @escaping (Result<[UserPhoto], Error>) -> ()) {
+    func fetchUserPhotos(for userID: Int, completion: @escaping (Result<UserPhotoResult, Error>) -> ()) {
         let parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.versionParameter: Constants.versionValue,
@@ -95,8 +94,7 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let result = try JSONDecoder().decode(UserPhotoResult.self, from: data)
-                let imagePaths = result.response.photos.compactMap(\.photos.last)
-                completion(.success(imagePaths))
+                completion(.success(result))
             } catch {
                 completion(.failure(error))
             }
