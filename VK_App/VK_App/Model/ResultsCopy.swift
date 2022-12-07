@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// vc
+/// Результат парсинга запроса на получение фотографий поста
 struct CopyHistoryAttachment: Decodable {
     let photo: UserPhotoResults?
 }
