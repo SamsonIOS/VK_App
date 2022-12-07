@@ -14,15 +14,9 @@ import UIKit
         static let darkGrayColor = "DarkGrayColor"
     }
 
-    // MARK: - Private Visual components
+    static let shared = LikeControl()
 
-    private let likesLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(named: Constants.darkGrayColor)
-        label.text = Constants.nullText
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    // MARK: - Private Visual components
 
     private let likeButton: UIButton = {
         let button = UIButton()
@@ -30,6 +24,16 @@ import UIKit
         button.setImage(UIImage(systemName: Constants.heartButtonImageName), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+
+    // MARK: Public Visual Components
+
+    let likesLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: Constants.darkGrayColor)
+        label.text = Constants.nullText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
 
     // MARK: - Private Property

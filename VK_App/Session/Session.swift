@@ -8,7 +8,7 @@ final class Session {
     // MARK: Constants
 
     private enum Constants {
-        static let userID = "51484037"
+        static let userID = "51496787"
     }
 
     // MARK: Public properties

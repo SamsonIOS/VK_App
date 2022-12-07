@@ -9,7 +9,7 @@ final class User: Object, Decodable {
     @Persisted var firstName: String
     @Persisted var lastName: String
     @Persisted var userImagePath: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case firstName = "first_name"

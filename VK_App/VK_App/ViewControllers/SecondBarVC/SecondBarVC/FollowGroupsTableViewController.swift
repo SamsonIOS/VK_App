@@ -22,6 +22,7 @@ final class FollowGroupsTableViewController: UITableViewController {
     }
 
     // MARK: Private properties
+
     private let networkService = NetworkService()
     private var groupsToken: NotificationToken?
     private var groups: Results<Group>? {

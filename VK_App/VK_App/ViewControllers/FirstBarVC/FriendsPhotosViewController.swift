@@ -55,6 +55,7 @@ final class FriendsPhotosViewController: UIViewController {
     }
 
     // MARK: - Private methods
+
     private func setMethods() {
         setupSwipeGesture()
         setImage()
@@ -62,7 +63,6 @@ final class FriendsPhotosViewController: UIViewController {
 
     private func loadPhotoToRealm(userID: Int) {
         do {
-            let realm = try Realm()
             guard let userPhotoResults = RealmService.get(UserPhotoResults.self) else { return }
             let userIdentificator = userPhotoResults.map(\.ownerID)
             if userIdentificator.contains(where: { tempID in userID == tempID }) {
