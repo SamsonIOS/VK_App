@@ -557,7 +557,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1,6K" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbL-Sf-4d9">
-                                            <rect key="frame" x="356" y="23" width="38" height="1"/>
+                                            <rect key="frame" x="356" y="12" width="38" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="38" id="dmk-lB-aEw"/>
                                             </constraints>
@@ -585,7 +585,7 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="32T-6l-rGA" secondAttribute="trailing" constant="260" id="4iw-c6-4cH"/>
                                         <constraint firstAttribute="bottom" secondItem="32T-6l-rGA" secondAttribute="bottom" constant="8.5" id="6eb-l9-flv"/>
-                                        <constraint firstAttribute="bottom" secondItem="vbL-Sf-4d9" secondAttribute="bottom" constant="23" id="AkF-mn-uqb"/>
+                                        <constraint firstAttribute="bottom" secondItem="vbL-Sf-4d9" secondAttribute="bottom" constant="10" id="AkF-mn-uqb"/>
                                         <constraint firstAttribute="bottom" secondItem="BUs-ax-vpr" secondAttribute="bottom" constant="10" id="DOa-6C-iEw"/>
                                         <constraint firstItem="0yV-Nc-9Tt" firstAttribute="top" secondItem="AbW-qt-tWG" secondAttribute="top" constant="12" id="EmC-Fc-rU1"/>
                                         <constraint firstAttribute="trailing" secondItem="wZ3-Dw-xEE" secondAttribute="trailing" constant="234" id="Es8-JV-8SY"/>
@@ -600,8 +600,8 @@
                                         <constraint firstAttribute="trailing" secondItem="0yV-Nc-9Tt" secondAttribute="trailing" constant="289" id="Zrh-Ji-R7L"/>
                                         <constraint firstItem="vbL-Sf-4d9" firstAttribute="leading" secondItem="AbW-qt-tWG" secondAttribute="leading" constant="356" id="aOM-Fo-coa"/>
                                         <constraint firstAttribute="bottom" secondItem="wZ3-Dw-xEE" secondAttribute="bottom" constant="10" id="cAm-eQ-0RN"/>
-                                        <constraint firstItem="vbL-Sf-4d9" firstAttribute="top" secondItem="AbW-qt-tWG" secondAttribute="top" constant="23" id="chz-ty-c2N"/>
-                                        <constraint firstItem="vbL-Sf-4d9" firstAttribute="centerY" secondItem="AbW-qt-tWG" secondAttribute="centerY" id="eTY-hO-4IQ"/>
+                                        <constraint firstItem="vbL-Sf-4d9" firstAttribute="top" secondItem="AbW-qt-tWG" secondAttribute="top" constant="12" id="chz-ty-c2N"/>
+                                        <constraint firstItem="vbL-Sf-4d9" firstAttribute="centerY" secondItem="AbW-qt-tWG" secondAttribute="centerY" constant="1" id="eTY-hO-4IQ"/>
                                         <constraint firstItem="32T-6l-rGA" firstAttribute="top" secondItem="AbW-qt-tWG" secondAttribute="top" constant="11" id="fnY-w2-ly2"/>
                                         <constraint firstAttribute="bottom" secondItem="jdi-6E-0JN" secondAttribute="bottom" constant="21" id="g7C-uG-27j"/>
                                         <constraint firstAttribute="trailing" secondItem="Pm2-Zi-LmN" secondAttribute="trailing" constant="315" id="hMp-0F-DMC"/>
@@ -616,10 +616,10 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="commentsLabel" destination="0yV-Nc-9Tt" id="7mu-oh-lRI"/>
-                                    <outlet property="likesControl" destination="BUs-ax-vpr" id="sTk-qp-DbC"/>
-                                    <outlet property="repostsLabel" destination="wZ3-Dw-xEE" id="Lp4-OT-kkz"/>
-                                    <outlet property="viewsLabel" destination="vbL-Sf-4d9" id="G67-zq-fPl"/>
+                                    <outlet property="commentLabel" destination="0yV-Nc-9Tt" id="28y-ks-tZI"/>
+                                    <outlet property="likeControl" destination="BUs-ax-vpr" id="uRv-xr-73L"/>
+                                    <outlet property="repostLabel" destination="wZ3-Dw-xEE" id="SRq-KS-NRS"/>
+                                    <outlet property="viewLabel" destination="vbL-Sf-4d9" id="U98-Ex-sKm"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsTextCell" rowHeight="200" id="hkX-3B-aGi" customClass="NewsTextCell" customModule="VK_App" customModuleProvider="target">

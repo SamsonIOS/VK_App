@@ -1,4 +1,4 @@
-// protocolConfigurable.swift
+// NewsConfigurable.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
@@ -8,5 +8,5 @@ typealias NewsCell = UITableViewCell & NewsConfigurable
 
 /// протокол для вызова функции в ячейке
 protocol NewsConfigurable {
-    func configure(news: NewsFeed, network: NetworkService)
+    func configure(news: NewsFeed)
 }

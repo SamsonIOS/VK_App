@@ -7,17 +7,17 @@ import UIKit
 final class NewsFooterCell: UITableViewCell, NewsConfigurable {
     // MARK: Private IBOutlets
 
-    @IBOutlet private var likesControl: LikeControl!
-    @IBOutlet private var commentsLabel: UILabel!
-    @IBOutlet private var repostsLabel: UILabel!
-    @IBOutlet private var viewsLabel: UILabel!
+    @IBOutlet private var likeControl: LikeControl!
+    @IBOutlet private var commentLabel: UILabel!
+    @IBOutlet private var repostLabel: UILabel!
+    @IBOutlet private var viewLabel: UILabel!
 
     // MARK: Public Methods
 
-    func configure(news: NewsFeed, network: NetworkService) {
-        likesControl.likesLabel.text = String(news.likes.count)
-        commentsLabel.text = String(news.comments.count)
-        repostsLabel.text = String(news.reposts.count)
-        viewsLabel.text = String(news.views.count)
+    func configure(news: NewsFeed) {
+        likeControl.likesLabel.text = String(news.likes.count)
+        commentLabel.text = String(news.comments.count)
+        repostLabel.text = String(news.reposts.count)
+        viewLabel.text = String(news.views.count)
     }
 }

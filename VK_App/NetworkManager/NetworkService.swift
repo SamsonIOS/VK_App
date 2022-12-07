@@ -40,15 +40,6 @@ struct NetworkService {
         static let ownerIDParameter = "owner_id"
     }
 
-    // MARK: - Public Methods
-
-    func downloadImage(url: String) -> Data? {
-        guard let url = URL(string: url),
-              let data = try? Data(contentsOf: url)
-        else { return nil }
-        return data
-    }
-
     func urlComponents() -> URLRequest? {
         var urlComponents = URLComponents()
         urlComponents.scheme = Constants.scheme

@@ -167,8 +167,7 @@ extension FriendsTableViewController {
         ) as? FriendTableViewCell,
             let infoForCell = filteredFriendsMap[sortedCharacters[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
-        cell.addFriends(user: infoForCell, service: networkService)
-
+        cell.addFriends(user: infoForCell)
         return cell
     }
 

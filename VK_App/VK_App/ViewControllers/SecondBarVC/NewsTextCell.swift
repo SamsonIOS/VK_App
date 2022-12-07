@@ -7,11 +7,11 @@ import UIKit
 final class NewsTextCell: UITableViewCell, NewsConfigurable {
     // MARK: Private IBOutlets
 
-    @IBOutlet var overviewPostLabels: UITextView!
+    @IBOutlet private var overviewPostLabels: UITextView!
 
     // MARK: Public Methods
 
-    func configure(news: NewsFeed, network: NetworkService) {
+    func configure(news: NewsFeed) {
         overviewPostLabels.text = news.text
     }
 }

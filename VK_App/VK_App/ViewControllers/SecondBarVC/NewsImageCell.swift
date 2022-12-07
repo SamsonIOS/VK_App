@@ -11,8 +11,9 @@ final class NewsImageCell: UITableViewCell, NewsConfigurable {
 
     // MARK: Public Methods
 
-    func configure(news: NewsFeed, network: NetworkService) {
-        guard let photo = news.copyHistory?.first?.attachments?.first?.photo?.photos.first?.url else { return }
-        postImageView.loadDatas(url: photo, networkService: network)
+    func configure(news: NewsFeed) {
+        guard let photo = news.copyHistory?.first?.attachments?.first?.photo?.photos.first?.url,
+              let url = URL(string: photo) else { return }
+        postImageView.load(url: url)
     }
 }

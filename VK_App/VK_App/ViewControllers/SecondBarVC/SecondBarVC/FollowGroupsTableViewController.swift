@@ -91,7 +91,7 @@ extension FollowGroupsTableViewController {
             ) as? FollowGroupsTableViewCell
         else { return UITableViewCell() }
         guard let groups = groups?[indexPath.row] else { return UITableViewCell() }
-        cell.configure(groups, networkService: networkService)
+        cell.configure(groups)
         return cell
     }
 

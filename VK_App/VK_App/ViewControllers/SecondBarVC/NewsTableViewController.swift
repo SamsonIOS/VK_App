@@ -12,6 +12,7 @@ final class NewsTableViewController: UITableViewController {
         static let headerCellID = "NewsHeaderCell"
         static let textCellID = "NewsTextCell"
         static let footerCellID = "NewsFooterCell"
+        static let imageCellID = "NewsImageCell"
     }
 
     private enum NewsCellType: Int, CaseIterable {
@@ -22,7 +23,7 @@ final class NewsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
-    private let network = NetworkService()
+    private let networkService = NetworkService()
     private var news: [NewsFeed] = []
 
     // MARK: Life cycle
@@ -35,7 +36,7 @@ final class NewsTableViewController: UITableViewController {
     // MARK: Private Methods
 
     private func fetchNews() {
-        network.fetchNews { [weak self] result in
+        networkService.fetchNews { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(response):
@@ -82,7 +83,7 @@ extension NewsTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = news[indexPath.section]
+        let news = news[indexPath.section]
         let cellType = NewsCellType(rawValue: indexPath.row) ?? .content
         var cellID = Constants.emptyText
 
@@ -90,14 +91,14 @@ extension NewsTableViewController {
         case .header:
             cellID = Constants.headerCellID
         case .content:
-            cellID = Constants.textCellID
+            cellID = Constants.imageCellID
         case .footer:
             cellID = Constants.footerCellID
         }
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? NewsCell
         else { return UITableViewCell() }
-        cell.configure(news: item, network: network)
+        cell.configure(news: news)
         return cell
     }
 }

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Массивы новостоей, групп, друзей
+/// Новостоей, группы, друзья
 struct NewsFeedResponse: Decodable {
     let news: [NewsFeed]
     let groups: [Group]

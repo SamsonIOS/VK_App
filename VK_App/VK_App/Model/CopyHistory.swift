@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// vc
+/// Доступ к фото поста
 struct CopyHistory: Decodable {
     let attachments: [CopyHistoryAttachment]?
 }
