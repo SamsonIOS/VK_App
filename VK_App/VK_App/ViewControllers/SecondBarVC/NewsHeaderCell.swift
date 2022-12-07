@@ -5,6 +5,11 @@ import UIKit
 
 ///  Ячейка хедера
 final class NewsHeaderCell: UITableViewCell, NewsConfigurable {
+    
+    // MARK: Constants
+    private enum Constants {
+        static let dateStyle = "MM-dd-yyyy HH:mm"
+    }
     // MARK: Private IBOtlets
 
     @IBOutlet private var userImageView: UIImageView!
@@ -26,7 +31,7 @@ final class NewsHeaderCell: UITableViewCell, NewsConfigurable {
         let truncatedTime = TimeInterval(dateValue)
         let date = Date(timeIntervalSince1970: truncatedTime)
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy HH:mm"
+        formatter.dateFormat = Constants.dateStyle
         return formatter.string(from: date)
     }
 }

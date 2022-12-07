@@ -64,7 +64,6 @@ struct NetworkService {
         ]
         guard let components = urlComponents.url else { return nil }
         let request = URLRequest(url: components)
-        print(request)
         return request
     }
 
@@ -79,7 +78,6 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let request = try JSONDecoder().decode(UserResult.self, from: data)
-                print(request)
                 completion(.success(request.response.users))
             } catch {
                 completion(.failure(error))
@@ -149,13 +147,11 @@ struct NetworkService {
             Constants.versionParameter: Constants.versionValue
         ]
         let path = "\(Constants.baseURL)\(Constants.getNewsFeed)"
-
         AF.request(path, parameters: parameters).responseData { response in
             guard let data = response.data else { return }
             do {
                 let request = try JSONDecoder().decode(NewsFeedResult.self, from: data)
                 completion(.success(request.response))
-
             } catch {
                 completion(.failure(error))
             }

@@ -8,7 +8,10 @@ final class NewsTableViewController: UITableViewController {
     // MARK: Constants
 
     private enum Constants {
-        static let newsCellID = "newsCell"
+        static let emptyText = ""
+        static let headerCellID = "NewsHeaderCell"
+        static let textCellID = "NewsTextCell"
+        static let footerCellID = "NewsFooterCell"
     }
 
     private enum NewsCellType: Int, CaseIterable {
@@ -81,15 +84,15 @@ extension NewsTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = news[indexPath.section]
         let cellType = NewsCellType(rawValue: indexPath.row) ?? .content
-        var cellID = ""
+        var cellID = Constants.emptyText
 
         switch cellType {
         case .header:
-            cellID = "NewsHeaderCell"
+            cellID = Constants.headerCellID
         case .content:
-            cellID = "NewsImageCell"
+            cellID = Constants.textCellID
         case .footer:
-            cellID = "NewsFooterCell"
+            cellID = Constants.footerCellID
         }
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? NewsCell

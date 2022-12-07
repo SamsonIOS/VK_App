@@ -14,8 +14,6 @@ import UIKit
         static let darkGrayColor = "DarkGrayColor"
     }
 
-    static let shared = LikeControl()
-
     // MARK: - Private Visual components
 
     private let likeButton: UIButton = {
