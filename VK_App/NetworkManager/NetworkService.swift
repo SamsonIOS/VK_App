@@ -15,6 +15,9 @@ struct NetworkService {
         static let getUserPhoto = "photos.getAll"
         static let getGroups = "groups.get"
         static let getSearchGroup = "groups.search"
+        static let getNewsFeed = "newsfeed.get"
+        static let filters = "filters"
+        static let post = "post"
         static let scheme = "https"
         static let host = "oauth.vk.com"
         static let path = "/authorize"
@@ -24,7 +27,7 @@ struct NetworkService {
         static let redirectText = "redirect_uri"
         static let blankText = "https://oauth.vk.com/blank.html"
         static let scopeText = "scope"
-        static let scopeValue = "262150"
+        static let scopeValue = "8194"
         static let responseTypeText = "response_type"
         static let toketText = "token"
         static let versionText = "v"
@@ -35,15 +38,6 @@ struct NetworkService {
         static let extendedValue = "1"
         static let queryParameter = "q"
         static let ownerIDParameter = "owner_id"
-    }
-
-    // MARK: - Public Methods
-
-    func downloadImage(url: String) -> Data? {
-        guard let url = URL(string: url),
-              let data = try? Data(contentsOf: url)
-        else { return nil }
-        return data
     }
 
     func urlComponents() -> URLRequest? {
@@ -131,6 +125,24 @@ struct NetworkService {
             do {
                 let result = try JSONDecoder().decode(GroupResult.self, from: data)
                 completion(.success(result.response.groups))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchNews(completion: @escaping (Result<NewsFeedResponse, Error>) -> ()) {
+        let parameters: Parameters = [
+            Constants.acessTokenParameter: Session.shared.token,
+            Constants.filters: Constants.post,
+            Constants.versionParameter: Constants.versionValue
+        ]
+        let path = "\(Constants.baseURL)\(Constants.getNewsFeed)"
+        AF.request(path, parameters: parameters).responseData { response in
+            guard let data = response.data else { return }
+            do {
+                let request = try JSONDecoder().decode(NewsFeedResult.self, from: data)
+                completion(.success(request.response))
             } catch {
                 completion(.failure(error))
             }

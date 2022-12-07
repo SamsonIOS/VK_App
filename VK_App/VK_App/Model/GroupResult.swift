@@ -5,5 +5,6 @@ import Foundation
 
 /// ответ на запрос групп
 struct GroupResult: Decodable {
+    /// Запрос
     let response: GroupResponse
 }

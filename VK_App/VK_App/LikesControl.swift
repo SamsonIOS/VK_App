@@ -16,20 +16,22 @@ import UIKit
 
     // MARK: - Private Visual components
 
-    private let likesLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(named: Constants.darkGrayColor)
-        label.text = Constants.nullText
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
     private let likeButton: UIButton = {
         let button = UIButton()
         button.tintColor = UIColor(named: Constants.darkGrayColor)
         button.setImage(UIImage(systemName: Constants.heartButtonImageName), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+
+    // MARK: Public Visual Components
+
+    let likesLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: Constants.darkGrayColor)
+        label.text = Constants.nullText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
 
     // MARK: - Private Property
