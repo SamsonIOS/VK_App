@@ -5,6 +5,7 @@ import Foundation
 
 /// UserResponse результат
 struct UserResponse: Decodable {
+    /// Друзья
     let users: [User]
 
     enum CodingKeys: String, CodingKey {

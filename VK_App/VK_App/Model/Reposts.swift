@@ -3,7 +3,8 @@
 
 import Foundation
 
-/// Колличество репостов поста
+/// Количество репостов поста
 struct Reposts: Decodable {
+    /// Количество репостов поста
     var count: Int
 }

@@ -5,7 +5,7 @@ import RealmSwift
 
 /// Группы
 final class Group: Object, Decodable {
-    /// Айди группы
+    /// ID группы
     @Persisted(primaryKey: true) var id: Int
     /// Имя группы
     @Persisted var name: String

@@ -5,6 +5,7 @@ import Foundation
 
 /// Массив групп
 struct GroupResponse: Decodable {
+    /// Группы
     let groups: [Group]
 
     enum CodingKeys: String, CodingKey {

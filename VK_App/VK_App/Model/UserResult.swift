@@ -5,5 +5,6 @@ import Foundation
 
 /// Response результат
 struct UserResult: Decodable {
+    /// Запрос
     let response: UserResponse
 }
