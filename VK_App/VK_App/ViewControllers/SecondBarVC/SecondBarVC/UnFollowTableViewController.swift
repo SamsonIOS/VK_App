@@ -23,15 +23,15 @@ final class UnFollowTableViewController: UITableViewController {
     // MARK: Private Methods
 
     private func fetchSearchedGroups(by prefix: String) {
-        networkService.fetchSearchedGroups(by: prefix) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success(groups):
-                self.searchedGroups = groups
-            case let .failure(error):
-                print(error)
-            }
-        }
+//        networkService.fetchSearchedGroups(by: prefix) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case let .success(groups):
+//                self.searchedGroups = groups
+//            case let .failure(error):
+//                print(error)
+//            }
+//        }
     }
 
     private func setupSearchBar() {

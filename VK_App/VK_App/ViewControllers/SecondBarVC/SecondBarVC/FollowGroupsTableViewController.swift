@@ -65,14 +65,7 @@ final class FollowGroupsTableViewController: UITableViewController {
     }
 
     private func fetchGroups() {
-        networkService.fetchGroups { result in
-            switch result {
-            case let .success(data):
-                RealmService.save(items: data)
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
-        }
+        networkService.getGroups()
     }
 }
 
