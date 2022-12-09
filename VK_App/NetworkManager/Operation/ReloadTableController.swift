@@ -3,7 +3,7 @@
 
 import RealmSwift
 
-/// Обновление таблицы
+/// Обновление данных в реалм
 final class ReloadTableController: Operation {
     // MARK: Public Methods
 
