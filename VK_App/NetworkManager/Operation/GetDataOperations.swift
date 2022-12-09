@@ -3,7 +3,7 @@
 
 import Alamofire
 
-/// Запрос в сеть
+/// Асинхронная операция запрос в сеть
 final class GetDataOperations: AsyncOperation {
     // MARK: Public Properties
 

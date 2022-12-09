@@ -3,7 +3,7 @@
 
 import RealmSwift
 
-/// Структура поста полученная из интернета
+/// Операция парсинга Group
 final class ParseGroupData: Operation {
     // MARK: Public Properties
 
