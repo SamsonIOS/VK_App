@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
+import PromiseKit
 
 /// VK API Сервис
 struct NetworkService {
@@ -40,6 +41,8 @@ struct NetworkService {
         static let ownerIDParameter = "owner_id"
     }
 
+    // MARK: Public Methods
+
     func urlComponents() -> URLRequest? {
         var urlComponents = URLComponents()
         urlComponents.scheme = Constants.scheme
@@ -58,25 +61,28 @@ struct NetworkService {
         return request
     }
 
-    func fetchFriends(completion: @escaping (Result<[User], Error>) -> ()) {
+    func fetchFriends() -> Promise<[User]> {
         let parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.friendFields: Constants.friendFieldsValue,
             Constants.versionParameter: Constants.versionValue
         ]
         let path = "\(Constants.baseURL)\(Constants.getFriends)"
-        AF.request(path, parameters: parameters).responseData { response in
-            guard let data = response.data else { return }
-            do {
-                let request = try JSONDecoder().decode(UserResult.self, from: data)
-                completion(.success(request.response.users))
-            } catch {
-                completion(.failure(error))
+        let promise = Promise<[User]> { resolver in
+            AF.request(path, parameters: parameters).responseData { response in
+                guard let data = response.data else { return }
+                do {
+                    let request = try JSONDecoder().decode(UserResult.self, from: data)
+                    resolver.fulfill(request.response.users)
+                } catch {
+                    resolver.reject(error)
+                }
             }
         }
+        return promise
     }
 
-    func fetchUserPhotos(for userID: Int, completion: @escaping (Result<UserPhotoResult, Error>) -> ()) {
+    func fetchUserPhotos(for userID: Int) -> Promise<UserPhotoResult> {
         let parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.versionParameter: Constants.versionValue,
@@ -84,69 +90,71 @@ struct NetworkService {
             Constants.ownerIDParameter: userID
         ]
         let path = "\(Constants.baseURL)\(Constants.getUserPhoto)"
-        AF.request(path, parameters: parameters).responseData { response in
-            guard let data = response.data else { return }
-            do {
-                let result = try JSONDecoder().decode(UserPhotoResult.self, from: data)
-                completion(.success(result))
-            } catch {
-                completion(.failure(error))
+        let promise = Promise<UserPhotoResult> { resolver in
+            AF.request(path, parameters: parameters).responseData { response in
+                guard let data = response.data else { return }
+                do {
+                    let result = try JSONDecoder().decode(UserPhotoResult.self, from: data)
+                    resolver.fulfill(result)
+                } catch {
+                    resolver.reject(error)
+                }
             }
         }
+        return promise
     }
 
-    func fetchGroups(completion: @escaping (Result<[Group], Error>) -> ()) {
-        let parameters: Parameters = [
-            Constants.acessTokenParameter: Session.shared.token,
-            Constants.versionParameter: Constants.versionValue,
-            Constants.extendedParameter: Constants.extendedValue
-        ]
-        let path = "\(Constants.baseURL)\(Constants.getGroups)"
-        AF.request(path, parameters: parameters).responseData { response in
-            guard let data = response.data else { return }
-            do {
-                let result = try JSONDecoder().decode(GroupResult.self, from: data)
-                completion(.success(result.response.groups))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+    func getGroups() {
+        let operationQueue = OperationQueue()
+        let request = getRequest()
+        let getDataOperaion = GetDataOperations(request: request)
+        operationQueue.addOperation(getDataOperaion)
+
+        let parseGroupData = ParseGroupData()
+        parseGroupData.addDependency(getDataOperaion)
+        operationQueue.addOperation(parseGroupData)
+
+        let saveToRealm = ReloadTable()
+        saveToRealm.addDependency(parseGroupData)
+        OperationQueue.main.addOperation(saveToRealm)
     }
 
-    func fetchSearchedGroups(by searchQuery: String, completion: @escaping (Result<[Group], Error>) -> ()) {
-        let parameters: Parameters = [
-            Constants.acessTokenParameter: Session.shared.token,
-            Constants.versionParameter: Constants.versionValue,
-            Constants.queryParameter: searchQuery
-        ]
-        let path = "\(Constants.baseURL)\(Constants.getSearchGroup)"
-        AF.request(path, parameters: parameters).responseData { response in
-            guard let data = response.data else { return }
-            do {
-                let result = try JSONDecoder().decode(GroupResult.self, from: data)
-                completion(.success(result.response.groups))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-    }
-
-    func fetchNews(completion: @escaping (Result<NewsFeedResponse, Error>) -> ()) {
+    func fetchNews() -> Promise<NewsFeedResponse> {
         let parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.filters: Constants.post,
             Constants.versionParameter: Constants.versionValue
         ]
         let path = "\(Constants.baseURL)\(Constants.getNewsFeed)"
-        AF.request(path, parameters: parameters).responseData { response in
-            guard let data = response.data else { return }
-            do {
-                let request = try JSONDecoder().decode(NewsFeedResult.self, from: data)
-                completion(.success(request.response))
-            } catch {
-                completion(.failure(error))
+        let promise = Promise<NewsFeedResponse> { resolver in
+            AF.request(path, parameters: parameters).responseData { response in
+                guard let data = response.data else { return }
+                do {
+                    let request = try JSONDecoder().decode(NewsFeedResult.self, from: data)
+                    resolver.fulfill(request.response)
+                } catch {
+                    resolver.reject(error)
+                }
             }
         }
+        return promise
+    }
+
+    // MARK: Private Methods
+
+    private func getRequest() -> DataRequest {
+        let baseURL = Constants.baseURL
+        let version = Constants.versionValue
+        let token = Session.shared.token
+        let path = Constants.getGroups
+        let parameters: Parameters = [
+            Constants.versionParameter: version,
+            Constants.extendedParameter: Constants.extendedValue,
+            Constants.acessTokenParameter: token
+        ]
+        let url = "\(baseURL)\(path)"
+        let request = AF.request(url, parameters: parameters)
+        return request
     }
 }
 

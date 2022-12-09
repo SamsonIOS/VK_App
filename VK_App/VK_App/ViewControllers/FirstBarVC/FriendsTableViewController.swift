@@ -1,6 +1,7 @@
 // FriendsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import PromiseKit
 import RealmSwift
 import UIKit
 
@@ -83,13 +84,12 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func fetchFriends() {
-        networkService.fetchFriends { result in
-            switch result {
-            case let .success(data):
-                RealmService.save(items: data)
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
+        firstly {
+            networkService.fetchFriends()
+        }.done { users in
+            RealmService.save(items: users)
+        }.catch { error in
+            print(error.localizedDescription)
         }
     }
 

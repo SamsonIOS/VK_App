@@ -9,5 +9,6 @@ target 'VK_App' do
 
  pod 'Alamofire'
  pod 'RealmSwift'
+ pod 'PromiseKit'
 
 end

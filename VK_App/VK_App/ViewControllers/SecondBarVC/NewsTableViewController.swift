@@ -1,6 +1,7 @@
 // NewsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import PromiseKit
 import UIKit
 
 /// Экран с новостями
@@ -36,14 +37,12 @@ final class NewsTableViewController: UITableViewController {
     // MARK: Private Methods
 
     private func fetchNews() {
-        networkService.fetchNews { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success(response):
-                self.filterNews(response: response)
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
+        firstly {
+            networkService.fetchNews()
+        }.done { news in
+            self.filterNews(response: news)
+        }.catch { error in
+            print(error.localizedDescription)
         }
     }
 

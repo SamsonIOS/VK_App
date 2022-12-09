@@ -1,6 +1,7 @@
 // FriendsPhotosViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import PromiseKit
 import RealmSwift
 import UIKit
 
@@ -88,17 +89,15 @@ final class FriendsPhotosViewController: UIViewController {
     }
 
     private func fetchUserPhotos(userID: Int) {
-        networkService.fetchUserPhotos(for: userID) { [weak self] results in
-            guard let self = self else { return }
-            switch results {
-            case let .success(photoPaths):
-                let photoOptional = photoPaths.response.photos.map(\.photos.last)
-                self.photoNames = photoOptional.map { $0?.url ?? "NO" }
-                RealmService.save(items: photoPaths.response.photos)
-                self.setupUserPhotos()
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
+        firstly {
+            networkService.fetchUserPhotos(for: userID)
+        }.done { userPhotos in
+            let photoOptional = userPhotos.response.photos.map(\.photos.last)
+            self.photoNames = photoOptional.map { $0?.url ?? "NO" }
+            RealmService.save(items: userPhotos.response.photos)
+            self.setupUserPhotos()
+        }.catch { error in
+            print(error.localizedDescription)
         }
     }
 
