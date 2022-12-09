@@ -5,7 +5,7 @@ import RealmSwift
 
 /// Обновление таблицы
 final class ReloadTableController: Operation {
-    // MARK: Initializers
+    // MARK: Public Methods
 
     override func main() {
         guard let getParseData = dependencies.first as? ParseData else { return }

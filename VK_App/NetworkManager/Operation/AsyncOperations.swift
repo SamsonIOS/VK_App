@@ -32,9 +32,9 @@ class AsyncOperation: Operation {
             didChangeValue(forKey: oldValue.keyPath)
         }
     }
-
-    // MARK: Initializers
-
+    
+    // MARK: Public Methods
+    
     override var isAsynchronous: Bool {
         true
     }

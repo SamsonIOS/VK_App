@@ -19,6 +19,8 @@ final class GetDataOperations: AsyncOperation {
         self.request = request
     }
 
+    // MARK: Public Methods
+    
     override func cancel() {
         request.cancel()
         super.cancel()

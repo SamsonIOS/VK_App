@@ -9,7 +9,7 @@ final class ParseData: Operation {
 
     var outputData: [Group] = []
 
-    // MARK: Initializers
+    // MARK: Public Methods
 
     override func main() {
         guard let getDataOperation = dependencies.first as? GetDataOperations,

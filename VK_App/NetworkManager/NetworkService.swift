@@ -105,15 +105,15 @@ struct NetworkService {
     }
 
     func getGroups() {
-        let opq = OperationQueue()
+        let operationQueue = OperationQueue()
 
         let request = getRequest()
         let getDataOperaion = GetDataOperations(request: request)
-        opq.addOperation(getDataOperaion)
+        operationQueue.addOperation(getDataOperaion)
 
         let parseData = ParseData()
         parseData.addDependency(getDataOperaion)
-        opq.addOperation(parseData)
+        operationQueue.addOperation(parseData)
 
         let saveToRealm = ReloadTableController()
         saveToRealm.addDependency(parseData)
@@ -153,7 +153,7 @@ struct NetworkService {
             Constants.extendedParameter: Constants.extendedValue,
             Constants.acessTokenParameter: token
         ]
-        let url = (baseURL + path)
+        let url = "\(baseURL)\(path)"
         let request = AF.request(url, parameters: parameters)
         return request
     }

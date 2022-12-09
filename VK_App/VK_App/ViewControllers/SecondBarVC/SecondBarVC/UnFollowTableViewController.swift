@@ -20,20 +20,6 @@ final class UnFollowTableViewController: UITableViewController {
         }
     }
 
-    // MARK: Private Methods
-
-    private func fetchSearchedGroups(by prefix: String) {
-//        networkService.fetchSearchedGroups(by: prefix) { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case let .success(groups):
-//                self.searchedGroups = groups
-//            case let .failure(error):
-//                print(error)
-//            }
-//        }
-    }
-
     private func setupSearchBar() {
         let searchBar = UISearchBar()
         searchBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 45)
@@ -68,7 +54,5 @@ extension UnFollowTableViewController {
 // MARK: UISearchBarDelegate
 
 extension UnFollowTableViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        fetchSearchedGroups(by: searchText)
-    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {}
 }
