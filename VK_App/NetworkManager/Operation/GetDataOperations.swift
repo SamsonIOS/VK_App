@@ -20,7 +20,7 @@ final class GetDataOperations: AsyncOperation {
     }
 
     // MARK: Public Methods
-    
+
     override func cancel() {
         request.cancel()
         super.cancel()

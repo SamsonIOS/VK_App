@@ -32,9 +32,7 @@ class AsyncOperation: Operation {
             didChangeValue(forKey: oldValue.keyPath)
         }
     }
-    
-    // MARK: Public Methods
-    
+
     override var isAsynchronous: Bool {
         true
     }
@@ -50,6 +48,8 @@ class AsyncOperation: Operation {
     override var isFinished: Bool {
         state == .finished
     }
+
+    // MARK: Public Methods
 
     override func start() {
         if isCancelled {

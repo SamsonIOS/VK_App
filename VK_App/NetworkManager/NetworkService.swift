@@ -106,17 +106,16 @@ struct NetworkService {
 
     func getGroups() {
         let operationQueue = OperationQueue()
-
         let request = getRequest()
         let getDataOperaion = GetDataOperations(request: request)
         operationQueue.addOperation(getDataOperaion)
 
-        let parseData = ParseData()
-        parseData.addDependency(getDataOperaion)
-        operationQueue.addOperation(parseData)
+        let parseGroupData = ParseGroupData()
+        parseGroupData.addDependency(getDataOperaion)
+        operationQueue.addOperation(parseGroupData)
 
-        let saveToRealm = ReloadTableController()
-        saveToRealm.addDependency(parseData)
+        let saveToRealm = ReloadTable()
+        saveToRealm.addDependency(parseGroupData)
         OperationQueue.main.addOperation(saveToRealm)
     }
 
