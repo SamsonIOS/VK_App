@@ -24,8 +24,8 @@ final class FollowGroupsTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func configure(_ group: Group, photoPath: UIImage?) {
+    func configure(_ group: Group, photoService: PhotoService, indexPath: IndexPath) {
         nameGroupLabel.text = group.name
-        groupImageView.image = photoPath
+        groupImageView.image = photoService.photo(atIndexpath: indexPath, byUrl: group.photoPath)
     }
 }
