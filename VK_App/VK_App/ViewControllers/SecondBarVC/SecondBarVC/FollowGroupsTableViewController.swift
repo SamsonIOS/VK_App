@@ -37,12 +37,12 @@ final class FollowGroupsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setVC()
+        setViewController()
     }
 
     // MARK: Private Methods
 
-    private func setVC() {
+    private func setViewController() {
         photoService = PhotoService(container: self)
         loadGroupsRealm()
     }
