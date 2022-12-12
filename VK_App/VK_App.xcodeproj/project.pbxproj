@@ -27,6 +27,9 @@
 		334A637029406C0900D34316 /* ResultsCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A636F29406C0900D34316 /* ResultsCopy.swift */; };
 		334A63722941D99F00D34316 /* GetDataOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A63712941D99F00D34316 /* GetDataOperations.swift */; };
 		334A63752941DB9200D34316 /* AsyncOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A63742941DB9200D34316 /* AsyncOperations.swift */; };
+		334A96F029435EA400F15026 /* PhotoService + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A96EF29435EA400F15026 /* PhotoService + Extension.swift */; };
+		334A96F229435EE600F15026 /* DataReloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A96F129435EE600F15026 /* DataReloadable.swift */; };
+		334A96F429435EF300F15026 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A96F329435EF300F15026 /* PhotoService.swift */; };
 		33601E5129353AFD00763BF8 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */; };
 		33898CE5293F83B4004E567F /* NewsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33898CE4293F83B4004E567F /* NewsFooterCell.swift */; };
 		33898CE7293F83C1004E567F /* NewsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33898CE6293F83C1004E567F /* NewsHeaderCell.swift */; };
@@ -89,6 +92,9 @@
 		334A636F29406C0900D34316 /* ResultsCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCopy.swift; sourceTree = "<group>"; };
 		334A63712941D99F00D34316 /* GetDataOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataOperations.swift; sourceTree = "<group>"; };
 		334A63742941DB9200D34316 /* AsyncOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperations.swift; sourceTree = "<group>"; };
+		334A96EF29435EA400F15026 /* PhotoService + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoService + Extension.swift"; sourceTree = "<group>"; };
+		334A96F129435EE600F15026 /* DataReloadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataReloadable.swift; sourceTree = "<group>"; };
+		334A96F329435EF300F15026 /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
 		33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
 		33898CE4293F83B4004E567F /* NewsFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFooterCell.swift; sourceTree = "<group>"; };
 		33898CE6293F83C1004E567F /* NewsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderCell.swift; sourceTree = "<group>"; };
@@ -242,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */,
+				334A96EF29435EA400F15026 /* PhotoService + Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -300,6 +307,8 @@
 				334A63732941D9AC00D34316 /* Operation */,
 				33D78D40292D5903008BF031 /* NetworkService.swift */,
 				33C059652936324000820EA1 /* RealmService.swift */,
+				334A96F329435EF300F15026 /* PhotoService.swift */,
+				334A96F129435EE600F15026 /* DataReloadable.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -492,6 +501,7 @@
 				33D125D92930DE9A0081AB73 /* UserResponse.swift in Sources */,
 				33898CEB293F83E6004E567F /* NewsTextCell.swift in Sources */,
 				33D78D3E292D55D4008BF031 /* Session.swift in Sources */,
+				334A96F429435EF300F15026 /* PhotoService.swift in Sources */,
 				3308766129146ED900F4D3E8 /* FriendTableViewCell.swift in Sources */,
 				33D125DD2930DFF20081AB73 /* GroupResult.swift in Sources */,
 				33D125E92930E0CF0081AB73 /* UserPhoto.swift in Sources */,
@@ -503,6 +513,7 @@
 				33A9E65D293F2D0700D28A5C /* NewsFeed.swift in Sources */,
 				330876632914703F00F4D3E8 /* FriendsTableViewController.swift in Sources */,
 				334A637029406C0900D34316 /* ResultsCopy.swift in Sources */,
+				334A96F029435EA400F15026 /* PhotoService + Extension.swift in Sources */,
 				33D125E52930E08F0081AB73 /* UserPhotoResponse.swift in Sources */,
 				33D125E72930E0B00081AB73 /* UserPhotoResults.swift in Sources */,
 				33D125E12930E0300081AB73 /* Group.swift in Sources */,
@@ -510,6 +521,7 @@
 				334A636E29406BF100D34316 /* CopyHistory.swift in Sources */,
 				330876722914905100F4D3E8 /* FollowGroupsTableViewCell.swift in Sources */,
 				330876782914958E00F4D3E8 /* UnFollowTableViewController.swift in Sources */,
+				334A96F229435EE600F15026 /* DataReloadable.swift in Sources */,
 				33C059662936324000820EA1 /* RealmService.swift in Sources */,
 				33ADDF722941E12E00E20CFD /* ParseGroupData.swift in Sources */,
 				33ADDF742941E44E00E20CFD /* ReloadTable.swift in Sources */,

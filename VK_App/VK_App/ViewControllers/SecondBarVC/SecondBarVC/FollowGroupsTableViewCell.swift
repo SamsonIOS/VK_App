@@ -24,9 +24,8 @@ final class FollowGroupsTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func configure(_ group: Group) {
+    func configure(_ group: Group, photo: UIImage?) {
         nameGroupLabel.text = group.name
-        guard let url = URL(string: group.photoPath) else { return }
-        groupImageView.load(url: url)
+        groupImageView.image = photo
     }
 }
