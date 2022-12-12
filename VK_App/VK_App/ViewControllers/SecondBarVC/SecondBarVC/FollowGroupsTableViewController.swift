@@ -13,6 +13,8 @@ final class FollowGroupsTableViewController: UITableViewController {
         static let followGroupCellId = "signGroupCell"
     }
 
+    private var photoService: PhotoService?
+
     // MARK: Private IBAction
 
     @IBAction private func addCellAction(segue: UIStoryboardSegue) {
@@ -35,10 +37,15 @@ final class FollowGroupsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadGroupsRealm()
+        setViewController()
     }
 
     // MARK: Private Methods
+
+    private func setViewController() {
+        photoService = PhotoService(container: self)
+        loadGroupsRealm()
+    }
 
     private func loadGroupsRealm() {
         guard let objects = RealmService.get(Group.self) else { return }
@@ -81,10 +88,10 @@ extension FollowGroupsTableViewController {
             .dequeueReusableCell(
                 withIdentifier: Constants.followGroupCellId,
                 for: indexPath
-            ) as? FollowGroupsTableViewCell
-        else { return UITableViewCell() }
-        guard let groups = groups?[indexPath.row] else { return UITableViewCell() }
-        cell.configure(groups)
+            ) as? FollowGroupsTableViewCell,
+              let groups = groups?[indexPath.row],
+              let photoService = photoService else { return UITableViewCell() }
+        cell.configure(groups, photoService: photoService, indexPath: indexPath.row)
         return cell
     }
 
