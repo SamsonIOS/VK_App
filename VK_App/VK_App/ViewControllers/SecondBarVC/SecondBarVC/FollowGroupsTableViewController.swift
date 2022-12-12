@@ -90,7 +90,7 @@ extension FollowGroupsTableViewController {
                 for: indexPath
             ) as? FollowGroupsTableViewCell,
             let groups = groups?[indexPath.row] else { return UITableViewCell() }
-        cell.configure(groups, photo: photoService?.photo(atIndexpath: indexPath, byUrl: groups.photoPath))
+        cell.configure(groups, photoPath: photoService?.photo(atIndexpath: indexPath, byUrl: groups.photoPath))
         return cell
     }
 
