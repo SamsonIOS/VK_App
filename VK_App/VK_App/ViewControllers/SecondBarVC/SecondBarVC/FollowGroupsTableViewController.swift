@@ -41,6 +41,7 @@ final class FollowGroupsTableViewController: UITableViewController {
     }
 
     // MARK: Private Methods
+
     private func setVC() {
         photoService = PhotoService(container: self)
         loadGroupsRealm()
@@ -88,7 +89,7 @@ extension FollowGroupsTableViewController {
                 withIdentifier: Constants.followGroupCellId,
                 for: indexPath
             ) as? FollowGroupsTableViewCell,
-              let groups = groups?[indexPath.row] else { return UITableViewCell() }
+            let groups = groups?[indexPath.row] else { return UITableViewCell() }
         cell.configure(groups, photo: photoService?.photo(atIndexpath: indexPath, byUrl: groups.photoPath))
         return cell
     }

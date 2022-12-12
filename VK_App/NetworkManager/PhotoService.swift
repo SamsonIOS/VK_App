@@ -4,7 +4,7 @@
 import Alamofire
 import UIKit
 
-/// PhotoService
+/// Сервис для кеширования фото и загрузки фото с кеша
 final class PhotoService {
     // MARK: Constants
 
@@ -15,6 +15,9 @@ final class PhotoService {
         static let defaultText: Substring = "default"
     }
 
+    // MARK: Private Properties
+
+    private let container: DataReloadable
     private let cacheLifeTime: TimeInterval = 30 * 24 * 60 * 60
     private static let pathName: String = {
         let pathName = Constants.pathName
@@ -37,6 +40,16 @@ final class PhotoService {
         }
         return pathName
     }()
+
+    private var images = [String: UIImage]()
+
+    // MARK: Init
+
+    init(container: UITableViewController) {
+        self.container = TableViewController(table: container)
+    }
+
+    // MARK: Private Methods
 
     private func getFilePath(url: String) -> String? {
         guard let cachesDirectory = FileManager.default.urls(
@@ -80,8 +93,6 @@ final class PhotoService {
         return image
     }
 
-    private var images = [String: UIImage]()
-
     private func loadPhoto(atIndexpath indexPath: IndexPath, byUrl url: String) {
         AF.request(url).responseData(queue: DispatchQueue.global()) { [weak self] response in
             guard
@@ -98,6 +109,8 @@ final class PhotoService {
         }
     }
 
+    // MARK: Public Merthods
+
     func photo(atIndexpath indexPath: IndexPath, byUrl url: String) -> UIImage? {
         var image: UIImage?
         if let photo = images[url] {
@@ -108,19 +121,5 @@ final class PhotoService {
             loadPhoto(atIndexpath: indexPath, byUrl: url)
         }
         return image
-    }
-
-    private let container: DataReloadable
-
-    init(container: UICollectionView) {
-        self.container = Collection(collection: container)
-    }
-
-    init(container: UITableViewController) {
-        self.container = TableViewController(table: container)
-    }
-
-    init(container: UITableViewCell) {
-        self.container = TableViewCell(table: container)
     }
 }
