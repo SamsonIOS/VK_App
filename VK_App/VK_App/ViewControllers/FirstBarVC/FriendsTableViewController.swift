@@ -26,6 +26,7 @@ final class FriendsTableViewController: UITableViewController {
     private let networkService = NetworkService()
     private var sectionsMap: [Character: [User]] = [:]
     private var usersToken: NotificationToken?
+    private var nextFrom = ""
     private var users: Results<User>? {
         didSet {
             filteredFriendsMap = [:]

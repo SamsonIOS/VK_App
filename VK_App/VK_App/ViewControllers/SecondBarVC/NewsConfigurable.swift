@@ -6,7 +6,7 @@ import UIKit
 /// typealias Ячейки и протокола
 typealias NewsCell = UITableViewCell & NewsConfigurable
 
-/// протокол для вызова функции в ячейке
+/// протокол вызова функции для конфигурирования ячейки
 protocol NewsConfigurable {
     func configure(news: NewsFeed)
 }

@@ -12,7 +12,7 @@ final class NewsImageCell: UITableViewCell, NewsConfigurable {
     // MARK: Public Methods
 
     func configure(news: NewsFeed) {
-        guard let photo = news.copyHistory?.first?.attachments?.first?.photo?.photos.first?.url,
+        guard let photo = news.attachments?.first?.photo?.photos.last?.url,
               let url = URL(string: photo) else { return }
         postImageView.load(url: url)
     }

@@ -30,6 +30,8 @@ struct NetworkService {
         static let scopeText = "scope"
         static let scopeValue = "8194"
         static let responseTypeText = "response_type"
+        static let startTime = "start_time"
+        static let startFrom = "start_from"
         static let toketText = "token"
         static let versionText = "v"
         static let acessTokenParameter = "access_token"
@@ -119,12 +121,16 @@ struct NetworkService {
         OperationQueue.main.addOperation(saveToRealm)
     }
 
-    func fetchNews() -> Promise<NewsFeedResponse> {
-        let parameters: Parameters = [
+    func fetchNews(startTime: TimeInterval? = nil, startFrom: String? = nil) -> Promise<NewsFeedResponse> {
+        var parameters: Parameters = [
             Constants.acessTokenParameter: Session.shared.token,
             Constants.filters: Constants.post,
-            Constants.versionParameter: Constants.versionValue
+            Constants.versionParameter: Constants.versionValue,
+            Constants.startFrom: startFrom
         ]
+        if let startTime = startTime {
+            parameters[Constants.startTime] = startTime
+        }
         let path = "\(Constants.baseURL)\(Constants.getNewsFeed)"
         let promise = Promise<NewsFeedResponse> { resolver in
             AF.request(path, parameters: parameters).responseData { response in

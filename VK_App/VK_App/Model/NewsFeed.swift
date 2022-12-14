@@ -10,13 +10,13 @@ final class NewsFeed: Decodable {
     /// Айди поста
     var sourceID: Int
     /// Текст поста
-    var text: String
+    var text: String?
     /// Имя автора поста
     var authorName: String?
     /// Фото автора поста
     var avatarPath: String?
     /// Дата поста
-    var date: Int
+    var date: Double
     /// Тип поста
     var type: NewsItemType?
     /// Лайки поста
@@ -28,7 +28,7 @@ final class NewsFeed: Decodable {
     /// Количество просмотров поста
     var views: Views
     /// Параметр для доступа к фото в посте
-    var copyHistory: [CopyHistory]?
+    var attachments: [CopyHistoryAttachment]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -39,10 +39,18 @@ final class NewsFeed: Decodable {
         case comments
         case reposts
         case views
+        case attachments
     }
 
     enum NewsItemType {
         case text
         case image
+    }
+
+    static func generatePhotos(count: Int) -> [String] {
+        guard count > 0 else { return [] }
+        return (1 ... count).compactMap { _ in
+            String(Int.random(in: 1 ... 20))
+        }
     }
 }
