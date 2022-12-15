@@ -47,7 +47,7 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
 
     // MARK: Private Methods
 
-    @objc func refreshNews() {
+    @objc private func refreshNewsAction() {
         refreshControl?.beginRefreshing()
         fetchNews()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -76,6 +76,7 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
             case let .success(response):
                 guard let self = self else { return }
                 self.filterNews(response: response)
+                self.nextFrom = nextFrom
                 self.news = response.news + self.news
                 self.tableView.reloadData()
             case let .failure(error):
@@ -108,7 +109,7 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
     }
 
     private func fetchNewsWithInfinityScroll() {
-        networkService.fetchNews(startTime: mostFreshDate, nextFrom: nextFrom) { [weak self] result in
+        networkService.fetchNews(nextFrom: nextFrom) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(response):

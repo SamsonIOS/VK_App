@@ -11,6 +11,6 @@ final class UserPhoto: Object, Decodable {
     let width: Int
     /// адрес на фото друга
     @Persisted var url: String
-
+    /// Cоотношение сторон
     var aspectRatio: CGFloat { CGFloat(height) / CGFloat(width) }
 }

@@ -11,8 +11,8 @@ struct NewsFeedResponse: Decodable {
     let groups: [Group]
     /// Друзья
     let friends: [User]
-    /// xn
-    let nextFrom: String
+    /// Получение следующей страницы новостей
+    let nextFrom: String?
 
     enum CodingKeys: String, CodingKey {
         case news = "items"
