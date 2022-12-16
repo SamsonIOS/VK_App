@@ -44,6 +44,7 @@ final class LoginViewController: UIViewController {
     // MARK: Private IBAction
 
     @IBAction private func signInButtonAction(_ sender: UIButton) {
+        guard let contentView = view as? LoginView else { return }
         let loginTextFieldText = contentView.loginTextField.text
         if loginTextFieldText == ConstantsSting.login {
             contentView.startAnimationView()

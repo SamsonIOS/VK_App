@@ -11,9 +11,9 @@ final class NewsImageCell: UITableViewCell, NewsConfigurable {
 
     // MARK: Public Methods
 
-    func configure(news: NewsFeed) {
-        guard let photo = news.attachments?.first?.photo?.photos.last?.url,
-              let url = URL(string: photo) else { return }
-        postImageView.load(url: url)
+    func configure(news: NewsFeed, photoService: PhotoService?, indexPath: Int?) {
+        guard let photo = news.attachments?.first?.photo?.photos.last?.url else { return }
+        let atIndexPath = IndexPath(index: indexPath ?? 0)
+        postImageView.image = photoService?.photo(atIndexpath: atIndexPath, byUrl: photo)
     }
 }

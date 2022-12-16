@@ -6,11 +6,29 @@ import WebKit
 
 /// Вью входа в приложение
 final class LoginView: UIView {
+    // MARK: Constants
+    private enum Constants {
+        static let forTopAndLeftEdgeInsets = 0.0
+        static let forRightEdgeInsets: CGFloat = 0
+        static let firstDoteViewX = -20
+        static let thirdDoteViewX = 20
+        static let DoveViewY = -115
+        static let DoteViewXzero = 0
+        static let alphaForAnimation: CGFloat = 1
+        static let durationForAnimation = 0.7
+        static let firstDoteAnimateDelay: TimeInterval = 0
+        static let secondDoteAnimateDelay = 0.3
+        static let thirdDoteAnimateDelay = 0.6
+        static let forViewAplha: CGFloat = 0
+        static let viewWidth = 10
+        static let viewHeigth = 10
+        static let viewCornerRadius: CGFloat = 5
+    }
     // MARK: IBOutlet
 
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var signInWithAppleButton: UIButton!
-    @IBOutlet var loginTextField: UITextField!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var signInWithAppleButton: UIButton!
+    @IBOutlet private var loginTextField: UITextField!
 
     // MARK: Public Visual Components
 
@@ -21,18 +39,20 @@ final class LoginView: UIView {
     // MARK: Public Methods
 
     @objc func keyboardWillShownAction(notification: Notification) {
-        guard let info = notification.userInfo as? NSDictionary else { return }
-        guard let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
+        guard let info = notification.userInfo as? NSDictionary,
+              let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
         else { return }
-
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0)
+        
+        let contentInsets = UIEdgeInsets(top: Constants.forTopAndLeftEdgeInsets,
+                                         left: Constants.forTopAndLeftEdgeInsets,
+                                         bottom: kbSize.height, right: Constants.forRightEdgeInsets)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
         scrollView.addGestureRecognizer(tapGesture)
     }
-
+    
     @objc func hideKeyboardAction() {
         scrollView.endEditing(true)
     }
@@ -43,32 +63,32 @@ final class LoginView: UIView {
     }
 
     func startAnimationView() {
-        firstDoteView = setupSubView(newView: firstDoteView, xPosition: -20, yPosition: -115)
-        secondDoteView = setupSubView(newView: secondDoteView, xPosition: 0, yPosition: -115)
-        thirdDoteView = setupSubView(newView: thirdDoteView, xPosition: 20, yPosition: -115)
+        firstDoteView = setupSubView(newView: firstDoteView, xPosition: Constants.firstDoteViewX, yPosition: Constants.DoveViewY)
+        secondDoteView = setupSubView(newView: secondDoteView, xPosition: Constants.DoteViewXzero, yPosition: Constants.DoveViewY)
+        thirdDoteView = setupSubView(newView: thirdDoteView, xPosition: Constants.thirdDoteViewX, yPosition: Constants.DoveViewY)
 
         UIView.animate(
-            withDuration: 0.7,
-            delay: 0,
+            withDuration: Constants.durationForAnimation,
+            delay: Constants.firstDoteAnimateDelay,
             options: [.repeat, .autoreverse]
         ) {
-            self.firstDoteView.alpha = 1
+            self.firstDoteView.alpha = Constants.alphaForAnimation
         }
 
         UIView.animate(
-            withDuration: 0.7,
-            delay: 0.3,
+            withDuration: Constants.durationForAnimation,
+            delay: Constants.secondDoteAnimateDelay,
             options: [.repeat, .autoreverse]
         ) {
-            self.secondDoteView.alpha = 1
+            self.secondDoteView.alpha = Constants.alphaForAnimation
         }
 
         UIView.animate(
-            withDuration: 0.7,
-            delay: 0.6,
+            withDuration: Constants.durationForAnimation,
+            delay: Constants.thirdDoteAnimateDelay,
             options: [.repeat, .autoreverse]
         ) {
-            self.thirdDoteView.alpha = 1
+            self.thirdDoteView.alpha = Constants.alphaForAnimation
         }
     }
 
@@ -100,15 +120,15 @@ final class LoginView: UIView {
 
     private func setupSubView(newView: UIView, xPosition: Int, yPosition: Int) -> UIView {
         newView.backgroundColor = .white
-        newView.alpha = 0
+        newView.alpha = Constants.forViewAplha
         newView.frame = CGRect(
-            x: center.x + CGFloat(xPosition),
-            y: center.y + CGFloat(yPosition),
-            width: 10,
-            height: 10
+            x: Int(center.x + CGFloat(xPosition)),
+            y: Int(center.y + CGFloat(yPosition)),
+            width: Constants.viewWidth,
+            height: Constants.viewHeigth
         )
         addSubview(newView)
-        newView.layer.cornerRadius = 5
+        newView.layer.cornerRadius = Constants.viewCornerRadius
         return newView
     }
 }

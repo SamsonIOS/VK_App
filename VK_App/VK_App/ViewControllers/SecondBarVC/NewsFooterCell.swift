@@ -5,6 +5,7 @@ import UIKit
 
 /// Ячейка футера
 final class NewsFooterCell: UITableViewCell, NewsConfigurable {
+    
     // MARK: Private IBOutlets
 
     @IBOutlet private var likeControl: LikeControl!
@@ -14,7 +15,7 @@ final class NewsFooterCell: UITableViewCell, NewsConfigurable {
 
     // MARK: Public Methods
 
-    func configure(news: NewsFeed) {
+    func configure(news: NewsFeed, photoService: PhotoService?, indexPath: Int?) {
         likeControl.likesLabel.text = String(news.likes.count)
         commentLabel.text = String(news.comments.count)
         repostLabel.text = String(news.reposts.count)

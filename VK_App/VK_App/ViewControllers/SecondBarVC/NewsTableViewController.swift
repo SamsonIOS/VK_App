@@ -13,6 +13,7 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
         static let textCellID = "NewsTextCell"
         static let footerCellID = "NewsFooterCell"
         static let imageCellID = "NewsImageCell"
+        static let refreshingText = "Refreshing..."
     }
 
     private enum NewsCellType: Int, CaseIterable {
@@ -62,17 +63,17 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
 
     private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing...")
+        refreshControl?.attributedTitle = NSAttributedString(string: Constants.refreshingText)
         refreshControl?.tintColor = .black
-        refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(refreshNewsAction), for: .valueChanged)
     }
 
     private func fetchNews() {
         if let firstItem = news.first {
             mostFreshDate = firstItem.date + 1
         }
-        networkService.fetchNews(startTime: mostFreshDate, nextFrom: nextFrom) { [weak self] news in
-            switch news {
+        networkService.fetchNews(startTime: mostFreshDate, nextFrom: nextFrom) { [weak self] result in
+            switch result {
             case let .success(response):
                 guard let self = self else { return }
                 self.filterNews(response: response)
@@ -108,7 +109,7 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
         }
     }
 
-    private func fetchNewsWithInfinityScroll() {
+    private func fetchNews(nextFrom: String) {
         networkService.fetchNews(nextFrom: nextFrom) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -184,10 +185,14 @@ extension NewsTableViewController {
 
 extension NewsTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        guard let maxSection = indexPaths.map(\.section).max() else { return }
-        if maxSection > news.count - 3, !isLoading {
+        guard
+            let maxSection = indexPaths.map(\.section).max()
+                maxSection > news.count - 3,
+            !isLoading
+        else {
             isLoading = true
             fetchNewsWithInfinityScroll()
         }
     }
 }
+
