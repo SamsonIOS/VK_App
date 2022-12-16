@@ -26,6 +26,7 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
     // MARK: Private properties
 
     private let networkService = NetworkNewsService()
+    private var photoService: PhotoService?
     private var isLoading = false
     private var nextFrom = Constants.emptyText
     private var news: [NewsFeed] = []
@@ -75,7 +76,9 @@ final class NewsTableViewController: UITableViewController, NewsPostCellDelegate
         networkService.fetchNews(startTime: mostFreshDate, nextFrom: nextFrom) { [weak self] result in
             switch result {
             case let .success(response):
-                guard let self = self else { return }
+                guard let self = self,
+                      let nextFrom = response.nextFrom
+                else { return }
                 self.filterNews(response: response)
                 self.nextFrom = nextFrom
                 self.news = response.news + self.news
@@ -154,7 +157,7 @@ extension NewsTableViewController {
         guard let cell = tableView
             .dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? NewsCell
         else { return UITableViewCell() }
-        cell.configure(news: news)
+        cell.configure(news: news, photoService: photoService, indexPath: indexPath.row)
         if let textCell = cell as? NewsTextCell {
             textCell.delegate = self
         }
@@ -186,13 +189,11 @@ extension NewsTableViewController {
 extension NewsTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard
-            let maxSection = indexPaths.map(\.section).max()
-                maxSection > news.count - 3,
+            let maxSection = indexPaths.map(\.section).max(),
+            maxSection > news.count - 3,
             !isLoading
-        else {
-            isLoading = true
-            fetchNewsWithInfinityScroll()
-        }
+        else { return }
+        isLoading = true
+        fetchNews(nextFrom: nextFrom)
     }
 }
-

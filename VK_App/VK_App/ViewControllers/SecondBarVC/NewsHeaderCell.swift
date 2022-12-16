@@ -5,7 +5,6 @@ import UIKit
 
 ///  Ячейка хедера
 final class NewsHeaderCell: UITableViewCell, NewsConfigurable {
-    
     // MARK: Private IBOutlets
 
     @IBOutlet private var userImageView: UIImageView!
@@ -20,7 +19,7 @@ final class NewsHeaderCell: UITableViewCell, NewsConfigurable {
         guard let url = URL(string: news.avatarPath ?? "") else { return }
         userImageView.load(url: url)
     }
-    
+
     func configure(news: NewsFeed, photoService: PhotoService?, indexPath: Int?) {
         datePostLabel.text = DateFormatter.convert(dateValue: news.date)
         userNameLabel.text = news.authorName

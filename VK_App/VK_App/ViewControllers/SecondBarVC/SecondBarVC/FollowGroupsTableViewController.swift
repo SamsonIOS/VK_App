@@ -13,8 +13,6 @@ final class FollowGroupsTableViewController: UITableViewController {
         static let followGroupCellId = "signGroupCell"
     }
 
-    private var photoService: PhotoService?
-
     // MARK: Private IBAction
 
     @IBAction private func addCellAction(segue: UIStoryboardSegue) {
@@ -25,6 +23,7 @@ final class FollowGroupsTableViewController: UITableViewController {
 
     // MARK: Private properties
 
+    private var photoService: PhotoService?
     private let networkService = NetworkService()
     private var groupsToken: NotificationToken?
     private var groups: Results<Group>? {

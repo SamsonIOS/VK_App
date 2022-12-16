@@ -5,7 +5,6 @@ import UIKit
 
 /// Ячейка футера
 final class NewsFooterCell: UITableViewCell, NewsConfigurable {
-    
     // MARK: Private IBOutlets
 
     @IBOutlet private var likeControl: LikeControl!

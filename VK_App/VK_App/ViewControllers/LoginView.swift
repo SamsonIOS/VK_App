@@ -7,6 +7,7 @@ import WebKit
 /// Вью входа в приложение
 final class LoginView: UIView {
     // MARK: Constants
+
     private enum Constants {
         static let forTopAndLeftEdgeInsets = 0.0
         static let forRightEdgeInsets: CGFloat = 0
@@ -24,11 +25,15 @@ final class LoginView: UIView {
         static let viewHeigth = 10
         static let viewCornerRadius: CGFloat = 5
     }
-    // MARK: IBOutlet
+
+    // MARK: Private IBOutlet
 
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var signInWithAppleButton: UIButton!
-    @IBOutlet private var loginTextField: UITextField!
+
+    // MARK: Public IBOutlet
+
+    @IBOutlet var loginTextField: UITextField!
 
     // MARK: Public Visual Components
 
@@ -42,17 +47,20 @@ final class LoginView: UIView {
         guard let info = notification.userInfo as? NSDictionary,
               let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
         else { return }
-        
-        let contentInsets = UIEdgeInsets(top: Constants.forTopAndLeftEdgeInsets,
-                                         left: Constants.forTopAndLeftEdgeInsets,
-                                         bottom: kbSize.height, right: Constants.forRightEdgeInsets)
+
+        let contentInsets = UIEdgeInsets(
+            top: Constants.forTopAndLeftEdgeInsets,
+            left: Constants.forTopAndLeftEdgeInsets,
+            bottom: kbSize.height,
+            right: Constants.forRightEdgeInsets
+        )
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-        
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
         scrollView.addGestureRecognizer(tapGesture)
     }
-    
+
     @objc func hideKeyboardAction() {
         scrollView.endEditing(true)
     }
@@ -63,9 +71,21 @@ final class LoginView: UIView {
     }
 
     func startAnimationView() {
-        firstDoteView = setupSubView(newView: firstDoteView, xPosition: Constants.firstDoteViewX, yPosition: Constants.DoveViewY)
-        secondDoteView = setupSubView(newView: secondDoteView, xPosition: Constants.DoteViewXzero, yPosition: Constants.DoveViewY)
-        thirdDoteView = setupSubView(newView: thirdDoteView, xPosition: Constants.thirdDoteViewX, yPosition: Constants.DoveViewY)
+        firstDoteView = setupSubView(
+            newView: firstDoteView,
+            xPosition: Constants.firstDoteViewX,
+            yPosition: Constants.DoveViewY
+        )
+        secondDoteView = setupSubView(
+            newView: secondDoteView,
+            xPosition: Constants.DoteViewXzero,
+            yPosition: Constants.DoveViewY
+        )
+        thirdDoteView = setupSubView(
+            newView: thirdDoteView,
+            xPosition: Constants.thirdDoteViewX,
+            yPosition: Constants.DoveViewY
+        )
 
         UIView.animate(
             withDuration: Constants.durationForAnimation,

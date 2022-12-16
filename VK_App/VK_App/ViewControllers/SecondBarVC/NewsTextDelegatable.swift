@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Показ полного текста новости, при нажатии 
+/// Показ полного текста новости, при нажатии
 protocol NewsPostCellDelegate: AnyObject {
     func didTappedShowMore(_ cell: NewsTextCell)
 }
