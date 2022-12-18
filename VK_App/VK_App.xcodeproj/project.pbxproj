@@ -31,6 +31,8 @@
 		334A96F229435EE600F15026 /* DataReloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A96F129435EE600F15026 /* DataReloadable.swift */; };
 		334A96F429435EF300F15026 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A96F329435EF300F15026 /* PhotoService.swift */; };
 		33601E5129353AFD00763BF8 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */; };
+		336FE8532949F0DA00DF88C0 /* NetworkNewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336FE8522949F0DA00DF88C0 /* NetworkNewsService.swift */; };
+		33892AC2294866C2004FDCFB /* DateFormatter + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33892AC1294866C2004FDCFB /* DateFormatter + Extension.swift */; };
 		33898CE5293F83B4004E567F /* NewsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33898CE4293F83B4004E567F /* NewsFooterCell.swift */; };
 		33898CE7293F83C1004E567F /* NewsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33898CE6293F83C1004E567F /* NewsHeaderCell.swift */; };
 		33898CE9293F83E0004E567F /* NewsImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33898CE8293F83E0004E567F /* NewsImageCell.swift */; };
@@ -47,6 +49,9 @@
 		339E7A892911BA1F000FF65C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A872911BA1F000FF65C /* Main.storyboard */; };
 		339E7A8B2911BA21000FF65C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A8A2911BA21000FF65C /* Assets.xcassets */; };
 		339E7A8E2911BA21000FF65C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339E7A8C2911BA21000FF65C /* LaunchScreen.storyboard */; };
+		33A42076294A4D2D00734876 /* NewsTextDelegatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A42075294A4D2D00734876 /* NewsTextDelegatable.swift */; };
+		33A42078294A4EC100734876 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A42077294A4EC100734876 /* LoginView.swift */; };
+		33A4207A294A670D00734876 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A42079294A670D00734876 /* UIViewController + Extension.swift */; };
 		33A9E65D293F2D0700D28A5C /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A9E65C293F2D0700D28A5C /* NewsFeed.swift */; };
 		33A9E65F293F3E5500D28A5C /* NewsFeedResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A9E65E293F3E5500D28A5C /* NewsFeedResult.swift */; };
 		33A9E661293F3EAE00D28A5C /* NewsFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A9E660293F3EAE00D28A5C /* NewsFeedResponse.swift */; };
@@ -96,6 +101,8 @@
 		334A96F129435EE600F15026 /* DataReloadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataReloadable.swift; sourceTree = "<group>"; };
 		334A96F329435EF300F15026 /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
 		33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
+		336FE8522949F0DA00DF88C0 /* NetworkNewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewsService.swift; sourceTree = "<group>"; };
+		33892AC1294866C2004FDCFB /* DateFormatter + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + Extension.swift"; sourceTree = "<group>"; };
 		33898CE4293F83B4004E567F /* NewsFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFooterCell.swift; sourceTree = "<group>"; };
 		33898CE6293F83C1004E567F /* NewsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderCell.swift; sourceTree = "<group>"; };
 		33898CE8293F83E0004E567F /* NewsImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsImageCell.swift; sourceTree = "<group>"; };
@@ -114,6 +121,9 @@
 		339E7A8A2911BA21000FF65C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		339E7A8D2911BA21000FF65C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		339E7A8F2911BA21000FF65C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33A42075294A4D2D00734876 /* NewsTextDelegatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTextDelegatable.swift; sourceTree = "<group>"; };
+		33A42077294A4EC100734876 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		33A42079294A670D00734876 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		33A9E65C293F2D0700D28A5C /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		33A9E65E293F3E5500D28A5C /* NewsFeedResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedResult.swift; sourceTree = "<group>"; };
 		33A9E660293F3EAE00D28A5C /* NewsFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedResponse.swift; sourceTree = "<group>"; };
@@ -169,6 +179,7 @@
 			children = (
 				3308765E2912B53900F4D3E8 /* ConstantsLoginVC.swift */,
 				339E7A852911BA1F000FF65C /* LoginViewController.swift */,
+				33A42077294A4EC100734876 /* LoginView.swift */,
 				33919C73291DACAD008D1F6D /* CustomSegueTransition.swift */,
 				33919C75291DAEDE008D1F6D /* MainNavigationController.swift */,
 				33919C79291DB16C008D1F6D /* CustomPushAnimator.swift */,
@@ -223,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				33898CEC293F8819004E567F /* NewsConfigurable.swift */,
+				33A42075294A4D2D00734876 /* NewsTextDelegatable.swift */,
 				3320CEC129193F06002355A7 /* NewsTableViewController.swift */,
 				33898CE6293F83C1004E567F /* NewsHeaderCell.swift */,
 				33898CEA293F83E6004E567F /* NewsTextCell.swift */,
@@ -249,6 +261,8 @@
 			children = (
 				33601E5029353AFD00763BF8 /* UIImageView + Extension.swift */,
 				334A96EF29435EA400F15026 /* PhotoService + Extension.swift */,
+				33892AC1294866C2004FDCFB /* DateFormatter + Extension.swift */,
+				33A42079294A670D00734876 /* UIViewController + Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -306,6 +320,7 @@
 			children = (
 				334A63732941D9AC00D34316 /* Operation */,
 				33D78D40292D5903008BF031 /* NetworkService.swift */,
+				336FE8522949F0DA00DF88C0 /* NetworkNewsService.swift */,
 				33C059652936324000820EA1 /* RealmService.swift */,
 				334A96F329435EF300F15026 /* PhotoService.swift */,
 				334A96F129435EE600F15026 /* DataReloadable.swift */,
@@ -494,6 +509,7 @@
 				330876702914903400F4D3E8 /* FollowGroupsTableViewController.swift in Sources */,
 				330876752914953F00F4D3E8 /* UnFollowTableViewCell.swift in Sources */,
 				339E7A862911BA1F000FF65C /* LoginViewController.swift in Sources */,
+				33892AC2294866C2004FDCFB /* DateFormatter + Extension.swift in Sources */,
 				33919C74291DACAD008D1F6D /* CustomSegueTransition.swift in Sources */,
 				33F2DFB72915666C004C808D /* LikesControl.swift in Sources */,
 				33D125E32930E0740081AB73 /* UserPhotoResult.swift in Sources */,
@@ -517,6 +533,7 @@
 				33D125E52930E08F0081AB73 /* UserPhotoResponse.swift in Sources */,
 				33D125E72930E0B00081AB73 /* UserPhotoResults.swift in Sources */,
 				33D125E12930E0300081AB73 /* Group.swift in Sources */,
+				33A4207A294A670D00734876 /* UIViewController + Extension.swift in Sources */,
 				33898CE5293F83B4004E567F /* NewsFooterCell.swift in Sources */,
 				334A636E29406BF100D34316 /* CopyHistory.swift in Sources */,
 				330876722914905100F4D3E8 /* FollowGroupsTableViewCell.swift in Sources */,
@@ -525,6 +542,7 @@
 				33C059662936324000820EA1 /* RealmService.swift in Sources */,
 				33ADDF722941E12E00E20CFD /* ParseGroupData.swift in Sources */,
 				33ADDF742941E44E00E20CFD /* ReloadTable.swift in Sources */,
+				33A42078294A4EC100734876 /* LoginView.swift in Sources */,
 				33D78D41292D5903008BF031 /* NetworkService.swift in Sources */,
 				3320CEC229193F06002355A7 /* NewsTableViewController.swift in Sources */,
 				33898CE9293F83E0004E567F /* NewsImageCell.swift in Sources */,
@@ -535,8 +553,10 @@
 				33B020F0291B9A4800FAD4A1 /* UIView +Extension.swift in Sources */,
 				33A9E65F293F3E5500D28A5C /* NewsFeedResult.swift in Sources */,
 				334A635E293FE7DF00D34316 /* Comments.swift in Sources */,
+				33A42076294A4D2D00734876 /* NewsTextDelegatable.swift in Sources */,
 				33B020F6291D089A00FAD4A1 /* FriendsPhotosViewController.swift in Sources */,
 				339E7A842911BA1F000FF65C /* SceneDelegate.swift in Sources */,
+				336FE8532949F0DA00DF88C0 /* NetworkNewsService.swift in Sources */,
 				334A63722941D99F00D34316 /* GetDataOperations.swift in Sources */,
 				33919C7C291DB45C008D1F6D /* CustomPopAnimator.swift in Sources */,
 				334A63752941DB9200D34316 /* AsyncOperations.swift in Sources */,
@@ -616,7 +636,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -670,7 +690,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

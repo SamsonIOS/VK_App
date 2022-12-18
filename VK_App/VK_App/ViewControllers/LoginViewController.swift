@@ -16,7 +16,7 @@ final class LoginViewController: UIViewController {
         static let blankHtmlText = "/blank.html"
     }
 
-    // MARK: IBOutlet
+    // MARK: Private IBOutlet
 
     @IBOutlet private var webView: WKWebView! {
         didSet {
@@ -24,50 +24,39 @@ final class LoginViewController: UIViewController {
         }
     }
 
-    @IBOutlet private var scrollView: UIScrollView!
-    @IBOutlet private var signInWithAppleButton: UIButton!
-    @IBOutlet private var loginTextField: UITextField!
-
-    // MARK: Private Vusial Components
-
-    private var firstDoteView = UIView()
-    private var secondDoteView = UIView()
-    private var thirdDoteView = UIView()
-
     // MARK: Private properties
 
     private let networkService = NetworkService()
+    private lazy var contentView = LoginView()
 
     // MARK: Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addObserverForNotification()
-        setBorderButton()
-        showAuthorizationWebView()
+        configure()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        removeObserverNotification()
+        contentView.removeObserverNotification()
     }
 
     // MARK: Private IBAction
 
     @IBAction private func signInButtonAction(_ sender: UIButton) {
-        let loginTextFieldText = loginTextField.text
+        let loginTextFieldText = contentView.loginTextField.text
         if loginTextFieldText == ConstantsSting.login {
-            startAnimationView()
+            contentView.startAnimationView()
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                self.firstDoteView.layer.removeAllAnimations()
-                self.secondDoteView.layer.removeAllAnimations()
-                self.thirdDoteView.layer.removeAllAnimations()
+                self.contentView.firstDoteView.layer.removeAllAnimations()
+                self.contentView.secondDoteView.layer.removeAllAnimations()
+                self.contentView.thirdDoteView.layer.removeAllAnimations()
 
-                guard let vc = UIStoryboard(name: ConstantsSting.mainText, bundle: nil)
+                guard let tabBarController = UIStoryboard(name: ConstantsSting.mainText, bundle: nil)
                     .instantiateViewController(withIdentifier: ConstantsSting.tabBarID) as? UITabBarController
                 else { return }
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true)
             }
         } else {
             showAlert(title: ConstantsSting.errorText, message: ConstantsSting.errorMessageText) {
@@ -78,113 +67,17 @@ final class LoginViewController: UIViewController {
 
     // MARK: Private Methods
 
-    @objc private func keyboardWillShownAction(notification: Notification) {
-        guard let info = notification.userInfo as? NSDictionary else { return }
-        guard let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)?.cgRectValue.size
-        else { return }
-
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
-        scrollView.addGestureRecognizer(tapGesture)
-    }
-
-    @objc private func hideKeyboardAction() {
-        scrollView.endEditing(true)
-    }
-
-    @objc private func keyboardWillHideAction(notification: Notification) {
-        scrollView.contentInset = UIEdgeInsets.zero
-        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    private func configure() {
+        guard let contentView = view as? LoginView else { return }
+        self.contentView = contentView
+        self.contentView.addObserverForNotification()
+        self.contentView.setBorderButton()
+        showAuthorizationWebView()
     }
 
     private func showAuthorizationWebView() {
         guard let request = networkService.urlComponents() else { return }
         webView.load(request)
-    }
-
-    private func setupSubView(newView: UIView, xPosition: Int, yPosition: Int) -> UIView {
-        newView.backgroundColor = .white
-        newView.alpha = 0
-        newView.frame = CGRect(
-            x: view.center.x + CGFloat(xPosition),
-            y: view.center.y + CGFloat(yPosition),
-            width: 10,
-            height: 10
-        )
-        view.addSubview(newView)
-        newView.layer.cornerRadius = 5
-        return newView
-    }
-
-    private func startAnimationView() {
-        firstDoteView = setupSubView(newView: firstDoteView, xPosition: -20, yPosition: -115)
-        secondDoteView = setupSubView(newView: secondDoteView, xPosition: 0, yPosition: -115)
-        thirdDoteView = setupSubView(newView: thirdDoteView, xPosition: 20, yPosition: -115)
-
-        UIView.animate(
-            withDuration: 0.7,
-            delay: 0,
-            options: [.repeat, .autoreverse]
-        ) {
-            self.firstDoteView.alpha = 1
-        }
-
-        UIView.animate(
-            withDuration: 0.7,
-            delay: 0.3,
-            options: [.repeat, .autoreverse]
-        ) {
-            self.secondDoteView.alpha = 1
-        }
-
-        UIView.animate(
-            withDuration: 0.7,
-            delay: 0.6,
-            options: [.repeat, .autoreverse]
-        ) {
-            self.thirdDoteView.alpha = 1
-        }
-    }
-
-    private func setBorderButton() {
-        signInWithAppleButton.layer.borderColor = UIColor.lightGray.cgColor
-    }
-
-    private func addObserverForNotification() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShownAction(notification:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHideAction(notification:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-
-    private func removeObserverNotification() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-    }
-}
-
-// MARK: вызов алерта из любого UIViewController
-
-extension UIViewController {
-    typealias Closure = (() -> ())?
-    func showAlert(title: String?, message: String?, handler: Closure) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertControllerAction = UIAlertAction(title: ConstantsSting.okText, style: .default) { _ in
-            handler?()
-        }
-        alertController.addAction(alertControllerAction)
-        present(alertController, animated: true)
     }
 }
 
